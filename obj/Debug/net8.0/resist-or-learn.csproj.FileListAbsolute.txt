@@ -23,3 +23,6 @@ c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\obj\Debug\net8.0\re
 c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\obj\Debug\net8.0\resist-or-learn.pdb
 C:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\obj\Debug\net8.0\resist-or-learn.genruntimeconfig.cache
 C:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\obj\Debug\net8.0\ref\resist-or-learn.dll
+c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\obj\Debug\net8.0\resist-or-learn.sourcelink.json
+c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\four_band\band1.xnb
+c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\four_band\base.xnb
