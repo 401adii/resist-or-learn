@@ -11,10 +11,10 @@ public class FourBandResistor : Resistor
 
     protected override void changeBandTypes()
     {
-        bands[0] = new DigitBand(bands[0].texture, bands[0].position);
-        bands[1] = new DigitBand(bands[1].texture, bands[1].position);
-        bands[2] = new MultiplierBand(bands[2].texture, bands[2].position);
-        bands[3] = new ToleranceBand(bands[3].texture, bands[3].position);
+        bands[0] = new DigitBand(bands[0].texture, new Vector2(position.X + 38*4, position.Y));
+        bands[1] = new DigitBand(bands[1].texture, new Vector2(position.X + 55*4, position.Y));
+        bands[2] = new MultiplierBand(bands[2].texture, new Vector2(position.X + 72*4, position.Y + 3*4));
+        bands[3] = new ToleranceBand(bands[3].texture, new Vector2(position.X + 99*4, position.Y));
     }
 
     protected override float getResistance()

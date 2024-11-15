@@ -11,11 +11,11 @@ public class FiveBandResistor : Resistor
 
     protected override void changeBandTypes()
     {
-        bands[0] = new DigitBand(bands[0].texture, bands[0].position);
-        bands[1] = new DigitBand(bands[1].texture, bands[0].position);
-        bands[2] = new DigitBand(bands[2].texture, bands[0].position);
-        bands[3] = new MultiplierBand(bands[3].texture, bands[0].position);
-        bands[4] = new ToleranceBand(bands[4].texture, bands[0].position);
+        bands[0] = new DigitBand(bands[0].texture, new Vector2(position.X + 34*4, position.Y));
+        bands[1] = new DigitBand(bands[1].texture, new Vector2(position.X + 48*4, position.Y));
+        bands[2] = new DigitBand(bands[2].texture, new Vector2(position.X + 62*4, position.Y+8));
+        bands[3] = new MultiplierBand(bands[3].texture, new Vector2(position.X + 76*4, position.Y+8));
+        bands[4] = new ToleranceBand(bands[4].texture, new Vector2(position.X + 104*4, position.Y));
     }
 
     protected override float getResistance()

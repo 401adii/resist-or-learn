@@ -28,7 +28,7 @@ public class Game1 : Game
     List<Texture2D> threeBandTexture = [];
     List<Texture2D> fourBandTexture = [];
     List<Texture2D> fiveBandTexture = [];
-    Resistor resistor;
+    List<Resistor> resistors = [];
 
     public Game1()
     {
@@ -55,10 +55,11 @@ public class Game1 : Game
         LoadResistorBandTextures(threeBandTexture, ResistorType.three_band); // DO NOT DELETE!!!
         LoadResistorBandTextures(fourBandTexture, ResistorType.four_band); // DO NOT DELETE!!!
         LoadResistorBandTextures(fiveBandTexture, ResistorType.five_band); // DO NOT DELETE!!!
-
-
-        resistor = CreateResistor(ResistorType.five_band);
-
+        //////////////////////////////////////////////////////////////////////////////////////
+        
+        resistors.Add(CreateResistor(ResistorType.five_band));
+        resistors.Add(CreateResistor(ResistorType.four_band));
+        resistors.Add(CreateResistor(ResistorType.three_band));
     }
 
     protected override void Update(GameTime gameTime)
@@ -77,7 +78,13 @@ public class Game1 : Game
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-        _spriteBatch.Draw(resistor.texture, new Vector2(100, 100), Color.White);
+        
+        foreach(Resistor resistor in resistors){
+            _spriteBatch.Draw(resistor.texture, resistor.position, Color.White);
+            foreach(Band band in resistor.bands)
+                _spriteBatch.Draw(band.texture, band.position, band.color);
+        }
+
         _spriteBatch.End();
         base.Draw(gameTime);
     }
@@ -103,7 +110,7 @@ public class Game1 : Game
         List<Band> resistorBandList = [];
         for(int i = 0; i < textures.Count; i++)
         {
-            resistorBandList.Add(new Band(textures[i], new Vector2(100, 100)));
+            resistorBandList.Add(new Band(textures[i], Vector2.Zero));
         }
         return resistorBandList;
     }
@@ -113,13 +120,13 @@ public class Game1 : Game
         Resistor r = null;
         switch(t){
         case ResistorType.three_band:
-            r = new ThreeBandResistor(threeBandBaseTexture, Vector2.Zero, LoadResistorBandsList(threeBandTexture));
+            r = new ThreeBandResistor(threeBandBaseTexture, new Vector2(100, 120), LoadResistorBandsList(threeBandTexture));
             break;
         case ResistorType.four_band:
-            r = new FourBandResistor(fourBandBaseTexture, Vector2.Zero, LoadResistorBandsList(fourBandTexture));
+            r = new FourBandResistor(fourBandBaseTexture, new Vector2(100, 112), LoadResistorBandsList(fourBandTexture));
             break;
         case ResistorType.five_band:
-            r = new FiveBandResistor(fiveBandBaseTexture, Vector2.Zero, LoadResistorBandsList(fiveBandTexture));
+            r = new FiveBandResistor(fiveBandBaseTexture, new Vector2(100, 100), LoadResistorBandsList(fiveBandTexture));
             break;
         }
 
