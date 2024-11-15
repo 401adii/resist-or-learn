@@ -28,6 +28,8 @@ public class Game1 : Game
     List<Texture2D> threeBandTexture = [];
     List<Texture2D> fourBandTexture = [];
     List<Texture2D> fiveBandTexture = [];
+    Resistor resistor;
+
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -55,7 +57,7 @@ public class Game1 : Game
         LoadResistorBandTextures(fiveBandTexture, ResistorType.five_band); // DO NOT DELETE!!!
 
 
-        Resistor resistor = CreateResistor(ResistorType.three_band);
+        resistor = CreateResistor(ResistorType.five_band);
 
     }
 
@@ -75,7 +77,7 @@ public class Game1 : Game
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-
+        _spriteBatch.Draw(resistor.texture, new Vector2(100, 100), Color.White);
         _spriteBatch.End();
         base.Draw(gameTime);
     }
@@ -114,10 +116,10 @@ public class Game1 : Game
             r = new ThreeBandResistor(threeBandBaseTexture, Vector2.Zero, LoadResistorBandsList(threeBandTexture));
             break;
         case ResistorType.four_band:
-            r = new ThreeBandResistor(fourBandBaseTexture, Vector2.Zero, LoadResistorBandsList(fourBandTexture));
+            r = new FourBandResistor(fourBandBaseTexture, Vector2.Zero, LoadResistorBandsList(fourBandTexture));
             break;
         case ResistorType.five_band:
-            r = new ThreeBandResistor(fiveBandBaseTexture, Vector2.Zero, LoadResistorBandsList(fiveBandTexture));
+            r = new FiveBandResistor(fiveBandBaseTexture, Vector2.Zero, LoadResistorBandsList(fiveBandTexture));
             break;
         }
 
