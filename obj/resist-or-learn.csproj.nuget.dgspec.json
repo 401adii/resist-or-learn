@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Adrian\\Desktop\\!!\\Studia\\5 sem\\jpwp\\resist-or-learn\\resist-or-learn.csproj": {}
+    "c:\\Users\\Adrian\\Desktop\\!!\\Studia\\5 sem\\jpwp\\resist-or-learn\\resist-or-learn.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Adrian\\Desktop\\!!\\Studia\\5 sem\\jpwp\\resist-or-learn\\resist-or-learn.csproj": {
+    "c:\\Users\\Adrian\\Desktop\\!!\\Studia\\5 sem\\jpwp\\resist-or-learn\\resist-or-learn.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Adrian\\Desktop\\!!\\Studia\\5 sem\\jpwp\\resist-or-learn\\resist-or-learn.csproj",
+        "projectUniqueName": "c:\\Users\\Adrian\\Desktop\\!!\\Studia\\5 sem\\jpwp\\resist-or-learn\\resist-or-learn.csproj",
         "projectName": "resist-or-learn",
-        "projectPath": "C:\\Users\\Adrian\\Desktop\\!!\\Studia\\5 sem\\jpwp\\resist-or-learn\\resist-or-learn.csproj",
+        "projectPath": "c:\\Users\\Adrian\\Desktop\\!!\\Studia\\5 sem\\jpwp\\resist-or-learn\\resist-or-learn.csproj",
         "packagesPath": "C:\\Users\\Adrian\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Adrian\\Desktop\\!!\\Studia\\5 sem\\jpwp\\resist-or-learn\\obj\\",
+        "outputPath": "c:\\Users\\Adrian\\Desktop\\!!\\Studia\\5 sem\\jpwp\\resist-or-learn\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Adrian\\AppData\\Roaming\\NuGet\\NuGet.Config"
