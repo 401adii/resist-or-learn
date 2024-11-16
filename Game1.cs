@@ -28,7 +28,8 @@ public class Game1 : Game
     List<Texture2D> threeBandTexture = [];
     List<Texture2D> fourBandTexture = [];
     List<Texture2D> fiveBandTexture = [];
-    List<Resistor> resistors = [];
+    Resistor resistor;
+    InputBox inputbox;
 
     public Game1()
     {
@@ -45,6 +46,7 @@ public class Game1 : Game
         // TODO: Add your initialization logic here
 
         base.Initialize();
+        
     }
 
     protected override void LoadContent()
@@ -52,23 +54,21 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         //Loading textures
         LoadResistorBaseTextures(); // DO NOT DELETE!!!
-        LoadResistorBandTextures(threeBandTexture, ResistorType.three_band); // DO NOT DELETE!!!
+        LoadResistorBandTextures(threeBandTexture, ResistorType.three_band); // DO NOT DELETE!!!monogame input box
         LoadResistorBandTextures(fourBandTexture, ResistorType.four_band); // DO NOT DELETE!!!
         LoadResistorBandTextures(fiveBandTexture, ResistorType.five_band); // DO NOT DELETE!!!
         //////////////////////////////////////////////////////////////////////////////////////
         
-        resistors.Add(CreateResistor(ResistorType.five_band));
-        resistors.Add(CreateResistor(ResistorType.four_band));
-        resistors.Add(CreateResistor(ResistorType.three_band));
+        resistor = CreateResistor(ResistorType.four_band);
+        inputbox = new InputBox(null, Vector2.Zero);
     }
 
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
-
-        // TODO: Add your update logic here
-
+        inputbox.HandleInput();
+        Debug.WriteLine(inputbox.value);
         base.Update(gameTime);
     }
 
@@ -79,11 +79,11 @@ public class Game1 : Game
         // TODO: Add your drawing code here
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
         
-        foreach(Resistor resistor in resistors){
-            _spriteBatch.Draw(resistor.texture, resistor.position, Color.White);
-            foreach(Band band in resistor.bands)
-                _spriteBatch.Draw(band.texture, band.position, band.color);
-        }
+        //Drawing resistor
+        _spriteBatch.Draw(resistor.texture, resistor.position, Color.White);
+        foreach(Band band in resistor.bands)
+            _spriteBatch.Draw(band.texture, band.position, band.color);
+        
 
         _spriteBatch.End();
         base.Draw(gameTime);
