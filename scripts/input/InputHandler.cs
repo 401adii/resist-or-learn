@@ -7,22 +7,19 @@ namespace resist_or_learn;
 
 public static class InputHandler
 {
-    private static bool isPressed = false;
+    private static int keysPressed = 0;
     public static string GetSingleInput()
     {
         string str = "";
+        if(Keyboard.GetState().GetPressedKeyCount() < keysPressed)
+            keysPressed--;
 
-        if(Keyboard.GetState().GetPressedKeyCount() == 0){
-            isPressed = false;
-        }
-
-        foreach(Keys key in Keyboard.GetState().GetPressedKeys()){
-            if(Keyboard.GetState().GetPressedKeyCount() > 0 && !isPressed){
+        if(Keyboard.GetState().GetPressedKeyCount() > keysPressed){
+            foreach(Keys key in Keyboard.GetState().GetPressedKeys()){
                 str = ((char)key).ToString();
-                isPressed = true;
+                keysPressed++;
             }
         }
-
         return str;
     }
 }

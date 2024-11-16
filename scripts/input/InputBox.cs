@@ -11,14 +11,27 @@ public class InputBox : Sprite
     public string value;
     private bool onlyNumeric;
     private bool focus;
+    
     public InputBox(Texture2D texture, Vector2 position, bool onlyNumeric = false): base(texture, position){
         value = "";
         this.onlyNumeric = onlyNumeric;
-        focus = true;
+        focus = false;
+    }
+
+    public void ChangeFocus()
+    {
+        focus = !focus;
     }
 
     public void HandleInput()
-    {            
-        string str = InputHandler.GetSingleInput();
+    {
+        value += InputHandler.GetSingleInput();
+    }
+
+    public void Update()
+    {
+        if(focus){
+            HandleInput();
+        }
     }
 }

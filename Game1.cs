@@ -21,6 +21,8 @@ public class Game1 : Game
     };
     private const string RESISTOR_BAND_DEFAULT = "/band";
     private const string RESISTOR_BASE_DEFAULT = "/base";
+    private const string GUI_DEFAULT = "gui";
+    private const string BUTTON_BLUE = "/button_blue";
     //TEXUTRES
     Texture2D threeBandBaseTexture;
     Texture2D fourBandBaseTexture;
@@ -28,6 +30,7 @@ public class Game1 : Game
     List<Texture2D> threeBandTexture = [];
     List<Texture2D> fourBandTexture = [];
     List<Texture2D> fiveBandTexture = [];
+    Texture2D buttonTexture;
     Resistor resistor;
     InputBox inputbox;
 
@@ -57,17 +60,18 @@ public class Game1 : Game
         LoadResistorBandTextures(threeBandTexture, ResistorType.three_band); // DO NOT DELETE!!!monogame input box
         LoadResistorBandTextures(fourBandTexture, ResistorType.four_band); // DO NOT DELETE!!!
         LoadResistorBandTextures(fiveBandTexture, ResistorType.five_band); // DO NOT DELETE!!!
+        buttonTexture = Content.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
         //////////////////////////////////////////////////////////////////////////////////////
         
         resistor = CreateResistor(ResistorType.four_band);
-        inputbox = new InputBox(null, Vector2.Zero);
+        inputbox = new InputBox(buttonTexture, new Vector2(200, 200));
     }
 
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
-        inputbox.HandleInput();
+        inputbox.Update();
         Debug.WriteLine(inputbox.value);
         base.Update(gameTime);
     }
@@ -84,7 +88,7 @@ public class Game1 : Game
         foreach(Band band in resistor.bands)
             _spriteBatch.Draw(band.texture, band.position, band.color);
         
-
+        _spriteBatch.Draw(inputbox.texture, inputbox.position, Color.White);
         _spriteBatch.End();
         base.Draw(gameTime);
     }
