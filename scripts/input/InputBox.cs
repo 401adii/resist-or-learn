@@ -15,7 +15,7 @@ public class InputBox : Sprite
     public InputBox(Texture2D texture, Vector2 position, bool onlyNumeric = false): base(texture, position){
         value = "";
         this.onlyNumeric = onlyNumeric;
-        focus = false;
+        focus = true;
     }
 
     public void ChangeFocus()
@@ -25,7 +25,9 @@ public class InputBox : Sprite
 
     public void HandleInput()
     {
-        value += InputHandler.GetSingleInput();
+        char ch = InputHandler.GetSingleInput();
+        if(ch != '\0')
+            value += ch;
     }
 
     public void Update()

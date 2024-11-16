@@ -23,6 +23,8 @@ public class Game1 : Game
     private const string RESISTOR_BASE_DEFAULT = "/base";
     private const string GUI_DEFAULT = "gui";
     private const string BUTTON_BLUE = "/button_blue";
+    //FONT
+    SpriteFont font;
     //TEXUTRES
     Texture2D threeBandBaseTexture;
     Texture2D fourBandBaseTexture;
@@ -55,6 +57,8 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+        //Loading font
+        font = Content.Load<SpriteFont>("font");
         //Loading textures
         LoadResistorBaseTextures(); // DO NOT DELETE!!!
         LoadResistorBandTextures(threeBandTexture, ResistorType.three_band); // DO NOT DELETE!!!monogame input box
@@ -89,6 +93,7 @@ public class Game1 : Game
             _spriteBatch.Draw(band.texture, band.position, band.color);
         
         _spriteBatch.Draw(inputbox.texture, inputbox.position, Color.White);
+        _spriteBatch.DrawString(font, inputbox.value, Vector2.Zero, Color.White);
         _spriteBatch.End();
         base.Draw(gameTime);
     }

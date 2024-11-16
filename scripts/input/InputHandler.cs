@@ -1,25 +1,29 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework.Input;
 
 namespace resist_or_learn;
 
 public static class InputHandler
-{
-    private static int keysPressed = 0;
-    public static string GetSingleInput()
-    {
-        string str = "";
-        if(Keyboard.GetState().GetPressedKeyCount() < keysPressed)
-            keysPressed--;
+{  
 
-        if(Keyboard.GetState().GetPressedKeyCount() > keysPressed){
-            foreach(Keys key in Keyboard.GetState().GetPressedKeys()){
-                str = ((char)key).ToString();
-                keysPressed++;
+    static KeyboardState prevState = new();
+    static KeyboardState currState;
+    
+    public static char GetSingleInput()
+    {
+        char ch = '\0';
+        foreach(Keys key in Keyboard.GetState().GetPressedKeys()){
+            if(key >= Keys.D0 && key <= Keys.Z && prevState != Keyboard.GetState()){
+                if(Keyboard.GetState().IsKeyDown(Keys.LeftShift))
+                    ch = (char)key;
+                else
+                    ch = char.ToLower((char)key);
             }
         }
-        return str;
+        prevState = Keyboard.GetState();
+        return ch;
     }
 }

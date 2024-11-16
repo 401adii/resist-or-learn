@@ -85,6 +85,13 @@
 /processorParam:TextureFormat=Color
 /build:five_band/base.png
 
+#begin font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:font.spritefont
+
 #begin four_band/band1.png
 /importer:TextureImporter
 /processor:TextureProcessor
