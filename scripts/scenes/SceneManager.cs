@@ -5,7 +5,7 @@ namespace resist_or_learn;
 
 public static class SceneManager
 {
-    private static Stack<IScene> sceneStack;
+    private static Stack<IScene> sceneStack = new();
 
     public static void AddScene(IScene scene)
     {
