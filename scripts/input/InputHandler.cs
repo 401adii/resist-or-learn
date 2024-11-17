@@ -10,7 +10,6 @@ public static class InputHandler
 {  
 
     static KeyboardState prevState = new();
-    static KeyboardState currState;
     
     public static char GetSingleInput()
     {

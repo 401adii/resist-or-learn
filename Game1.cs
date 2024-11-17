@@ -57,16 +57,12 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        //Loading font
         font = Content.Load<SpriteFont>("font");
-        //Loading textures
         LoadResistorBaseTextures(); // DO NOT DELETE!!!
-        LoadResistorBandTextures(threeBandTexture, ResistorType.three_band); // DO NOT DELETE!!!monogame input box
+        LoadResistorBandTextures(threeBandTexture, ResistorType.three_band); // DO NOT DELETE!!!
         LoadResistorBandTextures(fourBandTexture, ResistorType.four_band); // DO NOT DELETE!!!
         LoadResistorBandTextures(fiveBandTexture, ResistorType.five_band); // DO NOT DELETE!!!
-        buttonTexture = Content.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
-        //////////////////////////////////////////////////////////////////////////////////////
-        
+        buttonTexture = Content.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);  
         resistor = CreateResistor(ResistorType.four_band);
         inputbox = new InputBox(buttonTexture, new Vector2(200, 200));
     }
