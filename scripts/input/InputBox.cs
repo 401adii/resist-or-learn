@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -6,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace resist_or_learn;
 
-public class InputBox : Sprite
+public class InputBox : Button
 {
     public string value;
     private bool onlyNumeric;
@@ -18,11 +19,6 @@ public class InputBox : Sprite
         focus = true;
     }
 
-    public void ChangeFocus()
-    {
-        focus = !focus;
-    }
-
     public void HandleInput()
     {
         char ch = InputHandler.GetSingleInput();
@@ -30,10 +26,11 @@ public class InputBox : Sprite
             value += ch;
     }
 
-    public void Update()
+    public override void UpdateState()
     {
-        if(focus){
-            HandleInput();
+        if(isPressed){
+            focus = !focus;
+            Debug.WriteLine(focus);
         }
     }
 }

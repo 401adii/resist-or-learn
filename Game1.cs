@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -14,7 +9,7 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-
+    public static SpriteFont font;
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -34,7 +29,9 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        SceneManager.AddScene(new LevelGuessScene(Content));
+        font = Content.Load<SpriteFont>("font");
+        //SceneManager.AddScene(new LevelGuessScene(Content));
+        SceneManager.AddScene(new TestScene(Content));
 
     }
 

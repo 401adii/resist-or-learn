@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
@@ -21,17 +20,17 @@ public class LevelGuessScene : IScene
     private const string GUI_DEFAULT = "gui";
     private const string BUTTON_BLUE = "/button_blue";
     //FONT
-    SpriteFont font;
+
     //TEXUTRES
-    Texture2D threeBandBaseTexture;
-    Texture2D fourBandBaseTexture;
-    Texture2D fiveBandBaseTexture;
-    List<Texture2D> threeBandTexture = [];
-    List<Texture2D> fourBandTexture = [];
-    List<Texture2D> fiveBandTexture = [];
-    Texture2D buttonTexture;
-    Resistor resistor;
-    InputBox inputbox;
+    private Texture2D threeBandBaseTexture;
+    private Texture2D fourBandBaseTexture;
+    private Texture2D fiveBandBaseTexture;
+    private List<Texture2D> threeBandTexture = [];
+    private List<Texture2D> fourBandTexture = [];
+    private List<Texture2D> fiveBandTexture = [];
+    private Texture2D buttonTexture;
+    private Resistor resistor;
+    private InputBox inputbox;
     public LevelGuessScene(ContentManager contentManager)
     {
         this.contentManager = contentManager;
@@ -39,7 +38,7 @@ public class LevelGuessScene : IScene
 
     public void Load()
     {
-        font = contentManager.Load<SpriteFont>("font");
+        
         LoadResistorBaseTextures(); // DO NOT DELETE!!!
         LoadResistorBandTextures(threeBandTexture, ResistorType.three_band); // DO NOT DELETE!!!
         LoadResistorBandTextures(fourBandTexture, ResistorType.four_band); // DO NOT DELETE!!!
@@ -62,7 +61,7 @@ public class LevelGuessScene : IScene
         foreach(Band band in resistor.bands)
             spriteBatch.Draw(band.texture, band.position, band.color);
         spriteBatch.Draw(inputbox.texture, inputbox.position, Color.White);
-        spriteBatch.DrawString(font, inputbox.value, Vector2.Zero, Color.White);
+        spriteBatch.DrawString(Game1.font, inputbox.value, Vector2.Zero, Color.White);
     }
 
     private void LoadResistorBaseTextures()
