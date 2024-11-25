@@ -1,4 +1,5 @@
 using System;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -10,18 +11,16 @@ namespace resist_or_learn;
 
 public class InputBox : Button
 {
-    public string text;
-    public readonly Vector2 textPosition;
+    public new string text;
     public readonly int charLimit;
     private bool onlyNumeric;
     public bool focus;
     
     public InputBox(Texture2D texture, Vector2 position, bool onlyNumeric = false, int charLimit = 15): base(texture, position){
-        text = "";
         this.onlyNumeric = onlyNumeric;
         this.charLimit = charLimit;
         focus = false;
-        textPosition = new(position.X + 8,position.Y + 12);
+        text = "";
     }
 
     public void HandleInput()

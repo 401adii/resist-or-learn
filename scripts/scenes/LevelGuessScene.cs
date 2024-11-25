@@ -20,6 +20,7 @@ public class LevelGuessScene : IScene
     private const string RESISTOR_BASE_DEFAULT = "/base";
     private const string GUI_DEFAULT = "gui";
     private const string BUTTON_BLUE = "/button_blue";
+    private const string BUTTON_GREEN = "/button_green";
     private const string BUTTON_BLUE_FOCUS = "/button_blue_focus";
     //TEXUTRES
     private Texture2D threeBandBaseTexture;
@@ -30,9 +31,11 @@ public class LevelGuessScene : IScene
     private List<Texture2D> fiveBandTexture = [];
     private Texture2D buttonTexture;
     private Texture2D buttonTextureFocus;
+    private Texture2D buttonTextureGreen;
     private Resistor resistor;
     private InputBox resistanceInput;
     private InputBox toleranceInput;
+    private Button submitButton;
     public LevelGuessScene(ContentManager contentManager)
     {
         this.contentManager = contentManager;
@@ -47,9 +50,11 @@ public class LevelGuessScene : IScene
         LoadResistorBandTextures(fiveBandTexture, ResistorType.five_band); // DO NOT DELETE!!!
         buttonTexture = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
         buttonTextureFocus = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE_FOCUS);
+        buttonTextureGreen = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_GREEN);
         resistor = CreateResistor(ResistorType.four_band);
         resistanceInput = new InputBox(buttonTexture, new Vector2(800, 150));
         toleranceInput = new InputBox(buttonTexture, new Vector2(800, 260));
+        submitButton = new Button(buttonTextureGreen, new Vector2(800, 330), "          SUBMIT");
     }
 
     public void Update(GameTime gameTime)
@@ -59,6 +64,10 @@ public class LevelGuessScene : IScene
         resistanceInput.HandleInput();
         toleranceInput.Update();
         toleranceInput.HandleInput();
+        submitButton.Update();
+        if(submitButton.isPressed){
+            HandleSubmit();
+        }
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -72,6 +81,8 @@ public class LevelGuessScene : IScene
         spriteBatch.DrawString(Game1.font, "Tolerance: ", new Vector2(800, 230), Color.White);
         spriteBatch.Draw(toleranceInput.texture, toleranceInput.position, Color.White);
         spriteBatch.DrawString(Game1.font, toleranceInput.text, toleranceInput.textPosition, Color.White);
+        spriteBatch.Draw(submitButton.texture, submitButton.position, Color.White);
+        spriteBatch.DrawString(Game1.font, submitButton.text, submitButton.textPosition, Color.White);
     }
 
     private void LoadResistorBaseTextures()
@@ -138,5 +149,10 @@ public class LevelGuessScene : IScene
         else{
             toleranceInput.texture = buttonTexture;
         }
+    }
+    public void HandleSubmit()
+    {
+        resistanceInput.text = "";
+        toleranceInput.text = "";
     }
 }

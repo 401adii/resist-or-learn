@@ -9,12 +9,16 @@ namespace resist_or_learn;
 
 public class Button : Sprite
 {
+    public readonly string text;
+    public readonly Vector2 textPosition;    
     private Rectangle rectangle;
     public bool isPressed;
-    public Button(Texture2D texture, Vector2 position) : base(texture, position)
+    public Button(Texture2D texture, Vector2 position, string text = "") : base(texture, position)
     {
         rectangle = new((int)position.X, (int)position.Y, texture.Width, texture.Height);
         isPressed = false;
+        this.text = text;
+        textPosition = new(position.X + 8,position.Y + 12);
     }
 
     public virtual void UpdateState() {}
