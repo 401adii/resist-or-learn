@@ -10,7 +10,7 @@ namespace resist_or_learn;
 public class Button : Sprite
 {
     private Rectangle rectangle;
-    protected bool isPressed;
+    public bool isPressed;
     public Button(Texture2D texture, Vector2 position) : base(texture, position)
     {
         rectangle = new((int)position.X, (int)position.Y, texture.Width, texture.Height);

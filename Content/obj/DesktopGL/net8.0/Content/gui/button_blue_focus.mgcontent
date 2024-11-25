@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/four_band/band4.png</SourceFile>
-  <SourceTime>2024-11-15T19:00:52.8502131+01:00</SourceTime>
-  <DestFile>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/bin/DesktopGL/four_band/band4.xnb</DestFile>
-  <DestTime>2024-11-25T17:59:41.6055428+01:00</DestTime>
+  <SourceFile>c:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/gui/button_blue_focus.png</SourceFile>
+  <SourceTime>2024-11-25T17:58:51.6952066+01:00</SourceTime>
+  <DestFile>c:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/bin/DesktopGL/Content/gui/button_blue_focus.xnb</DestFile>
+  <DestTime>2024-11-25T18:11:14.1947813+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2024-08-16T19:05:56+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

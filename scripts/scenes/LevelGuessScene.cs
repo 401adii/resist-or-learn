@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace resist_or_learn;
 
@@ -19,6 +20,7 @@ public class LevelGuessScene : IScene
     private const string RESISTOR_BASE_DEFAULT = "/base";
     private const string GUI_DEFAULT = "gui";
     private const string BUTTON_BLUE = "/button_blue";
+    private const string BUTTON_BLUE_FOCUS = "/button_blue_focus";
     //TEXUTRES
     private Texture2D threeBandBaseTexture;
     private Texture2D fourBandBaseTexture;
@@ -27,6 +29,7 @@ public class LevelGuessScene : IScene
     private List<Texture2D> fourBandTexture = [];
     private List<Texture2D> fiveBandTexture = [];
     private Texture2D buttonTexture;
+    private Texture2D buttonTextureFocus;
     private Resistor resistor;
     private InputBox resistanceInput;
     private InputBox toleranceInput;
@@ -43,6 +46,7 @@ public class LevelGuessScene : IScene
         LoadResistorBandTextures(fourBandTexture, ResistorType.four_band); // DO NOT DELETE!!!
         LoadResistorBandTextures(fiveBandTexture, ResistorType.five_band); // DO NOT DELETE!!!
         buttonTexture = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
+        buttonTextureFocus = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE_FOCUS);
         resistor = CreateResistor(ResistorType.four_band);
         resistanceInput = new InputBox(buttonTexture, new Vector2(800, 150));
         toleranceInput = new InputBox(buttonTexture, new Vector2(800, 260));
@@ -50,6 +54,7 @@ public class LevelGuessScene : IScene
 
     public void Update(GameTime gameTime)
     {
+        FocusControl();
         resistanceInput.Update();
         resistanceInput.HandleInput();
         toleranceInput.Update();
@@ -111,5 +116,27 @@ public class LevelGuessScene : IScene
         }
 
         return r;
+    }
+
+    public void FocusControl()
+    {   
+        if(resistanceInput.isPressed && toleranceInput.focus)
+            toleranceInput.focus = false;
+        
+        if(toleranceInput.isPressed && resistanceInput.focus)
+            resistanceInput.focus = false;
+        
+        if(resistanceInput.focus){
+            resistanceInput.texture = buttonTextureFocus;
+        }
+        else{
+            resistanceInput.texture = buttonTexture;
+        }
+        if(toleranceInput.focus){
+            toleranceInput.texture = buttonTextureFocus;
+        }
+        else{
+            toleranceInput.texture = buttonTexture;
+        }
     }
 }

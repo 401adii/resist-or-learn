@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -13,7 +14,7 @@ public class InputBox : Button
     public readonly Vector2 textPosition;
     public readonly int charLimit;
     private bool onlyNumeric;
-    private bool focus;
+    public bool focus;
     
     public InputBox(Texture2D texture, Vector2 position, bool onlyNumeric = false, int charLimit = 15): base(texture, position){
         text = "";
