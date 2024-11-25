@@ -19,8 +19,6 @@ public class LevelGuessScene : IScene
     private const string RESISTOR_BASE_DEFAULT = "/base";
     private const string GUI_DEFAULT = "gui";
     private const string BUTTON_BLUE = "/button_blue";
-    //FONT
-
     //TEXUTRES
     private Texture2D threeBandBaseTexture;
     private Texture2D fourBandBaseTexture;
@@ -30,7 +28,8 @@ public class LevelGuessScene : IScene
     private List<Texture2D> fiveBandTexture = [];
     private Texture2D buttonTexture;
     private Resistor resistor;
-    private InputBox inputbox;
+    private InputBox resistanceInput;
+    private InputBox toleranceInput;
     public LevelGuessScene(ContentManager contentManager)
     {
         this.contentManager = contentManager;
@@ -43,16 +42,18 @@ public class LevelGuessScene : IScene
         LoadResistorBandTextures(threeBandTexture, ResistorType.three_band); // DO NOT DELETE!!!
         LoadResistorBandTextures(fourBandTexture, ResistorType.four_band); // DO NOT DELETE!!!
         LoadResistorBandTextures(fiveBandTexture, ResistorType.five_band); // DO NOT DELETE!!!
-        buttonTexture = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);  
+        buttonTexture = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
         resistor = CreateResistor(ResistorType.four_band);
-        inputbox = new InputBox(buttonTexture, new Vector2(200, 200));
+        resistanceInput = new InputBox(buttonTexture, new Vector2(800, 150));
+        toleranceInput = new InputBox(buttonTexture, new Vector2(800, 260));
     }
 
     public void Update(GameTime gameTime)
     {
-        inputbox.Update();
-        Debug.WriteLine(inputbox.value);
-        
+        resistanceInput.Update();
+        resistanceInput.HandleInput();
+        toleranceInput.Update();
+        toleranceInput.HandleInput();
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -60,8 +61,12 @@ public class LevelGuessScene : IScene
         spriteBatch.Draw(resistor.texture, resistor.position, Color.White);
         foreach(Band band in resistor.bands)
             spriteBatch.Draw(band.texture, band.position, band.color);
-        spriteBatch.Draw(inputbox.texture, inputbox.position, Color.White);
-        spriteBatch.DrawString(Game1.font, inputbox.value, Vector2.Zero, Color.White);
+        spriteBatch.DrawString(Game1.font, "Resistance: ", new Vector2(800, 120), Color.White);
+        spriteBatch.Draw(resistanceInput.texture, resistanceInput.position, Color.White);
+        spriteBatch.DrawString(Game1.font, resistanceInput.text, resistanceInput.textPosition, Color.White);
+        spriteBatch.DrawString(Game1.font, "Tolerance: ", new Vector2(800, 230), Color.White);
+        spriteBatch.Draw(toleranceInput.texture, toleranceInput.position, Color.White);
+        spriteBatch.DrawString(Game1.font, toleranceInput.text, toleranceInput.textPosition, Color.White);
     }
 
     private void LoadResistorBaseTextures()

@@ -10,6 +10,7 @@ public class TestScene : IScene
     private Texture2D buttonTexture;
     private Button button;
     private InputBox inputBox;
+    public static SpriteFont font;
     public TestScene(ContentManager contentManager)
     {
         this.contentManager = contentManager;
@@ -19,6 +20,7 @@ public class TestScene : IScene
     {
         spriteBatch.Draw(button.texture, button.position, Color.White);
         spriteBatch.Draw(inputBox.texture, inputBox.position, Color.White);
+        spriteBatch.DrawString(font, inputBox.text, inputBox.textPosition, Color.White);
     }
 
     public void Load()
@@ -26,11 +28,13 @@ public class TestScene : IScene
         buttonTexture = contentManager.Load<Texture2D>("gui/button_blue");
         button = new Button(buttonTexture, new Vector2(100, 100));
         inputBox = new InputBox(buttonTexture, new Vector2(200, 300));
+        font = contentManager.Load<SpriteFont>("font");
     }
 
     public void Update(GameTime gameTime)
     {
         button.Update();
         inputBox.Update();
+        inputBox.HandleInput();
     }
 }

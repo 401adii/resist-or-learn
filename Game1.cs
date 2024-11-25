@@ -30,8 +30,8 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         font = Content.Load<SpriteFont>("font");
-        //SceneManager.AddScene(new LevelGuessScene(Content));
-        SceneManager.AddScene(new TestScene(Content));
+        SceneManager.AddScene(new LevelGuessScene(Content));
+        //SceneManager.AddScene(new TestScene(Content));
 
     }
 
