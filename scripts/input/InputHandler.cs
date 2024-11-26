@@ -25,4 +25,43 @@ public static class InputHandler
         prevState = Keyboard.GetState();
         return ch;
     }
+
+    public static double ConvertStringToEng(string s)
+    {
+        Dictionary<char,double> suffixes = new()
+        {
+            { 'm', 0.001 },
+            { 'k', 1000 },
+            { 'M', 1000000 },
+            { 'G', 1000000000 }
+        };
+        string number = "";
+        char suffix = '\0';
+
+        foreach(char ch in s){
+            if(Char.IsDigit(ch) || ch == '.')
+                number += ch;
+            else{
+                if(suffixes.ContainsKey(ch) && suffix == '\0'){
+                    suffix = ch;
+                }
+                else{
+                    return -1;
+                }
+            }
+        }
+
+        if(number == ""){
+            return -1;
+        }
+
+        if (double.TryParse(number, out _)){
+            if(suffix == '\0')
+                return Convert.ToDouble(number);
+            else
+                return Convert.ToDouble(number) * suffixes[suffix];
+        }
+
+        return -1;
+    }
 }

@@ -152,7 +152,38 @@ public class LevelGuessScene : IScene
     }
     public void HandleSubmit()
     {
+        double inputResistance = InputHandler.ConvertStringToEng(resistanceInput.text);
+        double inputTolerance = InputHandler.ConvertStringToEng(toleranceInput.text);
         resistanceInput.text = "";
         toleranceInput.text = "";
+        Debug.WriteLine(inputResistance);
+        Debug.WriteLine(inputTolerance);
+
+        if(inputResistance == -1){
+            //to do if wrong input
+            Debug.WriteLine("resistance error");
+        }
+
+        if(inputTolerance == -1){
+            //to do if wrong input
+            Debug.WriteLine("tolerance error");
+        }
+        
+        if(inputResistance == resistor.resistance){
+            //to do if correct
+        }
+        else{
+            //to do if wrong
+        }
+
+        if(inputTolerance == resistor.tolerance){
+            //to do if correct
+        }
+        else{
+            //to do if wrong
+        }
+
+        
+
     }
 }
