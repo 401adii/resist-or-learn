@@ -25,6 +25,8 @@ public class LevelGuessScene : IScene
     private const string BUTTON_GREEN = "/button_green";
     private const string BUTTON_BLUE_FOCUS = "/button_blue_focus";
     private const string ERROR = "gui/error";
+    private const string WRONG = "gui/wrong";
+    private const string CORRECT = "gui/correct";
     //TEXUTRES
     private Texture2D threeBandBaseTexture;
     private Texture2D fourBandBaseTexture;
@@ -36,12 +38,18 @@ public class LevelGuessScene : IScene
     private Texture2D buttonTextureFocus;
     private Texture2D buttonTextureGreen;
     private Texture2D errorTexture;
+    private Texture2D correctTexture;
+    private Texture2D wrongTexture;
     private Resistor resistor;
     private InputBox resistanceInput;
     private InputBox toleranceInput;
     private Button submitButton;
-    private Error resistanceError;
-    private Error toleranceError;
+    private Sprite resistanceError;
+    private Sprite toleranceError;
+    private Sprite resistanceWrong;
+    private Sprite toleranceWrong;
+    private Sprite resistanceCorrect;
+    private Sprite toleranceCorrect;
 
     //FLAGS
     private bool resistanceInputCorrect;
@@ -67,12 +75,18 @@ public class LevelGuessScene : IScene
         buttonTextureFocus = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE_FOCUS);
         buttonTextureGreen = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_GREEN);
         errorTexture = contentManager.Load<Texture2D>(ERROR);
+        wrongTexture = contentManager.Load<Texture2D>(WRONG);
+        correctTexture = contentManager.Load<Texture2D>(CORRECT);
         resistor = CreateResistor(ResistorType.four_band);
         resistanceInput = new InputBox(buttonTexture, new Vector2(800, 150));
         toleranceInput = new InputBox(buttonTexture, new Vector2(800, 260), true);
         submitButton = new Button(buttonTextureGreen, new Vector2(800, 330), "          SUBMIT");
-        resistanceError = new Error(errorTexture, new Vector2(1075, 145));
-        toleranceError = new Error(errorTexture, new Vector2(1075, 255));
+        resistanceError = new Sprite(errorTexture, new Vector2(1075, 145), false);
+        toleranceError = new Sprite(errorTexture, new Vector2(1075, 255), false);
+        resistanceWrong = new Sprite(wrongTexture, new Vector2(1075, 145), false);
+        toleranceWrong = new Sprite(wrongTexture, new Vector2(1075, 255), false);
+        resistanceCorrect = new Sprite(correctTexture, new Vector2(1075, 145), false);
+        toleranceCorrect = new Sprite(correctTexture, new Vector2(1075, 255), false);
     }
 
     public void Update(GameTime gameTime)
