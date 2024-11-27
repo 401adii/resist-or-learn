@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -22,6 +23,7 @@ public class LevelGuessScene : IScene
     private const string BUTTON_BLUE = "/button_blue";
     private const string BUTTON_GREEN = "/button_green";
     private const string BUTTON_BLUE_FOCUS = "/button_blue_focus";
+    private const string ERROR = "gui/error";
     //TEXUTRES
     private Texture2D threeBandBaseTexture;
     private Texture2D fourBandBaseTexture;
@@ -32,10 +34,12 @@ public class LevelGuessScene : IScene
     private Texture2D buttonTexture;
     private Texture2D buttonTextureFocus;
     private Texture2D buttonTextureGreen;
+    private Texture2D errorTexture;
     private Resistor resistor;
     private InputBox resistanceInput;
     private InputBox toleranceInput;
     private Button submitButton;
+    private Error error;
     public LevelGuessScene(ContentManager contentManager)
     {
         this.contentManager = contentManager;
@@ -51,10 +55,12 @@ public class LevelGuessScene : IScene
         buttonTexture = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
         buttonTextureFocus = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE_FOCUS);
         buttonTextureGreen = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_GREEN);
+        errorTexture = contentManager.Load<Texture2D>(ERROR);
         resistor = CreateResistor(ResistorType.four_band);
         resistanceInput = new InputBox(buttonTexture, new Vector2(800, 150));
         toleranceInput = new InputBox(buttonTexture, new Vector2(800, 260));
         submitButton = new Button(buttonTextureGreen, new Vector2(800, 330), "          SUBMIT");
+        error = new Error(errorTexture, new Vector2(100, 100));
     }
 
     public void Update(GameTime gameTime)
@@ -83,6 +89,8 @@ public class LevelGuessScene : IScene
         spriteBatch.DrawString(Game1.font, toleranceInput.text, toleranceInput.textPosition, Color.White);
         spriteBatch.Draw(submitButton.texture, submitButton.position, Color.White);
         spriteBatch.DrawString(Game1.font, submitButton.text, submitButton.textPosition, Color.White);
+        if(error.isVisible == true)
+            spriteBatch.Draw(error.texture, error.position, Color.White);
     }
 
     private void LoadResistorBaseTextures()
@@ -152,12 +160,11 @@ public class LevelGuessScene : IScene
     }
     public void HandleSubmit()
     {
+
         double inputResistance = InputHandler.ConvertStringToEng(resistanceInput.text);
         double inputTolerance = InputHandler.ConvertStringToEng(toleranceInput.text);
         resistanceInput.text = "";
         toleranceInput.text = "";
-        Debug.WriteLine(inputResistance);
-        Debug.WriteLine(inputTolerance);
 
         if(inputResistance == -1){
             //to do if wrong input
@@ -168,9 +175,15 @@ public class LevelGuessScene : IScene
             //to do if wrong input
             Debug.WriteLine("tolerance error");
         }
+
+        if(inputTolerance == -1 || inputResistance == -1)
+            return;
         
+        Debug.WriteLine(inputResistance);
+        Debug.WriteLine(inputTolerance);
+
         if(inputResistance == resistor.resistance){
-            //to do if correct
+
         }
         else{
             //to do if wrong
@@ -182,8 +195,5 @@ public class LevelGuessScene : IScene
         else{
             //to do if wrong
         }
-
-        
-
     }
 }
