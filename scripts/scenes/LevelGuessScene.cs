@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -39,10 +40,20 @@ public class LevelGuessScene : IScene
     private InputBox resistanceInput;
     private InputBox toleranceInput;
     private Button submitButton;
-    private Error error;
+    private Error resistanceError;
+    private Error toleranceError;
+
+    //FLAGS
+    private bool resistanceInputCorrect;
+    private bool toleranceInputCorrect;
+    private bool isSubmitted;
+    
     public LevelGuessScene(ContentManager contentManager)
     {
         this.contentManager = contentManager;
+        resistanceInputCorrect = false;
+        toleranceInputCorrect = false;
+        isSubmitted = false;
     }
 
     public void Load()
@@ -58,9 +69,10 @@ public class LevelGuessScene : IScene
         errorTexture = contentManager.Load<Texture2D>(ERROR);
         resistor = CreateResistor(ResistorType.four_band);
         resistanceInput = new InputBox(buttonTexture, new Vector2(800, 150));
-        toleranceInput = new InputBox(buttonTexture, new Vector2(800, 260));
+        toleranceInput = new InputBox(buttonTexture, new Vector2(800, 260), true);
         submitButton = new Button(buttonTextureGreen, new Vector2(800, 330), "          SUBMIT");
-        error = new Error(errorTexture, new Vector2(100, 100));
+        resistanceError = new Error(errorTexture, new Vector2(1075, 145));
+        toleranceError = new Error(errorTexture, new Vector2(1075, 255));
     }
 
     public void Update(GameTime gameTime)
@@ -89,8 +101,10 @@ public class LevelGuessScene : IScene
         spriteBatch.DrawString(Game1.font, toleranceInput.text, toleranceInput.textPosition, Color.White);
         spriteBatch.Draw(submitButton.texture, submitButton.position, Color.White);
         spriteBatch.DrawString(Game1.font, submitButton.text, submitButton.textPosition, Color.White);
-        if(error.isVisible == true)
-            spriteBatch.Draw(error.texture, error.position, Color.White);
+        if(resistanceError.isVisible == true)
+            spriteBatch.Draw(resistanceError.texture, resistanceError.position, Color.White);
+        if(toleranceError.isVisible == true)
+            spriteBatch.Draw(toleranceError.texture, toleranceError.position, Color.White);
     }
 
     private void LoadResistorBaseTextures()
@@ -160,36 +174,52 @@ public class LevelGuessScene : IScene
     }
     public void HandleSubmit()
     {
+        if(isSubmitted)
+            return;
 
-        double inputResistance = InputHandler.ConvertStringToEng(resistanceInput.text);
-        double inputTolerance = InputHandler.ConvertStringToEng(toleranceInput.text);
+        double inputResistanceValue = InputHandler.ConvertStringToEng(resistanceInput.text);
+        double inputToleranceValue = InputHandler.ConvertStringToEng(toleranceInput.text);
         resistanceInput.text = "";
         toleranceInput.text = "";
 
-        if(inputResistance == -1){
+        if(inputResistanceValue == -1 && !resistanceInputCorrect){
             //to do if wrong input
             Debug.WriteLine("resistance error");
-        }
-
-        if(inputTolerance == -1){
-            //to do if wrong input
-            Debug.WriteLine("tolerance error");
-        }
-
-        if(inputTolerance == -1 || inputResistance == -1)
-            return;
-        
-        Debug.WriteLine(inputResistance);
-        Debug.WriteLine(inputTolerance);
-
-        if(inputResistance == resistor.resistance){
-
+            resistanceError.isVisible = true;
+            resistanceInputCorrect = false;
         }
         else{
-            //to do if wrong
+            resistanceInputCorrect = true;
+            resistanceError.isVisible = false;
+            resistanceInput.enabled = false;
         }
 
-        if(inputTolerance == resistor.tolerance){
+        if(inputToleranceValue == -1 && !toleranceInputCorrect ){
+            //to do if wrong input
+            Debug.WriteLine("tolerance error");
+            toleranceError.isVisible = true;
+            toleranceInputCorrect = false;
+        }
+        else{
+            toleranceInputCorrect = true;
+            toleranceError.isVisible = false;
+            toleranceInput.enabled = false;
+        }
+
+        if(!resistanceInputCorrect || !toleranceInputCorrect)
+            return;
+        isSubmitted = true;
+        Debug.WriteLine(inputResistanceValue);
+        Debug.WriteLine(inputToleranceValue);
+        
+        if(inputResistanceValue == resistor.resistance){
+            Console.WriteLine("resistance correct");
+        }
+        else{
+            Console.WriteLine("resistance wrong");
+        }
+
+        if(inputToleranceValue == resistor.tolerance){
             //to do if correct
         }
         else{

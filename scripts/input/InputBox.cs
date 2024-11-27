@@ -15,18 +15,22 @@ public class InputBox : Button
     public readonly int charLimit;
     private bool onlyNumeric;
     public bool focus;
+    public bool enabled;
     
-    public InputBox(Texture2D texture, Vector2 position, bool onlyNumeric = false, int charLimit = 15): base(texture, position){
+    public InputBox(Texture2D texture, Vector2 position, bool onlyNumeric = false, bool enabled = true, int charLimit = 15): base(texture, position){
         this.onlyNumeric = onlyNumeric;
         this.charLimit = charLimit;
+        this.enabled = enabled;
         focus = false;
         text = "";
     }
 
     public void HandleInput()
     {
-        if(focus){
+        if(focus && enabled){
             char ch = InputHandler.GetSingleInput();
+            if(onlyNumeric && Char.IsLetter(ch))
+                return;
             if(ch != '\0' && ch != 8 && text.Length < charLimit)
                 text += ch;
             if(ch == 8 && text.Length != 0)
