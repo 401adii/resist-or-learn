@@ -55,6 +55,7 @@ public class LevelGuessScene : IScene
     private bool resistanceInputCorrect;
     private bool toleranceInputCorrect;
     private bool isSubmitted;
+    private bool isCorrect;
     
     public LevelGuessScene(ContentManager contentManager)
     {
@@ -62,6 +63,7 @@ public class LevelGuessScene : IScene
         resistanceInputCorrect = false;
         toleranceInputCorrect = false;
         isSubmitted = false;
+        isCorrect = true;
     }
 
     public void Load()
@@ -119,6 +121,14 @@ public class LevelGuessScene : IScene
             spriteBatch.Draw(resistanceError.texture, resistanceError.position, Color.White);
         if(toleranceError.isVisible == true)
             spriteBatch.Draw(toleranceError.texture, toleranceError.position, Color.White);
+        if(resistanceCorrect.isVisible == true)
+            spriteBatch.Draw(resistanceCorrect.texture, resistanceCorrect.position, Color.White);
+        if(toleranceCorrect.isVisible == true)
+            spriteBatch.Draw(toleranceCorrect.texture, toleranceCorrect.position, Color.White);
+        if(resistanceWrong.isVisible == true)
+            spriteBatch.Draw(resistanceWrong.texture, resistanceWrong.position, Color.White);
+        if(toleranceWrong.isVisible == true)
+            spriteBatch.Draw(toleranceWrong.texture, toleranceWrong.position, Color.White);
     }
 
     private void LoadResistorBaseTextures()
@@ -223,21 +233,20 @@ public class LevelGuessScene : IScene
         if(!resistanceInputCorrect || !toleranceInputCorrect)
             return;
         isSubmitted = true;
-        Debug.WriteLine(inputResistanceValue);
-        Debug.WriteLine(inputToleranceValue);
+        Debug.WriteLine("Input resistance: " + inputResistanceValue);
+        Debug.WriteLine("Input tolerance: " + inputToleranceValue);
         
-        if(inputResistanceValue == resistor.resistance){
-            Console.WriteLine("resistance correct");
-        }
-        else{
-            Console.WriteLine("resistance wrong");
-        }
+        if(inputResistanceValue == resistor.resistance)
+            resistanceCorrect.isVisible = true;
+        else
+            resistanceWrong.isVisible = true;
 
-        if(inputToleranceValue == resistor.tolerance){
-            //to do if correct
-        }
-        else{
-            //to do if wrong
-        }
+        if(inputToleranceValue == resistor.tolerance)
+            toleranceCorrect.isVisible = true;
+        else
+            toleranceWrong.isVisible = true;
+
+        if(resistanceCorrect.isVisible && toleranceCorrect.isVisible)
+            isCorrect = true;
     }
 }
