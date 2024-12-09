@@ -15,7 +15,7 @@ public class LevelGuessScene : IScene
 
 
     //CONSTS AND ENUMS
-    enum ResistorType{
+    public enum ResistorType{
         three_band = 3,
         four_band = 4,
         five_band = 5,
@@ -29,15 +29,16 @@ public class LevelGuessScene : IScene
     private const string ERROR = "gui/error";
     private const string WRONG = "gui/wrong";
     private const string CORRECT = "gui/correct";
-    
+    private readonly Dictionary<ResistorType, Vector2> RESISTOR_POSITIONS = new()
+    {
+        {ResistorType.three_band, new Vector2(100, 120)},
+        {ResistorType.four_band, new Vector2(100, 112)},
+        {ResistorType.five_band, new Vector2(100, 100)},
+    };
     
     //TEXUTRES
-    private Texture2D threeBandBaseTexture;
-    private Texture2D fourBandBaseTexture;
-    private Texture2D fiveBandBaseTexture;
-    private List<Texture2D> threeBandTexture = [];
-    private List<Texture2D> fourBandTexture = [];
-    private List<Texture2D> fiveBandTexture = [];
+    private Texture2D baseTexture;
+    private List<Texture2D> bandTextures = [];
     private Texture2D buttonTexture;
     private Texture2D buttonTextureFocus;
     private Texture2D buttonTextureGreen;
@@ -57,24 +58,40 @@ public class LevelGuessScene : IScene
     private Sprite resistanceCorrect;
     private Sprite toleranceCorrect;
 
-    //FLAGS
+    //FLAGS AND PUBLIC VARIABLES
     private bool isSubmitted;
-    private bool isCorrect;
+    public  bool isCorrect;
+    public ResistorType resistorType;
     
     public LevelGuessScene(ContentManager contentManager)
     {
         this.contentManager = contentManager;
         isSubmitted = false;
         isCorrect = false;
+        resistorType = ResistorType.four_band;
     }
 
     public void Load()
     {
-        //texture loading
-        LoadResistorBaseTextures();
-        LoadResistorBandTextures(threeBandTexture, ResistorType.three_band); 
-        LoadResistorBandTextures(fourBandTexture, ResistorType.four_band); 
-        LoadResistorBandTextures(fiveBandTexture, ResistorType.five_band); 
+        //loading and creating a resistor object
+        switch(resistorType){
+        case ResistorType.three_band:
+            LoadResistorTextures(); 
+            resistor = new ThreeBandResistor(baseTexture, RESISTOR_POSITIONS[resistorType], LoadResistorBandsList(bandTextures));
+            break;
+        case ResistorType.four_band:
+            LoadResistorTextures(); 
+            resistor = new FourBandResistor(baseTexture, RESISTOR_POSITIONS[resistorType], LoadResistorBandsList(bandTextures));
+            break;
+        case ResistorType.five_band:
+            LoadResistorTextures();
+            resistor = new FiveBandResistor(baseTexture, RESISTOR_POSITIONS[resistorType], LoadResistorBandsList(bandTextures)); 
+            break;
+        default:
+            break;
+        }
+
+        //loading other textures
         buttonTexture = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
         buttonTextureFocus = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE_FOCUS);
         buttonTextureGreen = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_GREEN);
@@ -82,8 +99,7 @@ public class LevelGuessScene : IScene
         wrongTexture = contentManager.Load<Texture2D>(WRONG);
         correctTexture = contentManager.Load<Texture2D>(CORRECT);
         
-        //creating objects
-        resistor = CreateResistor(ResistorType.four_band);
+        //creating other objects
         resistanceInput = new InputBox(buttonTexture, new Vector2(800, 150));
         toleranceInput = new InputBox(buttonTexture, new Vector2(800, 260), true);
         submitButton = new Button(buttonTextureGreen, new Vector2(800, 330), "          SUBMIT");
@@ -130,19 +146,13 @@ public class LevelGuessScene : IScene
             toleranceWrong.Draw(spriteBatch);
     }
 
-    private void LoadResistorBaseTextures()
+    private void LoadResistorTextures()
     {
-        threeBandBaseTexture = contentManager.Load<Texture2D>(ResistorType.three_band.ToString() + RESISTOR_BASE_DEFAULT);
-        fourBandBaseTexture = contentManager.Load<Texture2D>(ResistorType.four_band.ToString() + RESISTOR_BASE_DEFAULT);
-        fiveBandBaseTexture = contentManager.Load<Texture2D>(ResistorType.five_band.ToString() + RESISTOR_BASE_DEFAULT);
-    }
-
-    private void LoadResistorBandTextures(List<Texture2D> l, ResistorType t)
-    {
-        for(int i = 0; i < (int)t; i++)
+        baseTexture = contentManager.Load<Texture2D>(resistorType.ToString() + RESISTOR_BASE_DEFAULT);
+        for(int i = 0; i < (int)resistorType; i++)
         {
-            Texture2D texture = contentManager.Load<Texture2D>(t.ToString() + RESISTOR_BAND_DEFAULT + (i+1).ToString());
-            l.Add(texture);
+            Texture2D texture = contentManager.Load<Texture2D>(resistorType.ToString() + RESISTOR_BAND_DEFAULT + (i+1).ToString());
+            bandTextures.Add(texture);
         }
     }
 
@@ -156,25 +166,7 @@ public class LevelGuessScene : IScene
         return resistorBandList;
     }
 
-    private Resistor CreateResistor(ResistorType t)
-    {
-        Resistor r = null;
-        switch(t){
-        case ResistorType.three_band:
-            r = new ThreeBandResistor(threeBandBaseTexture, new Vector2(100, 120), LoadResistorBandsList(threeBandTexture));
-            break;
-        case ResistorType.four_band:
-            r = new FourBandResistor(fourBandBaseTexture, new Vector2(100, 112), LoadResistorBandsList(fourBandTexture));
-            break;
-        case ResistorType.five_band:
-            r = new FiveBandResistor(fiveBandBaseTexture, new Vector2(100, 100), LoadResistorBandsList(fiveBandTexture));
-            break;
-        }
-
-        return r;
-    }
-
-    public void FocusControl()
+    private void FocusControl()
     {   
         if(resistanceInput.isPressed && toleranceInput.focus)
             toleranceInput.focus = false;
@@ -195,7 +187,7 @@ public class LevelGuessScene : IScene
             toleranceInput.texture = buttonTexture;
         }
     }
-    public void HandleSubmit()
+    private void HandleSubmit()
     {
         if(isSubmitted)
             return;
