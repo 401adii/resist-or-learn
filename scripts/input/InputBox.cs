@@ -25,6 +25,12 @@ public class InputBox : Button
         text = "";
     }
 
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        base.Draw(spriteBatch);
+        spriteBatch.DrawString(Game1.font, text, textPosition, Color.White);
+    }
+    
     public void HandleInput()
     {
         if(focus && enabled){

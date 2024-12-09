@@ -20,7 +20,11 @@ public class Button : Sprite
         this.text = text;
         textPosition = new(position.X + 8,position.Y + 12);
     }
-
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        base.Draw(spriteBatch);
+        spriteBatch.DrawString(Game1.font, text, textPosition, Color.White);
+    }
     public virtual void UpdateState() {}
     public void Update()
     {

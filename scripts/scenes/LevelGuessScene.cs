@@ -12,7 +12,9 @@ namespace resist_or_learn;
 public class LevelGuessScene : IScene
 {
     private ContentManager contentManager;
-        //CONSTS AND ENUMS
+
+
+    //CONSTS AND ENUMS
     enum ResistorType{
         three_band = 3,
         four_band = 4,
@@ -27,6 +29,8 @@ public class LevelGuessScene : IScene
     private const string ERROR = "gui/error";
     private const string WRONG = "gui/wrong";
     private const string CORRECT = "gui/correct";
+    
+    
     //TEXUTRES
     private Texture2D threeBandBaseTexture;
     private Texture2D fourBandBaseTexture;
@@ -40,6 +44,8 @@ public class LevelGuessScene : IScene
     private Texture2D errorTexture;
     private Texture2D correctTexture;
     private Texture2D wrongTexture;
+    
+    //OBJECTS
     private Resistor resistor;
     private InputBox resistanceInput;
     private InputBox toleranceInput;
@@ -52,33 +58,31 @@ public class LevelGuessScene : IScene
     private Sprite toleranceCorrect;
 
     //FLAGS
-    private bool resistanceInputCorrect;
-    private bool toleranceInputCorrect;
     private bool isSubmitted;
     private bool isCorrect;
     
     public LevelGuessScene(ContentManager contentManager)
     {
         this.contentManager = contentManager;
-        resistanceInputCorrect = false;
-        toleranceInputCorrect = false;
         isSubmitted = false;
-        isCorrect = true;
+        isCorrect = false;
     }
 
     public void Load()
     {
-        
-        LoadResistorBaseTextures(); // DO NOT DELETE!!!
-        LoadResistorBandTextures(threeBandTexture, ResistorType.three_band); // DO NOT DELETE!!!
-        LoadResistorBandTextures(fourBandTexture, ResistorType.four_band); // DO NOT DELETE!!!
-        LoadResistorBandTextures(fiveBandTexture, ResistorType.five_band); // DO NOT DELETE!!!
+        //texture loading
+        LoadResistorBaseTextures();
+        LoadResistorBandTextures(threeBandTexture, ResistorType.three_band); 
+        LoadResistorBandTextures(fourBandTexture, ResistorType.four_band); 
+        LoadResistorBandTextures(fiveBandTexture, ResistorType.five_band); 
         buttonTexture = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
         buttonTextureFocus = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE_FOCUS);
         buttonTextureGreen = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_GREEN);
         errorTexture = contentManager.Load<Texture2D>(ERROR);
         wrongTexture = contentManager.Load<Texture2D>(WRONG);
         correctTexture = contentManager.Load<Texture2D>(CORRECT);
+        
+        //creating objects
         resistor = CreateResistor(ResistorType.four_band);
         resistanceInput = new InputBox(buttonTexture, new Vector2(800, 150));
         toleranceInput = new InputBox(buttonTexture, new Vector2(800, 260), true);
@@ -106,29 +110,24 @@ public class LevelGuessScene : IScene
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(resistor.texture, resistor.position, Color.White);
-        foreach(Band band in resistor.bands)
-            spriteBatch.Draw(band.texture, band.position, band.color);
+        resistor.Draw(spriteBatch);
         spriteBatch.DrawString(Game1.font, "Resistance: ", new Vector2(800, 120), Color.White);
-        spriteBatch.Draw(resistanceInput.texture, resistanceInput.position, Color.White);
-        spriteBatch.DrawString(Game1.font, resistanceInput.text, resistanceInput.textPosition, Color.White);
+        resistanceInput.Draw(spriteBatch);
+        toleranceInput.Draw(spriteBatch);
         spriteBatch.DrawString(Game1.font, "Tolerance: ", new Vector2(800, 230), Color.White);
-        spriteBatch.Draw(toleranceInput.texture, toleranceInput.position, Color.White);
-        spriteBatch.DrawString(Game1.font, toleranceInput.text, toleranceInput.textPosition, Color.White);
-        spriteBatch.Draw(submitButton.texture, submitButton.position, Color.White);
-        spriteBatch.DrawString(Game1.font, submitButton.text, submitButton.textPosition, Color.White);
+        submitButton.Draw(spriteBatch);
         if(resistanceError.isVisible == true)
-            spriteBatch.Draw(resistanceError.texture, resistanceError.position, Color.White);
+            resistanceError.Draw(spriteBatch);
         if(toleranceError.isVisible == true)
-            spriteBatch.Draw(toleranceError.texture, toleranceError.position, Color.White);
+            toleranceError.Draw(spriteBatch);
         if(resistanceCorrect.isVisible == true)
-            spriteBatch.Draw(resistanceCorrect.texture, resistanceCorrect.position, Color.White);
+            resistanceCorrect.Draw(spriteBatch);
         if(toleranceCorrect.isVisible == true)
-            spriteBatch.Draw(toleranceCorrect.texture, toleranceCorrect.position, Color.White);
+            toleranceCorrect.Draw(spriteBatch);
         if(resistanceWrong.isVisible == true)
-            spriteBatch.Draw(resistanceWrong.texture, resistanceWrong.position, Color.White);
+            resistanceWrong.Draw(spriteBatch);
         if(toleranceWrong.isVisible == true)
-            spriteBatch.Draw(toleranceWrong.texture, toleranceWrong.position, Color.White);
+            toleranceWrong.Draw(spriteBatch);
     }
 
     private void LoadResistorBaseTextures()
@@ -203,35 +202,28 @@ public class LevelGuessScene : IScene
 
         double inputResistanceValue = InputHandler.ConvertStringToEng(resistanceInput.text);
         double inputToleranceValue = InputHandler.ConvertStringToEng(toleranceInput.text);
-        resistanceInput.text = "";
-        toleranceInput.text = "";
 
-        if(inputResistanceValue == -1 && !resistanceInputCorrect){
-            //to do if wrong input
+        if(inputResistanceValue == -1){
             Debug.WriteLine("resistance error");
             resistanceError.isVisible = true;
-            resistanceInputCorrect = false;
         }
         else{
-            resistanceInputCorrect = true;
             resistanceError.isVisible = false;
             resistanceInput.enabled = false;
         }
 
-        if(inputToleranceValue == -1 && !toleranceInputCorrect ){
-            //to do if wrong input
+        if(inputToleranceValue == -1){
             Debug.WriteLine("tolerance error");
             toleranceError.isVisible = true;
-            toleranceInputCorrect = false;
         }
         else{
-            toleranceInputCorrect = true;
             toleranceError.isVisible = false;
             toleranceInput.enabled = false;
         }
 
-        if(!resistanceInputCorrect || !toleranceInputCorrect)
+        if(toleranceError.isVisible || resistanceError.isVisible)
             return;
+        
         isSubmitted = true;
         Debug.WriteLine("Input resistance: " + inputResistanceValue);
         Debug.WriteLine("Input tolerance: " + inputToleranceValue);

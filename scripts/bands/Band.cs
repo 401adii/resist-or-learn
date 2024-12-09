@@ -19,6 +19,7 @@ public class Band : Sprite
     };
     public float value;
     public Color color;
+    
     public Band(Texture2D texture, Vector2 position) : base(texture, position)
     {
         List<Color> keys = ValueMap.Keys.ToList();
@@ -27,4 +28,10 @@ public class Band : Sprite
         value = ValueMap[color];
         Debug.WriteLine(value);
     }
+
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        spriteBatch.Draw(texture, position, color);
+    }
+
 }

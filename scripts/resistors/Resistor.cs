@@ -23,6 +23,13 @@ public class Resistor : Sprite
         Debug.WriteLine("Tolerance " + tolerance.ToString());
     }
 
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        base.Draw(spriteBatch);
+        foreach(Band band in bands)
+            band.Draw(spriteBatch);
+    }
+
     protected virtual void changeBandTypes()
     {
 
@@ -37,4 +44,5 @@ public class Resistor : Sprite
     {
         return 0.00f;
     }
+    
 }
