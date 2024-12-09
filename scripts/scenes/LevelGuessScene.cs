@@ -15,11 +15,7 @@ public class LevelGuessScene : IScene
 
 
     //CONSTS AND ENUMS
-    public enum ResistorType{
-        three_band = 3,
-        four_band = 4,
-        five_band = 5,
-    };
+
     private const string RESISTOR_BAND_DEFAULT = "/band";
     private const string RESISTOR_BASE_DEFAULT = "/base";
     private const string GUI_DEFAULT = "gui";
@@ -29,11 +25,11 @@ public class LevelGuessScene : IScene
     private const string ERROR = "gui/error";
     private const string WRONG = "gui/wrong";
     private const string CORRECT = "gui/correct";
-    private readonly Dictionary<ResistorType, Vector2> RESISTOR_POSITIONS = new()
+    private readonly Dictionary<Game1.ResistorType, Vector2> RESISTOR_POSITIONS = new()
     {
-        {ResistorType.three_band, new Vector2(100, 120)},
-        {ResistorType.four_band, new Vector2(100, 112)},
-        {ResistorType.five_band, new Vector2(100, 100)},
+        {Game1.ResistorType.three_band, new Vector2(100, 120)},
+        {Game1.ResistorType.four_band, new Vector2(100, 112)},
+        {Game1.ResistorType.five_band, new Vector2(100, 100)},
     };
     
     //TEXUTRES
@@ -61,29 +57,29 @@ public class LevelGuessScene : IScene
     //FLAGS AND PUBLIC VARIABLES
     private bool isSubmitted;
     public  bool isCorrect;
-    public ResistorType resistorType;
+    public Game1.ResistorType resistorType;
     
     public LevelGuessScene(ContentManager contentManager)
     {
         this.contentManager = contentManager;
         isSubmitted = false;
         isCorrect = false;
-        resistorType = ResistorType.four_band;
+        resistorType = Game1.ResistorType.four_band;
     }
 
     public void Load()
     {
         //loading and creating a resistor object
         switch(resistorType){
-        case ResistorType.three_band:
+        case Game1.ResistorType.three_band:
             LoadResistorTextures(); 
             resistor = new ThreeBandResistor(baseTexture, RESISTOR_POSITIONS[resistorType], LoadResistorBandsList(bandTextures));
             break;
-        case ResistorType.four_band:
+        case Game1.ResistorType.four_band:
             LoadResistorTextures(); 
             resistor = new FourBandResistor(baseTexture, RESISTOR_POSITIONS[resistorType], LoadResistorBandsList(bandTextures));
             break;
-        case ResistorType.five_band:
+        case Game1.ResistorType.five_band:
             LoadResistorTextures();
             resistor = new FiveBandResistor(baseTexture, RESISTOR_POSITIONS[resistorType], LoadResistorBandsList(bandTextures)); 
             break;

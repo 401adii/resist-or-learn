@@ -11,6 +11,13 @@ public class Sprite
     public Texture2D texture;
     public Vector2 position;
     public bool isVisible;
+    public Rectangle Rect
+    {
+        get
+        {
+            return new Rectangle((int) position.X, (int)position.Y, texture.Width, texture.Height);
+        }
+    }
 
     public Sprite(Texture2D texture, Vector2 position)
     {

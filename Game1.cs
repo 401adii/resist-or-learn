@@ -8,7 +8,11 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-
+    public enum ResistorType{
+        three_band = 3,
+        four_band = 4,
+        five_band = 5,
+    };
     public static SpriteFont font;
     public Game1()
     {
@@ -30,7 +34,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         font = Content.Load<SpriteFont>("font");
-        SceneManager.AddScene(new LevelGuessScene(Content));
+        SceneManager.AddScene(new LevelPlatformScene(Content));
         //SceneManager.AddScene(new TestScene(Content));
 
     }

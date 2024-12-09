@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,31 +13,50 @@ public class LevelPlatformScene : IScene
     //CONSTS AND ENUMS
     private const string PLATFORM_DEFAULT = "platform/";
     private const string PLAYER = "player";
-
-
-
-    //TEXTURES
-    Texture2D playerTexture;
-
+    private const string PICK_UP = "resistor_pickup";
     
-    //OBJECTS
-    Player player;
+    private Texture2D texture;
+    private List<Sprite> sprites;
+
+    private Player player;
+    private List<PickUp> pickUps;
+
+
     public LevelPlatformScene(ContentManager contentManager){
         this.contentManager = contentManager;
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        player.Draw(spriteBatch);
+        foreach(Sprite sprite in sprites)
+            sprite.Draw(spriteBatch);
     }
 
     public void Load()
     {
-        playerTexture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PLAYER);
-        player = new Player(playerTexture, new Vector2(100, 100));
+        sprites = new();
+        texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PLAYER);
+        player = new Player(texture, new Vector2(100, 100));
+        sprites.Add(player);
+
+
+        texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PICK_UP);
+        pickUps = [new PickUp(texture, new Vector2(200, 100), Game1.ResistorType.four_band)];
+        foreach(PickUp pickUp in pickUps){
+            sprites.Add(pickUp);
+        }
     }
 
     public void Update(GameTime gameTime)
     {
+        foreach(Sprite sprite in sprites)
+            sprite.Update(gameTime);
+        foreach(PickUp pickUp in pickUps)
+        {
+            if(player.Rect.Intersects(pickUp.Rect))
+            {
+                sprites.Remove(pickUp);
+            }
+        }
     }
 }
