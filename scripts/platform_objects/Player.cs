@@ -14,16 +14,16 @@ public class Player : Sprite
 
     public override void Update(GameTime gameTime)
     {
-        if(Keyboard.GetState().IsKeyDown(Keys.Right)){
+        if(Keyboard.GetState().IsKeyDown(Keys.D)){
             position.X += 2;
         }
-        if(Keyboard.GetState().IsKeyDown(Keys.Left)){
+        if(Keyboard.GetState().IsKeyDown(Keys.A)){
             position.X -= 2;
         }
-        if(Keyboard.GetState().IsKeyDown(Keys.Up)){
+        if(Keyboard.GetState().IsKeyDown(Keys.W)){
             position.Y -= 2;
         }
-        if(Keyboard.GetState().IsKeyDown(Keys.Down)){
+        if(Keyboard.GetState().IsKeyDown(Keys.S)){
             position.Y += 2;
         }
     }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("resist-or-learn")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5f4b0649412516f13597b0b4e6d7f3990e9df71f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae15c8c866c38c7746a207b6510326e698942097")]
 [assembly: System.Reflection.AssemblyProductAttribute("resist-or-learn")]
 [assembly: System.Reflection.AssemblyTitleAttribute("resist-or-learn")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

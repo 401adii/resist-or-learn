@@ -34,7 +34,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         font = Content.Load<SpriteFont>("font");
-        SceneManager.AddScene(new LevelPlatformScene(Content));
+        SceneManager.AddScene(new Level1(Content));
         //SceneManager.AddScene(new TestScene(Content));
 
     }

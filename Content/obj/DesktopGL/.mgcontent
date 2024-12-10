@@ -24,12 +24,14 @@
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/gui/wrong.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/player.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/resistor_pickup.png</File>
+    <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/tileset.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/three_band/band1.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/three_band/band2.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/three_band/band3.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/three_band/base.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
