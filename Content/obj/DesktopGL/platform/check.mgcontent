@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/player.png</SourceFile>
-  <SourceTime>2024-12-10T15:33:41.8103244+01:00</SourceTime>
-  <DestFile>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/bin/DesktopGL/platform/player.xnb</DestFile>
-  <DestTime>2024-12-10T15:33:48.3603948+01:00</DestTime>
+  <SourceFile>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/check.png</SourceFile>
+  <SourceTime>2024-12-10T16:15:19.3288275+01:00</SourceTime>
+  <DestFile>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/bin/DesktopGL/platform/check.xnb</DestFile>
+  <DestTime>2024-12-10T16:15:26.5388256+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2024-08-16T19:05:56+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

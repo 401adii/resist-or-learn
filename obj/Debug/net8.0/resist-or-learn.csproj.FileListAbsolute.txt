@@ -49,3 +49,4 @@ c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Co
 c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\platform\player.xnb
 c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\platform\resistor_pickup.xnb
 c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\platform\tileset.xnb
+c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\platform\check.xnb

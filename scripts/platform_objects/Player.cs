@@ -7,24 +7,26 @@ namespace resist_or_learn;
 
 public class Player : Sprite
 {
+    public Vector2 velocity;
     public Player(Texture2D texture, Vector2 position) : base(texture, position)
     {
-        
+        velocity = new();
     }
 
     public override void Update(GameTime gameTime)
     {
+        velocity = Vector2.Zero;
         if(Keyboard.GetState().IsKeyDown(Keys.D)){
-            position.X += 2;
+            velocity.X += 2;
         }
         if(Keyboard.GetState().IsKeyDown(Keys.A)){
-            position.X -= 2;
+            velocity.X -= 2;
         }
         if(Keyboard.GetState().IsKeyDown(Keys.W)){
-            position.Y -= 2;
+            velocity.Y -= 2;
         }
         if(Keyboard.GetState().IsKeyDown(Keys.S)){
-            position.Y += 2;
+            velocity.Y += 2;
         }
     }
 

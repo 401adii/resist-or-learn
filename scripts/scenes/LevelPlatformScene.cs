@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,10 +14,10 @@ public class LevelPlatformScene : IScene
     private ContentManager contentManager;
     
     //CONSTS AND ENUMS
-    protected const int ts = 64; //tilesize
+    protected const int TS = 64; //tilesize
     protected const string PLATFORM_DEFAULT = "platform/";
     protected const string CONTENT_DEFAULT = "../../../Content/";
-    private const string PLAYER = "player";
+    private const string PLAYER = "check";
     private const string PICK_UP = "resistor_pickup";
     private const string TILEMAP = "tilemap0.csv";
     private const string TILESET = "tileset";
@@ -24,10 +25,12 @@ public class LevelPlatformScene : IScene
     private Texture2D textureAtlas;
     protected List<Sprite> sprites;
 
-    protected Dictionary<Vector2, int> tilemap;
+    private Dictionary<Vector2, int> tilemap;
     private Player player;
+    protected Vector2 playerPos;
     protected List<PickUp> pickUps;
-    protected List<Rectangle> textureStore;
+    private List<Rectangle> textureStore;
+    private List<Rectangle> intersectingTiles;
     
 
 
@@ -36,10 +39,11 @@ public class LevelPlatformScene : IScene
         tilemap = new();
         LoadMap(CONTENT_DEFAULT + PLATFORM_DEFAULT + TILEMAP);
         textureStore = new(){
-            new Rectangle(0, 0, ts, ts),
-            new Rectangle(ts, 0, ts, ts),
-            new Rectangle(ts*2, 0, ts, ts)
+            new Rectangle(0, 0, TS, TS),
+            new Rectangle(TS, 0, TS, TS),
+            new Rectangle(TS*2, 0, TS, TS)
         };
+        playerPos = new Vector2(0, 0);
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -49,12 +53,12 @@ public class LevelPlatformScene : IScene
 
         foreach(var item in tilemap){
             Rectangle dest = new(
-                (int)item.Key.X*ts,
-                (int)item.Key.Y*ts,
-                ts,
-                ts
+                (int)item.Key.X*TS,
+                (int)item.Key.Y*TS,
+                TS,
+                TS
             );
-            Rectangle src = textureStore[item.Value - 1];
+            Rectangle src = textureStore[item.Value];
             spriteBatch.Draw(textureAtlas, dest, src, Color.White);
         }
     }
@@ -71,7 +75,7 @@ public class LevelPlatformScene : IScene
             for(int x = 0; x < items.Length; x++)
             {
                 if(int.TryParse(items[x], out int value)){
-                    if(value > 0)
+                    if(value > -1)
                         tilemap[new Vector2(x, y)] = value;
                 }
             }
@@ -89,15 +93,14 @@ public class LevelPlatformScene : IScene
 
     public virtual void Load()
     {
-        textureAtlas = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + TILESET);
         sprites = new();
         texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PLAYER);
-        player = new Player(texture, new Vector2(100, 100));
+        player = new Player(texture, playerPos);
         sprites.Add(player);
 
+        textureAtlas = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + TILESET);
         texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PICK_UP);
         LoadPickups();
-
     }
 
     public void Update(GameTime gameTime)
@@ -111,5 +114,84 @@ public class LevelPlatformScene : IScene
                 sprites.Remove(pickUp);
             }
         }
+
+        player.position.X += (int)player.velocity.X;
+        intersectingTiles = GetIntersectingTilesHorizontal(player.Rect);
+        foreach(Rectangle rect in intersectingTiles){
+            if(tilemap.TryGetValue(new Vector2(rect.X, rect.Y), out int _val)) {
+                Rectangle collision = new(
+                    rect.X * TS,
+                    rect.Y * TS,
+                    TS,
+                    TS
+                );
+
+                if (player.velocity.X > 0.0f){
+                    player.position.X = collision.Left - player.Rect.Width;
+                } else if (player.velocity.X < 0.0f){
+                    player.position.X = collision.Right;
+                }
+            }
+        }
+
+        player.position.Y += (int)player.velocity.Y;
+        intersectingTiles = GetIntersectingTilesVertical(player.Rect);
+
+        foreach(Rectangle rect in intersectingTiles){
+            if(tilemap.TryGetValue(new Vector2(rect.X, rect.Y), out int _val)) {
+                Rectangle collision = new(
+                    rect.X * TS,
+                    rect.Y * TS,
+                    TS,
+                    TS
+                );
+
+                if (player.velocity.Y > 0.0f){
+                    player.position.Y = collision.Top - player.Rect.Height;
+                } else if (player.velocity.Y < 0.0f){
+                    player.position.Y = collision.Bottom;
+                }
+            }
+        }
+    }
+
+    public List<Rectangle> GetIntersectingTilesHorizontal(Rectangle r){
+
+        List<Rectangle> intersections = new();
+
+        int widthInTiles = (r.Width - (r.Width % TS)) / TS;
+        int heightInTiles = (r.Height - (r.Height % TS)) / TS;
+
+        for(int x = 0; x <= widthInTiles; x++){
+            for(int y = 0; y <= heightInTiles; y++){
+                intersections.Add(new Rectangle(
+                    (r.X + x*TS) / TS,
+                    (r.Y + y*(TS - 1)) / TS,
+                    TS,
+                    TS
+                ));
+            }
+        }
+        return intersections;
+    }
+    public List<Rectangle> GetIntersectingTilesVertical(Rectangle r){
+
+        List<Rectangle> intersections = new();
+
+        int widthInTiles = (r.Width - (r.Width % TS)) / TS;
+        int heightInTiles = (r.Height - (r.Height % TS)) / TS;
+
+        for(int x = 0; x <= widthInTiles; x++){
+            for(int y = 0; y <= heightInTiles; y++){
+                intersections.Add(new Rectangle(
+                    (r.X + x*(TS - 1)) / TS,
+                    (r.Y + y*TS) / TS,
+                    TS,
+                    TS
+                ));
+            }
+        }
+
+        return intersections;
     }
 }
