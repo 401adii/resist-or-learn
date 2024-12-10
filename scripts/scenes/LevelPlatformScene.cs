@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace resist_or_learn;
 
@@ -31,6 +32,7 @@ public class LevelPlatformScene : IScene
     protected List<PickUp> pickUps;
     private List<Rectangle> textureStore;
     private List<Rectangle> intersectingTiles;
+    private KeyboardState prevState;
     
 
 
@@ -86,9 +88,8 @@ public class LevelPlatformScene : IScene
     protected virtual void LoadPickups()
     {
         pickUps = [new PickUp(texture, new Vector2(200, 100), Game1.ResistorType.four_band)];
-        foreach(PickUp pickUp in pickUps){
+        foreach(PickUp pickUp in pickUps)
             sprites.Add(pickUp);
-        }
     }
 
     public virtual void Load()
@@ -105,10 +106,11 @@ public class LevelPlatformScene : IScene
 
     public void Update(GameTime gameTime)
     {
-        foreach(Sprite sprite in sprites)
-            sprite.Update(gameTime);
+        player.Update(Keyboard.GetState(), prevState, gameTime);
+        prevState = Keyboard.GetState();
         foreach(PickUp pickUp in pickUps)
         {
+            pickUp.Update(gameTime);
             if(player.Rect.Intersects(pickUp.Rect))
             {
                 sprites.Remove(pickUp);
@@ -126,6 +128,10 @@ public class LevelPlatformScene : IScene
                     TS
                 );
 
+                if(!player.Rect.Intersects(collision)){
+                    continue;
+                }
+
                 if (player.velocity.X > 0.0f){
                     player.position.X = collision.Left - player.Rect.Width;
                 } else if (player.velocity.X < 0.0f){
@@ -136,7 +142,7 @@ public class LevelPlatformScene : IScene
 
         player.position.Y += (int)player.velocity.Y;
         intersectingTiles = GetIntersectingTilesVertical(player.Rect);
-
+        player.grounded = false;
         foreach(Rectangle rect in intersectingTiles){
             if(tilemap.TryGetValue(new Vector2(rect.X, rect.Y), out int _val)) {
                 Rectangle collision = new(
@@ -146,12 +152,23 @@ public class LevelPlatformScene : IScene
                     TS
                 );
 
+                if(!player.Rect.Intersects(collision)){
+                    continue;
+                }
+
                 if (player.velocity.Y > 0.0f){
                     player.position.Y = collision.Top - player.Rect.Height;
+                    player.velocity.Y = 1.0f;
+                    player.jumpCount = 2;
+                    player.grounded = true;
                 } else if (player.velocity.Y < 0.0f){
                     player.position.Y = collision.Bottom;
                 }
             }
+        }
+
+        if(!player.grounded && player.jumpCount == 2){
+            player.jumpCount--;
         }
     }
 
