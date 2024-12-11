@@ -70,20 +70,22 @@ public static class InputHandler
         return -1;
     }
 
-    public static void GetMouseOneShot(bool onPress)
+    public static bool GetMouseOneShot(bool onPress)
     {
         MouseState state;
+        bool output = false;
         state = Mouse.GetState();
         if(onPress){
             if(state.LeftButton == ButtonState.Pressed && state.LeftButton != prevMouseState.LeftButton){
-                Debug.WriteLine("pressed");
+                output = true;
             }
         }
         else{
             if(state.LeftButton == ButtonState.Released && state.LeftButton != prevMouseState.LeftButton){
-                Debug.WriteLine("pressed");
+                output = true;
             }
         }
         prevMouseState = Mouse.GetState();
+        return output;
     }
 }

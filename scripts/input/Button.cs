@@ -31,16 +31,13 @@ public class Button : Sprite
     {
         Rectangle cursor = new(Mouse.GetState().Position.X, Mouse.GetState().Position.Y, 1, 1);
         if(cursor.Intersects(rectangle)){
-            if(Mouse.GetState().LeftButton == ButtonState.Pressed){
+            if(InputHandler.GetMouseOneShot(false)){
                 isPressed = true;
-            }
-            if(Mouse.GetState().LeftButton == ButtonState.Released && isPressed){
                 UpdateState();
+            }
+            else{
                 isPressed = false;
             }
-        }
-        else{
-            isPressed = false;
         }
     }
 }

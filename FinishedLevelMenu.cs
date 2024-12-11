@@ -36,6 +36,7 @@ public class FinishedLevelMenu : IScene
     public void Update(GameTime gameTime)
     {
         mainMenu.Update();
-        InputHandler.GetMouseOneShot(false);
+        if(mainMenu.isPressed)
+            Debug.WriteLine("test");
     }
 }
