@@ -50,9 +50,6 @@ public class LevelPlatformScene : IScene
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        foreach(Sprite sprite in sprites)
-            sprite.Draw(spriteBatch);
-
         foreach(var item in tilemap){
             Rectangle dest = new(
                 (int)item.Key.X*TS,
@@ -63,6 +60,8 @@ public class LevelPlatformScene : IScene
             Rectangle src = textureStore[item.Value];
             spriteBatch.Draw(textureAtlas, dest, src, Color.White);
         }
+        foreach(Sprite sprite in sprites)
+            sprite.Draw(spriteBatch);
     }
 
     protected void LoadMap(string path)
