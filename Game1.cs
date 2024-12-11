@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,14 +16,20 @@ public class Game1 : Game
         four_band = 4,
         five_band = 5,
     };
-    private enum GameState{
+    public enum GameState{
         platform,
         guess,
+        load_next,
+        level_select,
+        main_menu,
+        finish
     }
     private GameState state;
     private SceneManager sceneManager;
     public static SpriteFont font;
     public LevelPlatformScene currentLevel;
+    public List<LevelPlatformScene> levels;
+    public int currentLevelIndex;
     public LevelGuessScene guessScene;
     public Game1()
     {
@@ -45,7 +52,13 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         font = Content.Load<SpriteFont>("font");
-        currentLevel = new Level1(Content);
+        currentLevelIndex = 0;
+        levels = [
+                    new Level1(Content)
+                    // new Level2(Content),
+                    // new Level3(Content),
+        ];
+        currentLevel = levels[currentLevelIndex];
         state = GameState.platform;
         sceneManager.AddScene(currentLevel);
     }
@@ -54,6 +67,8 @@ public class Game1 : Game
     {
 
         switch(state){
+        
+        
         case GameState.platform:
             if(currentLevel.resistorPickedUp){
                 currentLevel.resistorPickedUp = false;
@@ -62,9 +77,14 @@ public class Game1 : Game
                 state = GameState.guess;
             }
             if(currentLevel.levelFinished){
-                //TO DO: WHAT HAPPENS WHEN FINISHED LEVEL
+                if(currentLevelIndex == levels.IndexOf(currentLevel))
+                    currentLevelIndex++;
+                if(currentLevel.finishedLevelMenu.newState != 0)
+                    state = currentLevel.finishedLevelMenu.newState;
             }
             break;
+        
+        
         case GameState.guess:
             if(guessScene.isSubmitted){
                 if(guessScene.isCorrect)
@@ -76,6 +96,25 @@ public class Game1 : Game
                 state = GameState.platform;
             }   
             break;
+        
+        
+        case GameState.load_next:
+            if(currentLevelIndex == levels.Count){
+                state = GameState.finish;
+                break;
+            }   
+            sceneManager.RemoveScene();
+            currentLevel = new LevelPlatformScene(Content);
+            currentLevel = levels[currentLevelIndex];
+            sceneManager.AddScene(currentLevel);
+            state = GameState.platform;
+            break;
+        
+        
+        case GameState.finish:
+            sceneManager.RemoveScene();
+            break;
+        
         default: break;
         }
         sceneManager.GetCurrentScene().Update(gameTime);
@@ -90,6 +129,5 @@ public class Game1 : Game
         _spriteBatch.End();
         base.Draw(gameTime);
     }
-
 
 }

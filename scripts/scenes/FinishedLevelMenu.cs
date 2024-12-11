@@ -21,10 +21,13 @@ public class FinishedLevelMenu : IScene
     public Button continueBtn;
     public Button mainMenuBtn;
     public Button selectLevelBtn;
+    public Game1.GameState newState;
 
     public FinishedLevelMenu(ContentManager contentManager)
     {
-        this.contentManager = contentManager;    
+        this.contentManager = contentManager;
+        newState = 0;
+
     }
     public void Draw(SpriteBatch spriteBatch)
     {
@@ -49,15 +52,15 @@ public class FinishedLevelMenu : IScene
         selectLevelBtn.Update();
         continueBtn.Update();
         if(mainMenuBtn.isPressed){
-            //TO DO: on mainMenuBtn press
+            newState = Game1.GameState.main_menu;
         }
         
         if(selectLevelBtn.isPressed){
-            //TO DO: on selectLevelBtn press
+            newState = Game1.GameState.level_select;
         }
 
         if(continueBtn.isPressed){
-            //TO DO: on continueBtn press
+            newState = Game1.GameState.load_next;
         }
     }
 }

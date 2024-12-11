@@ -36,7 +36,7 @@ public class LevelPlatformScene : IScene
     private List<Rectangle> textureStore;
     private List<Rectangle> intersectingTiles;
     private KeyboardState prevState;
-    private FinishedLevelMenu finishedLevelMenu;
+    public FinishedLevelMenu finishedLevelMenu;
 
     //FLAGS
     public bool resistorPickedUp;
@@ -74,7 +74,7 @@ public class LevelPlatformScene : IScene
         foreach(Sprite sprite in sprites)
             sprite.Draw(spriteBatch);
         
-        if(true)
+        if(levelFinished)
             sceneManager.GetCurrentScene().Draw(spriteBatch);
     }
 
@@ -121,8 +121,8 @@ public class LevelPlatformScene : IScene
 
     public void Update(GameTime gameTime)
     {
-            finishedLevelMenu.Update(gameTime);
         if(levelFinished){
+            finishedLevelMenu.Update(gameTime);
             return;
         }
         
