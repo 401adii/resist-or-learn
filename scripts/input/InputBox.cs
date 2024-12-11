@@ -2,6 +2,7 @@ using System;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -44,10 +45,17 @@ public class InputBox : Button
         }
     }
 
-    public override void UpdateState()
+    public new void Update()
     {
-        if(isPressed){
-            focus = !focus;
+        Rectangle cursor = new(Mouse.GetState().Position.X, Mouse.GetState().Position.Y, 1, 1);
+        if(cursor.Intersects(rectangle)){
+            if(InputHandler.GetMouseOneShot(true)){
+                focus = !focus;
+            }
+            if(Mouse.GetState().LeftButton == ButtonState.Pressed)
+                isPressed = true;
+            else
+                isPressed = false;
         }
     }
 }

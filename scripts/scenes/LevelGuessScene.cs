@@ -22,6 +22,8 @@ public class LevelGuessScene : IScene
     private const string BUTTON_BLUE = "/button_blue";
     private const string BUTTON_GREEN = "/button_green";
     private const string BUTTON_BLUE_FOCUS = "/button_blue_focus";
+    private const string HOVER = "_hover";
+    private const string PRESSED = "_pressed";
     private const string ERROR = "gui/error";
     private const string WRONG = "gui/wrong";
     private const string CORRECT = "gui/correct";
@@ -38,6 +40,8 @@ public class LevelGuessScene : IScene
     private Texture2D buttonTexture;
     private Texture2D buttonTextureFocus;
     private Texture2D buttonTextureGreen;
+    private Texture2D buttonTextureGreenHover;
+    private Texture2D buttonTextureGreenPressed;
     private Texture2D errorTexture;
     private Texture2D correctTexture;
     private Texture2D wrongTexture;
@@ -91,6 +95,8 @@ public class LevelGuessScene : IScene
         buttonTexture = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
         buttonTextureFocus = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE_FOCUS);
         buttonTextureGreen = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_GREEN);
+        buttonTextureGreenHover = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_GREEN + HOVER);
+        buttonTextureGreenPressed = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_GREEN + PRESSED);
         errorTexture = contentManager.Load<Texture2D>(ERROR);
         wrongTexture = contentManager.Load<Texture2D>(WRONG);
         correctTexture = contentManager.Load<Texture2D>(CORRECT);
@@ -98,7 +104,7 @@ public class LevelGuessScene : IScene
         //creating other objects
         resistanceInput = new InputBox(buttonTexture, new Vector2(800, 150));
         toleranceInput = new InputBox(buttonTexture, new Vector2(800, 260), true);
-        submitButton = new Button(buttonTextureGreen, new Vector2(800, 330), "          SUBMIT");
+        submitButton = new Button(buttonTextureGreen, new Vector2(800, 330), "          SUBMIT", buttonTextureGreenPressed, buttonTextureGreenHover);
         resistanceError = new Sprite(errorTexture, new Vector2(1075, 145), false);
         toleranceError = new Sprite(errorTexture, new Vector2(1075, 255), false);
         resistanceWrong = new Sprite(wrongTexture, new Vector2(1075, 145), false);
