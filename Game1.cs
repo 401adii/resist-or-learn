@@ -58,8 +58,8 @@ public class Game1 : Game
         font = Content.Load<SpriteFont>("font");
         currentLevelIndex = 0;
         levels = [
-                    new Level1(Content)
-                    // new Level2(Content),
+                    new Level1(Content),
+                    new Level2(Content),
                     // new Level3(Content),
         ];
         currentLevel = levels[currentLevelIndex];
@@ -127,7 +127,7 @@ public class Game1 : Game
             break;
         
         case GameState.finish:
-            sceneManager.RemoveScene();
+            state = GameState.main_menu;            
             break;
         
         
