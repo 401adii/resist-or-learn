@@ -2,22 +2,27 @@ using System.Collections.Generic;
 
 namespace resist_or_learn;
 
-public static class SceneManager
+public class SceneManager
 {
-    private static Stack<IScene> sceneStack = new();
+    private Stack<IScene> sceneStack;
 
-    public static void AddScene(IScene scene)
+    public SceneManager()
+    {
+        sceneStack = new();
+    }
+
+    public void AddScene(IScene scene)
     {
         scene.Load();
         sceneStack.Push(scene);
     }
 
-    public static void RemoveScene()
+    public void RemoveScene()
     {
         sceneStack.Pop();
     }
 
-    public static IScene GetCurrentScene()
+    public IScene GetCurrentScene()
     {
         return sceneStack.Peek();
     }

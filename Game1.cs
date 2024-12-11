@@ -20,6 +20,7 @@ public class Game1 : Game
         guess,
     }
     private GameState state;
+    private SceneManager sceneManager;
     public static SpriteFont font;
     public LevelPlatformScene currentLevel;
     public LevelGuessScene guessScene;
@@ -31,6 +32,7 @@ public class Game1 : Game
         _graphics.PreferredBackBufferHeight = 720;
         _graphics.PreferredBackBufferWidth = 1280;
         _graphics.ApplyChanges();
+        sceneManager = new();
     }
 
     protected override void Initialize()
@@ -45,7 +47,7 @@ public class Game1 : Game
         font = Content.Load<SpriteFont>("font");
         currentLevel = new Level1(Content);
         state = GameState.platform;
-        SceneManager.AddScene(currentLevel);
+        sceneManager.AddScene(currentLevel);
     }
 
     protected override void Update(GameTime gameTime)
@@ -56,7 +58,7 @@ public class Game1 : Game
             if(currentLevel.resistorPickedUp){
                 currentLevel.resistorPickedUp = false;
                 guessScene = new LevelGuessScene(Content, currentLevel.pickedUpType);
-                SceneManager.AddScene(guessScene);
+                sceneManager.AddScene(guessScene);
                 state = GameState.guess;
             }
             if(currentLevel.levelFinished){
@@ -70,13 +72,13 @@ public class Game1 : Game
                 else
                     Debug.WriteLine("wrong!");
 
-                SceneManager.RemoveScene();
+                sceneManager.RemoveScene();
                 state = GameState.platform;
             }   
             break;
         default: break;
         }
-        SceneManager.GetCurrentScene().Update(gameTime);
+        sceneManager.GetCurrentScene().Update(gameTime);
         base.Update(gameTime);
     }
 
@@ -84,7 +86,7 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.Gray);
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-        SceneManager.GetCurrentScene().Draw(_spriteBatch);
+        sceneManager.GetCurrentScene().Draw(_spriteBatch);
         _spriteBatch.End();
         base.Draw(gameTime);
     }
