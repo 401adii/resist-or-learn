@@ -14,6 +14,8 @@ public class Game1 : Game
         five_band = 5,
     };
     public static SpriteFont font;
+    public LevelPlatformScene currentLevel;
+    public LevelGuessScene guessScene;
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -34,15 +36,18 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         font = Content.Load<SpriteFont>("font");
-        SceneManager.AddScene(new Level1(Content));
-        //SceneManager.AddScene(new TestScene(Content));
-
+        currentLevel = new Level1(Content);
+        SceneManager.AddScene(currentLevel);
     }
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
+        if(currentLevel.resistorPickedUp){
+            currentLevel.resistorPickedUp = false;
+            guessScene = new LevelGuessScene(Content, currentLevel.pickedUpType);
+            SceneManager.AddScene(guessScene);
+        }        
+
 
         SceneManager.GetCurrentScene().Update(gameTime);
         base.Update(gameTime);

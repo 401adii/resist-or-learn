@@ -8,13 +8,13 @@ namespace resist_or_learn;
 
 public class PickUp : Sprite
 {
-    public Game1.ResistorType resistor;
+    public Game1.ResistorType type;
     private float startPosY;
     private bool animationGoUp;
     private int counter;
-    public PickUp(Texture2D texture, Vector2 position, Game1.ResistorType resistor) : base(texture, position)
+    public PickUp(Texture2D texture, Vector2 position, Game1.ResistorType type) : base(texture, position)
     {
-        this.resistor = resistor;
+        this.type = type;
         startPosY = position.Y;
         animationGoUp = true;
         counter = 0;

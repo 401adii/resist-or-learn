@@ -33,12 +33,18 @@ public class LevelPlatformScene : IScene
     private List<Rectangle> textureStore;
     private List<Rectangle> intersectingTiles;
     private KeyboardState prevState;
+
+    //FLAGS
+    public bool resistorPickedUp;
+    public Game1.ResistorType pickedUpType;
     
 
 
     public LevelPlatformScene(ContentManager contentManager){
         this.contentManager = contentManager;
         tilemap = new();
+        resistorPickedUp = false;
+        pickedUpType = Game1.ResistorType.four_band;
         LoadMap(CONTENT_DEFAULT + PLATFORM_DEFAULT + TILEMAP);
         textureStore = new(){
             new Rectangle(0, 0, TS, TS),
@@ -112,7 +118,9 @@ public class LevelPlatformScene : IScene
             pickUp.Update(gameTime);
             if(player.Rect.Intersects(pickUp.Rect))
             {
+                pickedUpType = pickUp.type;
                 sprites.Remove(pickUp);
+                resistorPickedUp = true;
             }
         }
 

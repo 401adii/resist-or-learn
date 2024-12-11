@@ -59,12 +59,12 @@ public class LevelGuessScene : IScene
     public  bool isCorrect;
     public Game1.ResistorType resistorType;
     
-    public LevelGuessScene(ContentManager contentManager)
+    public LevelGuessScene(ContentManager contentManager, Game1.ResistorType resistorType)
     {
         this.contentManager = contentManager;
         isSubmitted = false;
         isCorrect = false;
-        resistorType = Game1.ResistorType.four_band;
+        this.resistorType = resistorType;
     }
 
     public void Load()
