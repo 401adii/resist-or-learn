@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -34,6 +35,7 @@ public class FinishedLevelMenu : IScene
 
     public void Update(GameTime gameTime)
     {
-        
+        mainMenu.Update();
+        InputHandler.GetMouseOneShot(false);
     }
 }

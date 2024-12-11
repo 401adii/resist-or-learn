@@ -10,23 +10,24 @@ namespace resist_or_learn;
 public static class InputHandler
 {  
 
-    static KeyboardState prevState = new();
+    static KeyboardState prevKeyboardState = new();
+    static MouseState prevMouseState = new();
     
     public static char GetSingleInput()
     {
         char ch = '\0';
         foreach(Keys key in Keyboard.GetState().GetPressedKeys()){
-            if((key == Keys.OemPeriod || key == Keys.OemComma) && prevState != Keyboard.GetState()){
+            if((key == Keys.OemPeriod || key == Keys.OemComma) && prevKeyboardState != Keyboard.GetState()){
                 ch = '.';
             }
-            if((key >= Keys.D0 && key <= Keys.Z || key == Keys.Back) && prevState != Keyboard.GetState()){
+            if((key >= Keys.D0 && key <= Keys.Z || key == Keys.Back) && prevKeyboardState != Keyboard.GetState()){
                 if(Keyboard.GetState().IsKeyDown(Keys.LeftShift))
                     ch = (char)key;
                 else
                     ch = char.ToLower((char)key);
             }
         }
-        prevState = Keyboard.GetState();
+        prevKeyboardState = Keyboard.GetState();
         return ch;
     }
 
@@ -67,5 +68,22 @@ public static class InputHandler
         }
 
         return -1;
+    }
+
+    public static void GetMouseOneShot(bool onPress)
+    {
+        MouseState state;
+        state = Mouse.GetState();
+        if(onPress){
+            if(state.LeftButton == ButtonState.Pressed && state.LeftButton != prevMouseState.LeftButton){
+                Debug.WriteLine("pressed");
+            }
+        }
+        else{
+            if(state.LeftButton == ButtonState.Released && state.LeftButton != prevMouseState.LeftButton){
+                Debug.WriteLine("pressed");
+            }
+        }
+        prevMouseState = Mouse.GetState();
     }
 }

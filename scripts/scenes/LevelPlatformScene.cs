@@ -121,8 +121,10 @@ public class LevelPlatformScene : IScene
 
     public void Update(GameTime gameTime)
     {
-        if(levelFinished)
+            finishedLevelMenu.Update(gameTime);
+        if(levelFinished){
             return;
+        }
         
         player.Update(Keyboard.GetState(), prevState, gameTime);
         prevState = Keyboard.GetState();
