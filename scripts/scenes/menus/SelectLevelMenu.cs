@@ -21,7 +21,7 @@ public class SelectLevelMenu : MenuScene
         textureHover = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE + HOVER);
         texturePressed = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE + PRESSED);
         buttons = [
-            backBtn = new Button(textureButton, new Vector2(100, 100), "BACK", textureHover, texturePressed)
+            backBtn = new Button(textureButton, new Vector2(100, 100), "BACK TO MENU", textureHover, texturePressed)
         ];
     }
 

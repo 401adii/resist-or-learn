@@ -57,11 +57,7 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         font = Content.Load<SpriteFont>("font");
         currentLevelIndex = 0;
-        levels = [
-                    new Level1(Content),
-                    new Level2(Content),
-                    // new Level3(Content),
-        ];
+        InitializeLevels();
         currentLevel = levels[currentLevelIndex];
         state = GameState.main_menu;
         mainMenu = new MainMenu(Content);
@@ -105,6 +101,7 @@ public class Game1 : Game
         
         
         case GameState.load_next:
+            InitializeLevels();
             if(currentLevelIndex == levels.Count){
                 state = GameState.finish;
                 break;
@@ -127,7 +124,9 @@ public class Game1 : Game
             break;
         
         case GameState.finish:
-            state = GameState.main_menu;            
+            state = GameState.main_menu;      
+            currentLevelIndex = 0;      
+            InitializeLevels();
             break;
         
         
@@ -150,6 +149,15 @@ public class Game1 : Game
         base.Draw(gameTime);
     }
 
+    private void InitializeLevels()
+    {
+        levels = [
+            new Level1(Content),
+            new Level2(Content),
+            // new Level3(Content),
+        ];
+    }
+
     private void MenuBehaviour(MenuScene sc)
     {
         if(sceneManager.GetCurrentScene() != sc){
@@ -160,6 +168,6 @@ public class Game1 : Game
         if(state != sc.nextState){
             state = sc.nextState;
         }
-}
+    }
 
 }
