@@ -55,7 +55,7 @@ public class LevelGuessScene : IScene
     private Sprite toleranceCorrect;
 
     //FLAGS AND PUBLIC VARIABLES
-    private bool isSubmitted;
+    public bool isSubmitted;
     public  bool isCorrect;
     public Game1.ResistorType resistorType;
     

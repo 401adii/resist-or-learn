@@ -36,6 +36,7 @@ public class LevelPlatformScene : IScene
 
     //FLAGS
     public bool resistorPickedUp;
+    public bool levelFinished;
     public Game1.ResistorType pickedUpType;
     
 
@@ -44,6 +45,7 @@ public class LevelPlatformScene : IScene
         this.contentManager = contentManager;
         tilemap = new();
         resistorPickedUp = false;
+        levelFinished = false;
         pickedUpType = Game1.ResistorType.four_band;
         LoadMap(CONTENT_DEFAULT + PLATFORM_DEFAULT + TILEMAP);
         textureStore = new(){
@@ -113,15 +115,23 @@ public class LevelPlatformScene : IScene
     {
         player.Update(Keyboard.GetState(), prevState, gameTime);
         prevState = Keyboard.GetState();
-        foreach(PickUp pickUp in pickUps)
-        {
-            pickUp.Update(gameTime);
-            if(player.Rect.Intersects(pickUp.Rect))
+        if(pickUps.Count > 0){
+            PickUp pickUpToKill = null;
+            foreach(PickUp pickUp in pickUps)
             {
-                pickedUpType = pickUp.type;
-                sprites.Remove(pickUp);
-                resistorPickedUp = true;
+                pickUp.Update(gameTime);
+                if(player.Rect.Intersects(pickUp.Rect))
+                {
+                    pickedUpType = pickUp.type;
+                    pickUpToKill = pickUp;
+                    resistorPickedUp = true;
+                }
             }
+            sprites.Remove(pickUpToKill);
+            pickUps.Remove(pickUpToKill);
+        }
+        else{
+            levelFinished = true;
         }
 
         player.position.X += (int)player.velocity.X;

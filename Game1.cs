@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -13,6 +15,11 @@ public class Game1 : Game
         four_band = 4,
         five_band = 5,
     };
+    private enum GameState{
+        platform,
+        guessing
+    }
+    private GameState state;
     public static SpriteFont font;
     public LevelPlatformScene currentLevel;
     public LevelGuessScene guessScene;
@@ -37,18 +44,35 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         font = Content.Load<SpriteFont>("font");
         currentLevel = new Level1(Content);
+        state = GameState.platform;
         SceneManager.AddScene(currentLevel);
     }
 
     protected override void Update(GameTime gameTime)
     {
-        if(currentLevel.resistorPickedUp){
-            currentLevel.resistorPickedUp = false;
-            guessScene = new LevelGuessScene(Content, currentLevel.pickedUpType);
-            SceneManager.AddScene(guessScene);
-        }        
 
+        switch(state){
+        case GameState.platform:
+            if(currentLevel.resistorPickedUp){
+                currentLevel.resistorPickedUp = false;
+                guessScene = new LevelGuessScene(Content, currentLevel.pickedUpType);
+                SceneManager.AddScene(guessScene);
+                state = GameState.guessing;
+            }
+            break;
+        case GameState.guessing:
+            if(guessScene.isSubmitted){
+                if(guessScene.isCorrect)
+                    Debug.WriteLine("correct!");
+                else
+                    Debug.WriteLine("wrong!");
 
+                SceneManager.RemoveScene();
+                state = GameState.platform;
+            }   
+            break;
+        default: break;
+        }
         SceneManager.GetCurrentScene().Update(gameTime);
         base.Update(gameTime);
     }
