@@ -22,11 +22,15 @@ public class Game1 : Game
         load_next,
         level_select,
         main_menu,
-        finish
+        settings,
+        finish,
+        exit
     }
     private GameState state;
     private SceneManager sceneManager;
     public static SpriteFont font;
+    public MainMenu mainMenu;
+    public SelectLevelMenu selectLevelMenu;
     public LevelPlatformScene currentLevel;
     public List<LevelPlatformScene> levels;
     public int currentLevelIndex;
@@ -59,8 +63,10 @@ public class Game1 : Game
                     // new Level3(Content),
         ];
         currentLevel = levels[currentLevelIndex];
-        state = GameState.platform;
-        sceneManager.AddScene(currentLevel);
+        state = GameState.main_menu;
+        mainMenu = new MainMenu(Content);
+        selectLevelMenu = new SelectLevelMenu(Content);
+        sceneManager.AddScene(mainMenu);
     }
 
     protected override void Update(GameTime gameTime)
@@ -79,8 +85,8 @@ public class Game1 : Game
             if(currentLevel.levelFinished){
                 if(currentLevelIndex == levels.IndexOf(currentLevel))
                     currentLevelIndex++;
-                if(currentLevel.finishedLevelMenu.newState != 0)
-                    state = currentLevel.finishedLevelMenu.newState;
+                if(currentLevel.finishedLevelMenu.nextState != 0)
+                    state = currentLevel.finishedLevelMenu.nextState;
             }
             break;
         
@@ -110,9 +116,23 @@ public class Game1 : Game
             state = GameState.platform;
             break;
         
+        case GameState.main_menu:
+            MenuBehaviour(mainMenu);
+            mainMenu.nextState = GameState.main_menu;
+            break;
+
+        case GameState.level_select:
+            MenuBehaviour(selectLevelMenu);
+            selectLevelMenu.nextState = GameState.level_select;
+            break;
         
         case GameState.finish:
             sceneManager.RemoveScene();
+            break;
+        
+        
+        case GameState.exit:
+            Exit();
             break;
         
         default: break;
@@ -129,5 +149,17 @@ public class Game1 : Game
         _spriteBatch.End();
         base.Draw(gameTime);
     }
+
+    private void MenuBehaviour(MenuScene sc)
+    {
+        if(sceneManager.GetCurrentScene() != sc){
+            sceneManager.RemoveScene();
+            sceneManager.AddScene(sc);
+        }
+
+        if(state != sc.nextState){
+            state = sc.nextState;
+        }
+}
 
 }
