@@ -16,7 +16,7 @@ public static class InputHandler
     {
         char ch = '\0';
         foreach(Keys key in Keyboard.GetState().GetPressedKeys()){
-            if(key == Keys.OemPeriod && prevState != Keyboard.GetState()){
+            if((key == Keys.OemPeriod || key == Keys.OemComma) && prevState != Keyboard.GetState()){
                 ch = '.';
             }
             if((key >= Keys.D0 && key <= Keys.Z || key == Keys.Back) && prevState != Keyboard.GetState()){

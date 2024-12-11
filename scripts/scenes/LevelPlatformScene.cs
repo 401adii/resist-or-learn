@@ -13,6 +13,7 @@ namespace resist_or_learn;
 public class LevelPlatformScene : IScene
 {
     private ContentManager contentManager;
+    private SceneManager sceneManager;
     
     //CONSTS AND ENUMS
     protected const int TS = 64; //tilesize
@@ -22,10 +23,12 @@ public class LevelPlatformScene : IScene
     private const string PICK_UP = "resistor_pickup";
     private const string TILEMAP = "tilemap0.csv";
     private const string TILESET = "tileset";
+    
+    
+    //VARIABLES
     protected Texture2D texture;
     private Texture2D textureAtlas;
     protected List<Sprite> sprites;
-
     private Dictionary<Vector2, int> tilemap;
     private Player player;
     protected Vector2 playerPos;
@@ -33,16 +36,16 @@ public class LevelPlatformScene : IScene
     private List<Rectangle> textureStore;
     private List<Rectangle> intersectingTiles;
     private KeyboardState prevState;
+    private FinishedLevelMenu finishedLevelMenu;
 
     //FLAGS
     public bool resistorPickedUp;
     public bool levelFinished;
     public Game1.ResistorType pickedUpType;
-    
-
 
     public LevelPlatformScene(ContentManager contentManager){
         this.contentManager = contentManager;
+        sceneManager = new();
         tilemap = new();
         resistorPickedUp = false;
         levelFinished = false;
@@ -70,6 +73,9 @@ public class LevelPlatformScene : IScene
         }
         foreach(Sprite sprite in sprites)
             sprite.Draw(spriteBatch);
+        
+        if(true)
+            sceneManager.GetCurrentScene().Draw(spriteBatch);
     }
 
     protected void LoadMap(string path)
@@ -102,6 +108,8 @@ public class LevelPlatformScene : IScene
     public virtual void Load()
     {
         sprites = new();
+        finishedLevelMenu = new FinishedLevelMenu(contentManager);
+        sceneManager.AddScene(finishedLevelMenu);
         texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PLAYER);
         player = new Player(texture, playerPos);
         sprites.Add(player);
@@ -135,6 +143,7 @@ public class LevelPlatformScene : IScene
         }
         else{
             levelFinished = true;
+            sceneManager.AddScene(finishedLevelMenu);
         }
 
         player.position.X += (int)player.velocity.X;

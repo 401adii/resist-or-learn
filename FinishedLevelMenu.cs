@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,15 +21,19 @@ public class FinishedLevelMenu : IScene
     }
     public void Draw(SpriteBatch spriteBatch)
     {
+        mainMenu.Draw(spriteBatch);
+        selectLevel.Draw(spriteBatch);
     }
 
     public void Load()
     {
         texture = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
         mainMenu = new Button(texture, new Vector2(100, 100), "main menu");
+        selectLevel = new Button(texture, new Vector2(100, 300), "select level");
     }
 
     public void Update(GameTime gameTime)
     {
+        
     }
 }
