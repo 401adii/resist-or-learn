@@ -18,12 +18,12 @@ public class FiveBandResistor : Resistor
         bands[4] = new ToleranceBand(bands[4].texture, new Vector2(position.X + 104*4, position.Y));
     }
 
-    protected override float getResistance()
+    protected override double getResistance()
     {
-        return float.Parse(bands[0].value.ToString() + bands[1].value.ToString() + bands[2].value.ToString()) * bands[3].value;
+        return double.Parse(bands[0].value.ToString() + bands[1].value.ToString() + bands[2].value.ToString()) * bands[3].value;
     }
 
-    protected override float getTolerance()
+    protected override double getTolerance()
     {
         return bands[4].value;
     }

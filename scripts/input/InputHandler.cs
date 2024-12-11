@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework.Input;
 
@@ -58,11 +59,11 @@ public static class InputHandler
             return -1;
         }
 
-        if (double.TryParse(number, out _)){
+        if (double.TryParse(number, System.Globalization.NumberStyles.Any, CultureInfo.GetCultureInfo("en-US"), out double output)){
             if(suffix == '\0')
-                return Convert.ToDouble(number);
+                return output;
             else
-                return Convert.ToDouble(number) * suffixes[suffix];
+                return output * suffixes[suffix];
         }
 
         return -1;

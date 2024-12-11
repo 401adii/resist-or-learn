@@ -17,7 +17,7 @@ public class Game1 : Game
     };
     private enum GameState{
         platform,
-        guessing
+        guess,
     }
     private GameState state;
     public static SpriteFont font;
@@ -57,10 +57,13 @@ public class Game1 : Game
                 currentLevel.resistorPickedUp = false;
                 guessScene = new LevelGuessScene(Content, currentLevel.pickedUpType);
                 SceneManager.AddScene(guessScene);
-                state = GameState.guessing;
+                state = GameState.guess;
+            }
+            if(currentLevel.levelFinished){
+                //TO DO: WHAT HAPPENS WHEN FINISHED LEVEL
             }
             break;
-        case GameState.guessing:
+        case GameState.guess:
             if(guessScene.isSubmitted){
                 if(guessScene.isCorrect)
                     Debug.WriteLine("correct!");

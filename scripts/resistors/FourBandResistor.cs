@@ -17,12 +17,12 @@ public class FourBandResistor : Resistor
         bands[3] = new ToleranceBand(bands[3].texture, new Vector2(position.X + 99*4, position.Y));
     }
 
-    protected override float getResistance()
+    protected override double getResistance()
     {
-        return float.Parse(bands[0].value.ToString() + bands[1].value.ToString()) * bands[2].value;
+        return double.Parse(bands[0].value.ToString() + bands[1].value.ToString()) * bands[2].value;
     }
 
-    protected override float getTolerance()
+    protected override double getTolerance()
     {
         return bands[3].value;
     }

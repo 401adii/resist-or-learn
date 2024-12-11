@@ -7,7 +7,7 @@ namespace resist_or_learn;
 
 public class DigitBand : Band
 {
-    protected override Dictionary<Color, float> ValueMap { get; }= new ()
+    protected override Dictionary<Color, double> ValueMap { get; }= new ()
     {
         {new Color(0f, 0f, 0f, 1f), 0},
         {new Color(0.28f, 0.16f, 0.09f, 1), 1},

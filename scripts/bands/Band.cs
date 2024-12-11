@@ -13,11 +13,11 @@ namespace resist_or_learn;
 
 public class Band : Sprite
 {   
-    protected virtual Dictionary<Color, float> ValueMap{ get; } = new()
+    protected virtual Dictionary<Color, double> ValueMap{ get; } = new()
     {
         {new Color(0f, 0f, 0f, 1f), 1}
     };
-    public float value;
+    public double value;
     public Color color;
     
     public Band(Texture2D texture, Vector2 position) : base(texture, position)

@@ -35,12 +35,12 @@ public class Resistor : Sprite
 
     }
 
-    protected virtual float getResistance()
+    protected virtual double getResistance()
     {
         return 0.00f;
     }
 
-    protected virtual float getTolerance()
+    protected virtual double getTolerance()
     {
         return 0.00f;
     }

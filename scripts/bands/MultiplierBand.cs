@@ -7,7 +7,7 @@ namespace resist_or_learn;
 
 public class MultiplierBand : Band
 {
-    protected override Dictionary<Color, float> ValueMap { get; }= new ()
+    protected override Dictionary<Color, double> ValueMap { get; }= new ()
     {
         {new Color(0f, 0, 0, 1), 1},
         {new Color(0.28f, 0.16f, 0.09f, 1), 10},
