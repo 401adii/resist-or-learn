@@ -63,7 +63,7 @@ public class LevelPlatformScene : IScene
             new Rectangle(TS*2, 0, TS, TS)
         };
         playerPos = new Vector2(0, 0);
-        health = 1;
+        health = 3;
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -81,11 +81,14 @@ public class LevelPlatformScene : IScene
         foreach(Sprite sprite in sprites)
             sprite.Draw(spriteBatch);
         
+        spriteBatch.DrawString(Game1.font, "HP: " + health, new Vector2(0, 0), Color.White);//TEMPORARY
+        
         if(levelFinished)
             sceneManager.GetCurrentScene().Draw(spriteBatch);
         
         if(levelFailed)
             sceneManager.GetCurrentScene().Draw(spriteBatch);
+            
     }
 
     protected void LoadMap(string path)

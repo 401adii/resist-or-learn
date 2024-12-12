@@ -113,8 +113,10 @@ public class Game1 : Game
                 break;
             }   
             sceneManager.RemoveScene();
+            int temp = currentLevel.health;
             currentLevel = new LevelPlatformScene(Content);
             currentLevel = levels[currentLevelIndex];
+            currentLevel.health = temp;
             sceneManager.AddScene(currentLevel);
             state = GameState.platform;
             break;
