@@ -37,10 +37,14 @@ public class LevelPlatformScene : IScene
     private List<Rectangle> intersectingTiles;
     private KeyboardState prevState;
     public FinishedLevelMenu finishedLevelMenu;
+    public FailedLevelMenu failedLevelMenu;
+    public int health;
 
     //FLAGS
     public bool resistorPickedUp;
+    public bool errorFlag;
     public bool levelFinished;
+    public bool levelFailed;
     public Game1.ResistorType pickedUpType;
 
     public LevelPlatformScene(ContentManager contentManager){
@@ -49,6 +53,8 @@ public class LevelPlatformScene : IScene
         tilemap = new();
         resistorPickedUp = false;
         levelFinished = false;
+        levelFailed = false;
+        errorFlag = false;
         pickedUpType = Game1.ResistorType.four_band;
         LoadMap(CONTENT_DEFAULT + PLATFORM_DEFAULT + TILEMAP);
         textureStore = new(){
@@ -57,6 +63,7 @@ public class LevelPlatformScene : IScene
             new Rectangle(TS*2, 0, TS, TS)
         };
         playerPos = new Vector2(0, 0);
+        health = 1;
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -75,6 +82,9 @@ public class LevelPlatformScene : IScene
             sprite.Draw(spriteBatch);
         
         if(levelFinished)
+            sceneManager.GetCurrentScene().Draw(spriteBatch);
+        
+        if(levelFailed)
             sceneManager.GetCurrentScene().Draw(spriteBatch);
     }
 
@@ -109,6 +119,7 @@ public class LevelPlatformScene : IScene
     {
         sprites = new();
         finishedLevelMenu = new FinishedLevelMenu(contentManager);
+        failedLevelMenu = new FailedLevelMenu(contentManager);
         sceneManager.AddScene(finishedLevelMenu);
         texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PLAYER);
         player = new Player(texture, playerPos);
@@ -124,6 +135,21 @@ public class LevelPlatformScene : IScene
         if(levelFinished){
             finishedLevelMenu.Update(gameTime);
             return;
+        }
+
+        if(levelFailed){
+            failedLevelMenu.Update(gameTime);
+            return;
+        }
+
+        if(errorFlag){
+            health--;
+            if(health == 0){
+                levelFailed = true;
+                sceneManager.AddScene(failedLevelMenu);
+                return;
+            }
+            errorFlag = false;
         }
         
         player.Update(Keyboard.GetState(), prevState, gameTime);
@@ -143,9 +169,10 @@ public class LevelPlatformScene : IScene
             sprites.Remove(pickUpToKill);
             pickUps.Remove(pickUpToKill);
         }
-        else{
+        else if (pickUps.Count == 0 && !levelFailed){
             levelFinished = true;
             sceneManager.AddScene(finishedLevelMenu);
+            return;
         }
 
         player.position.X += (int)player.velocity.X;

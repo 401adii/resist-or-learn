@@ -84,6 +84,10 @@ public class Game1 : Game
                 if(currentLevel.finishedLevelMenu.nextState != 0)
                     state = currentLevel.finishedLevelMenu.nextState;
             }
+            if(currentLevel.levelFailed){
+                if(currentLevel.failedLevelMenu.nextState != 0)
+                    state = currentLevel.failedLevelMenu.nextState;
+            }
             break;
         
         
@@ -91,8 +95,10 @@ public class Game1 : Game
             if(guessScene.isSubmitted){
                 if(guessScene.isCorrect)
                     Debug.WriteLine("correct!");
-                else
+                else{
                     Debug.WriteLine("wrong!");
+                    currentLevel.errorFlag = true;
+                }
 
                 sceneManager.RemoveScene();
                 state = GameState.platform;
