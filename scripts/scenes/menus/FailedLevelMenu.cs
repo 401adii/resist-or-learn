@@ -14,9 +14,7 @@ public class FailedLevelMenu : MenuScene
     public override void Load()
     {
         nextState = 0;
-        textureButton = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
-        textureHover = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE + HOVER);
-        texturePressed = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE + PRESSED);
+        base.Load();
         buttons = [
             retryBtn = new Button(textureButton, new Vector2(100, 100), "RETRY", textureHover, texturePressed),
             menuBtn = new Button(textureButton, new Vector2(100, 200), "BACK TO MENU", textureHover, texturePressed),

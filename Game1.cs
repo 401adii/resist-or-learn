@@ -32,11 +32,13 @@ public class Game1 : Game
     public static SpriteFont font;
     public MainMenu mainMenu;
     public SelectLevelMenu selectLevelMenu;
+    public SettingsMenu settingsMenu;
     public LevelPlatformScene currentLevel;
     public List<LevelPlatformScene> levels;
     public int currentLevelIndex;
     public LevelGuessScene guessScene;
     public Timer transitionTimer;
+    
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -64,6 +66,7 @@ public class Game1 : Game
         state = GameState.main_menu;
         mainMenu = new MainMenu(Content);
         selectLevelMenu = new SelectLevelMenu(Content);
+        settingsMenu = new SettingsMenu(Content);
         sceneManager.AddScene(mainMenu);
         transitionTimer = new Timer(3.0f, true);
     }
@@ -134,6 +137,11 @@ public class Game1 : Game
         case GameState.level_select:
             MenuBehaviour(selectLevelMenu);
             selectLevelMenu.nextState = GameState.level_select;
+            break;
+
+        case GameState.settings:
+            MenuBehaviour(settingsMenu);
+            settingsMenu.nextState = GameState.settings;
             break;
         
         case GameState.finish:

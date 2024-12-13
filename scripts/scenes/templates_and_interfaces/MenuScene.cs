@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace resist_or_learn;
 
@@ -30,6 +31,9 @@ public class MenuScene : IScene
 
     public virtual void Load()
     {
+        textureButton = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
+        textureHover = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE + HOVER);
+        texturePressed = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE + PRESSED);
     }
 
     public virtual void Update(GameTime gameTime)

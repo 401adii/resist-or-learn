@@ -16,10 +16,8 @@ public class SelectLevelMenu : MenuScene
 
     public override void Load()
     {
+        base.Load();
         nextState = Game1.GameState.level_select;
-        textureButton = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
-        textureHover = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE + HOVER);
-        texturePressed = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE + PRESSED);
         buttons = [
             backBtn = new Button(textureButton, new Vector2(100, 100), "BACK TO MENU", textureHover, texturePressed)
         ];

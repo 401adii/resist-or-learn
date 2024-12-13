@@ -22,10 +22,8 @@ public class MainMenu : MenuScene
 
     public override void Load()
     {
+        base.Load();
         nextState = Game1.GameState.main_menu;
-        textureButton = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
-        textureHover = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE  + HOVER);
-        texturePressed = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE + PRESSED);
         playBtn = new Button(textureButton, new Vector2(100, 100), "PLAY", textureHover, texturePressed);
         selectLevelBtn = new Button(textureButton, new Vector2(100, 200), "CHOOSE LEVEL", textureHover, texturePressed);
         settingsBtn = new Button(textureButton, new Vector2(100, 300), "SETTINGS", textureHover, texturePressed);

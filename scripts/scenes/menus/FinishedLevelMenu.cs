@@ -23,9 +23,7 @@ public class FinishedLevelMenu : MenuScene
 
     public override void Load()
     {
-        textureButton = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE);
-        textureHover = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE + HOVER);
-        texturePressed = contentManager.Load<Texture2D>(GUI_DEFAULT + BUTTON_BLUE + PRESSED);
+        base.Load();
         continueBtn = new Button(textureButton, new Vector2(100, 100), "continue", textureHover, texturePressed);
         selectLevelBtn = new Button(textureButton, new Vector2(100, 200), "select level", textureHover, texturePressed);
         mainMenuBtn = new Button(textureButton, new Vector2(100, 300), "main menu", textureHover, texturePressed);
