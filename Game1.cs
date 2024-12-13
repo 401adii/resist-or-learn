@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using resitor_or_learn;
 
 namespace resist_or_learn;
 
@@ -35,6 +36,7 @@ public class Game1 : Game
     public List<LevelPlatformScene> levels;
     public int currentLevelIndex;
     public LevelGuessScene guessScene;
+    public Timer transitionTimer;
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -63,13 +65,14 @@ public class Game1 : Game
         mainMenu = new MainMenu(Content);
         selectLevelMenu = new SelectLevelMenu(Content);
         sceneManager.AddScene(mainMenu);
+        transitionTimer = new Timer(3.0f, true);
     }
 
     protected override void Update(GameTime gameTime)
     {
 
+        transitionTimer.Update(gameTime);
         switch(state){
-        
         
         case GameState.platform:
             if(currentLevel.resistorPickedUp){
@@ -99,9 +102,11 @@ public class Game1 : Game
                     Debug.WriteLine("wrong!");
                     currentLevel.errorFlag = true;
                 }
-
-                sceneManager.RemoveScene();
-                state = GameState.platform;
+                transitionTimer.Start();
+                if(transitionTimer.timeOut){
+                    sceneManager.RemoveScene();
+                    state = GameState.platform;
+                }
             }   
             break;
         

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Formats.Tar;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using resitor_or_learn;
 
 namespace resist_or_learn;
 
@@ -11,37 +12,35 @@ public class PickUp : Sprite
     public Game1.ResistorType type;
     private float startPosY;
     private bool animationGoUp;
-    private int counter;
+    private Timer oscTimer;
+    private Timer moveTimer;
     public PickUp(Texture2D texture, Vector2 position, Game1.ResistorType type) : base(texture, position)
     {
         this.type = type;
         startPosY = position.Y;
         animationGoUp = true;
-        counter = 0;
+        oscTimer = new Timer(0.8f);
+        moveTimer = new Timer(0.05f);
+        oscTimer.Start();
+        moveTimer.Start();
     }
 
     public override void Update(GameTime gameTime)
-    {
-        float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        counter++;
-        if(delta * counter >= 0.1f){
+    {         
+        oscTimer.Update(gameTime);
+        moveTimer.Update(gameTime);
+
+        if (oscTimer.timeOut){
+            animationGoUp = !animationGoUp;
+        }
+        
+        if(moveTimer.timeOut){
             if(animationGoUp){
                 position.Y -= 1;
             }
             else{
                 position.Y += 1;
             }
-            counter = 0;
-        }                
-        
-        if(position.Y <= startPosY - 4){
-            animationGoUp = false;
-            position.Y = startPosY - 4;
-        }
-
-        if(position.Y >= startPosY + 4){
-            animationGoUp = true;
-            position.Y = startPosY + 4;
         }
 
     }
