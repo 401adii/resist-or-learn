@@ -91,6 +91,8 @@ public class Game1 : Game
                     state = currentLevel.finishedLevelMenu.nextState;
             }
             if(currentLevel.levelFailed){
+                currentLevelIndex = 0;
+                currentLevel.health = 3;
                 if(currentLevel.failedLevelMenu.nextState != 0)
                     state = currentLevel.failedLevelMenu.nextState;
             }
@@ -175,7 +177,7 @@ public class Game1 : Game
         levels = [
             new Level1(Content),
             new Level2(Content),
-            // new Level3(Content),
+            new Level3(Content),
         ];
     }
 
