@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -175,6 +176,7 @@ public class LevelPlatformScene : IScene
         else if (pickUps.Count == 0 && !levelFailed){
             levelFinished = true;
             sceneManager.AddScene(finishedLevelMenu);
+            UpdateLevelsJSON();
             return;
         }
 
@@ -272,4 +274,12 @@ public class LevelPlatformScene : IScene
 
         return intersections;
     }
+
+    // private void UpdateLevelsJSON()
+    // {
+    //     string content = File.ReadAllText(Game1.LEVELS_PATH);
+    //     Dictionary<string, bool> levelsInfo = JsonSerializer.Deserialize<Dictionary<string,bool>>(content);
+    //     levelsInfo[name] = true;
+    //     File.WriteAllText(Game1.LEVELS_PATH, JsonSerializer.Serialize(levelsInfo, new JsonSerializerOptions { WriteIndented = true}));
+    // }
 }

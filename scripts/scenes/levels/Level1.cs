@@ -6,11 +6,13 @@ namespace resist_or_learn;
 
 public class Level1 : LevelPlatformScene
 {   
+    
     private const string TILEMAP = "tilemap1.csv";
     public Level1(ContentManager contentManager) : base(contentManager)
     {
         LoadMap(CONTENT_DEFAULT + PLATFORM_DEFAULT + TILEMAP);
         playerPos = new Vector2(TS, TS);
+
     }
 
     protected override void LoadPickups()

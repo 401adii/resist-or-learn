@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,6 +15,8 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    public const string LEVELS_PATH = "../../../data/levels.json";
+    public const string SETTINGS_PATH = "../../../data/level.json";
     public enum ResistorType{
         three_band = 3,
         four_band = 4,
@@ -53,6 +58,7 @@ public class Game1 : Game
     protected override void Initialize()
     {
         base.Initialize();
+
         
     }
 
@@ -60,7 +66,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         font = Content.Load<SpriteFont>("font");
-        currentLevelIndex = 0;
+        ReadLevelData();
         InitializeLevels();
         currentLevel = levels[currentLevelIndex];
         state = GameState.main_menu;
@@ -170,6 +176,20 @@ public class Game1 : Game
         sceneManager.GetCurrentScene().Draw(_spriteBatch);
         _spriteBatch.End();
         base.Draw(gameTime);
+    }
+
+    void ReadLevelData()
+    {
+        string content = File.ReadAllText(LEVELS_PATH);
+        Dictionary<string, bool> levelInfo = JsonSerializer.Deserialize<Dictionary<string, bool>>(content);
+        int index = levelInfo.Count - 1;
+        foreach(string key in levelInfo.Keys.Reverse()){
+            if(levelInfo[key]){
+                currentLevelIndex = index;
+                break;
+            }
+            index--;
+        }
     }
 
     private void InitializeLevels()

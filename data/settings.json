@@ -1,5 +1,5 @@
 {
-    "arrowkeys" : "false",
-    "cheatsheet" : "false",
-    "sound" : "false"
+    "arrowkeys" : false,
+    "cheatsheet" : false,
+    "sound" : false
 }
