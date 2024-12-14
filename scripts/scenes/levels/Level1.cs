@@ -8,7 +8,7 @@ public class Level1 : LevelPlatformScene
 {   
     
     private const string TILEMAP = "tilemap1.csv";
-    public Level1(ContentManager contentManager) : base(contentManager)
+    public Level1(ContentManager contentManager, string name) : base(contentManager, name)
     {
         LoadMap(CONTENT_DEFAULT + PLATFORM_DEFAULT + TILEMAP);
         playerPos = new Vector2(TS, TS);

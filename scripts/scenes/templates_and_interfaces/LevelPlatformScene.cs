@@ -42,14 +42,16 @@ public class LevelPlatformScene : IScene
     public int health;
 
     //FLAGS
+    protected string name;
     public bool resistorPickedUp;
     public bool errorFlag;
     public bool levelFinished;
     public bool levelFailed;
     public Game1.ResistorType pickedUpType;
 
-    public LevelPlatformScene(ContentManager contentManager){
+    public LevelPlatformScene(ContentManager contentManager, string name){
         this.contentManager = contentManager;
+        this.name = name;
         sceneManager = new();
         tilemap = new();
         resistorPickedUp = false;
@@ -128,6 +130,7 @@ public class LevelPlatformScene : IScene
         texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PLAYER);
         player = new Player(texture, playerPos);
         sprites.Add(player);
+        UpdateLevelsJSON();
 
         textureAtlas = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + TILESET);
         texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PICK_UP);
@@ -176,7 +179,6 @@ public class LevelPlatformScene : IScene
         else if (pickUps.Count == 0 && !levelFailed){
             levelFinished = true;
             sceneManager.AddScene(finishedLevelMenu);
-            UpdateLevelsJSON();
             return;
         }
 
@@ -275,11 +277,11 @@ public class LevelPlatformScene : IScene
         return intersections;
     }
 
-    // private void UpdateLevelsJSON()
-    // {
-    //     string content = File.ReadAllText(Game1.LEVELS_PATH);
-    //     Dictionary<string, bool> levelsInfo = JsonSerializer.Deserialize<Dictionary<string,bool>>(content);
-    //     levelsInfo[name] = true;
-    //     File.WriteAllText(Game1.LEVELS_PATH, JsonSerializer.Serialize(levelsInfo, new JsonSerializerOptions { WriteIndented = true}));
-    // }
+    private void UpdateLevelsJSON()
+    {
+        string content = File.ReadAllText(Game1.LEVELS_PATH);
+        Dictionary<string, bool> levelsInfo = JsonSerializer.Deserialize<Dictionary<string,bool>>(content);
+        levelsInfo[name] = true;
+        File.WriteAllText(Game1.LEVELS_PATH, JsonSerializer.Serialize(levelsInfo, new JsonSerializerOptions { WriteIndented = true}));
+    }
 }

@@ -130,7 +130,7 @@ public class Game1 : Game
             }   
             sceneManager.RemoveScene();
             int temp = currentLevel.health;
-            currentLevel = new LevelPlatformScene(Content);
+            //currentLevel = new LevelPlatformScene(Content);
             currentLevel = levels[currentLevelIndex];
             currentLevel.health = temp;
             sceneManager.AddScene(currentLevel);
@@ -195,9 +195,9 @@ public class Game1 : Game
     private void InitializeLevels()
     {
         levels = [
-            new Level1(Content),
-            new Level2(Content),
-            new Level3(Content),
+            new Level1(Content, "Level1"),
+            new Level2(Content, "Level2"),
+            new Level3(Content, "Level3"),
         ];
     }
 

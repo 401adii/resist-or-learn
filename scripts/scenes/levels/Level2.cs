@@ -7,7 +7,7 @@ namespace resist_or_learn;
 public class Level2 : LevelPlatformScene
 {   
     private const string TILEMAP = "tilemap1.csv";
-    public Level2(ContentManager contentManager) : base(contentManager)
+    public Level2(ContentManager contentManager, string name) : base(contentManager, name)
     {
         LoadMap(CONTENT_DEFAULT + PLATFORM_DEFAULT + TILEMAP);
         playerPos = new Vector2(4*TS, TS);
