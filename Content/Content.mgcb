@@ -278,6 +278,18 @@
 /processorParam:TextureFormat=Color
 /build:gui/error.png
 
+#begin gui/health.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:gui/health.png
+
 #begin gui/wrong.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -324,7 +336,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:platform/resistor_pickup.png
+/build:platform/resistor_pickup.png;platform/pickup.png
 
 #begin platform/tileset.png
 /importer:TextureImporter

@@ -22,11 +22,12 @@ public class LevelPlatformScene : IScene
     protected const string PLATFORM_DEFAULT = "platform/";
     protected const string CONTENT_DEFAULT = "../../../Content/";
     private const string PLAYER = "player";
-    private const string PICK_UP = "resistor_pickup";
+    private const string PICK_UP = "pickup";
     private const string TILEMAP = "tilemap0.csv";
     private const string TILESET = "tileset";
     private const string AUDIO = "audio/";
-    private const string PICK_UP_SFX = "pickup";
+    private const string GUI = "gui/";
+    private const string HEALTH = "health";
     //VARIABLES
     protected Texture2D texture;
     private Texture2D textureAtlas;
@@ -38,6 +39,7 @@ public class LevelPlatformScene : IScene
     private List<Rectangle> textureStore;
     private List<Rectangle> intersectingTiles;
     private KeyboardState prevState;
+    public Healthbar hpbar;
     public FinishedLevelMenu finishedLevelMenu;
     public FailedLevelMenu failedLevelMenu;
     private SoundEffect pickUpSfx;
@@ -86,14 +88,13 @@ public class LevelPlatformScene : IScene
         foreach(Sprite sprite in sprites)
             sprite.Draw(spriteBatch);
         
-        spriteBatch.DrawString(Game1.font, "HP: " + health, new Vector2(0, 0), Color.White);//TEMPORARY
-        
+        spriteBatch.Draw(hpbar.texture, hpbar.Rect, hpbar.DisplayRect, Color.White);
+
         if(levelFinished)
             sceneManager.GetCurrentScene().Draw(spriteBatch);
         
         if(levelFailed)
             sceneManager.GetCurrentScene().Draw(spriteBatch);
-            
     }
 
     protected void LoadMap(string path)
@@ -133,12 +134,14 @@ public class LevelPlatformScene : IScene
         player = new Player(texture, playerPos, new Vector2(64,64));
         sprites.Add(player);
         UpdateLevelsJSON();
+        texture = contentManager.Load<Texture2D>(GUI + HEALTH);
+        hpbar = new Healthbar(texture, new Vector2(0, 0), new Vector2(64,32), health);
 
         textureAtlas = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + TILESET);
         texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PICK_UP);
         LoadPickups();
 
-        pickUpSfx = contentManager.Load<SoundEffect>(AUDIO + PICK_UP_SFX);
+        pickUpSfx = contentManager.Load<SoundEffect>(AUDIO + PICK_UP);
     }
 
     public void Update(GameTime gameTime)
@@ -155,6 +158,7 @@ public class LevelPlatformScene : IScene
 
         if(errorFlag){
             health--;
+            hpbar.UpdateTexture();
             if(health == 0){
                 levelFailed = true;
                 sceneManager.AddScene(failedLevelMenu);
