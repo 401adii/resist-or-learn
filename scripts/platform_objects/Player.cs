@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,6 +20,7 @@ public class Player : Sprite
 
     public void Update(KeyboardState currState, KeyboardState prevState, GameTime gameTime)
     {
+        animationManager.Update(gameTime);
         float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
         velocity.X = 0;
         velocity.Y += 40 * delta;
@@ -40,6 +42,6 @@ public class Player : Sprite
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        base.Draw(spriteBatch);
+        spriteBatch.Draw(texture, Rect, animationManager.GetFrame(), Color.White);
     }
 }

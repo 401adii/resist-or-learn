@@ -52,7 +52,6 @@ public class Sprite
         isVisible = true;
         colPos = 0;
         rowPos = 0;
-        Debug.WriteLine(Rect.ToString());
     }
     
     public Sprite(Texture2D texture, Vector2 position, bool isVisible)
