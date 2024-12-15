@@ -54,3 +54,6 @@ c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Co
 c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\gui\button_blue_pressed.xnb
 c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\gui\button_green_hover.xnb
 c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\gui\button_green_pressed.xnb
+c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\audio\correct.xnb
+c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\audio\healthup.xnb
+c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\audio\pickup.xnb

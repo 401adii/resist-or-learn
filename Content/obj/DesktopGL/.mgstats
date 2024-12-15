@@ -1,2 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/player.png","C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/bin/DesktopGL/platform/player.xnb","TextureProcessor","Texture2DContent",1554,98389,0,1546606
+"C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/audio/correct.wav","C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/bin/DesktopGL/audio/correct.xnb","SoundEffectProcessor","SoundEffectContent",11786,11847,0,4583482
+"C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/audio/healthup.wav","C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/bin/DesktopGL/audio/healthup.xnb","SoundEffectProcessor","SoundEffectContent",15729,15790,0,1198799
+"C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/audio/pickup.wav","C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/bin/DesktopGL/audio/pickup.xnb","SoundEffectProcessor","SoundEffectContent",1438,1499,0,1222898

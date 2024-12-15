@@ -22,7 +22,7 @@ public class Sprite
                 return new Rectangle((int) position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y);
         }
     }
-    public Rectangle displayRect
+    public Rectangle DisplayRect
     {
         get
         {
@@ -72,7 +72,7 @@ public class Sprite
     public virtual void Draw(SpriteBatch spriteBatch)
     {
         if(isVisible){
-            spriteBatch.Draw(texture, Rect, displayRect, Color.White);
+            spriteBatch.Draw(texture, Rect, DisplayRect, Color.White);
         }
     }
 }

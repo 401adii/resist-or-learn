@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -24,8 +25,8 @@ public class LevelPlatformScene : IScene
     private const string PICK_UP = "resistor_pickup";
     private const string TILEMAP = "tilemap0.csv";
     private const string TILESET = "tileset";
-    
-    
+    private const string AUDIO = "audio/";
+    private const string PICK_UP_SFX = "pickup";
     //VARIABLES
     protected Texture2D texture;
     private Texture2D textureAtlas;
@@ -39,6 +40,7 @@ public class LevelPlatformScene : IScene
     private KeyboardState prevState;
     public FinishedLevelMenu finishedLevelMenu;
     public FailedLevelMenu failedLevelMenu;
+    private SoundEffect pickUpSfx;
     public int health;
 
     //FLAGS
@@ -135,6 +137,8 @@ public class LevelPlatformScene : IScene
         textureAtlas = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + TILESET);
         texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PICK_UP);
         LoadPickups();
+
+        pickUpSfx = contentManager.Load<SoundEffect>(AUDIO + PICK_UP_SFX);
     }
 
     public void Update(GameTime gameTime)
@@ -168,6 +172,7 @@ public class LevelPlatformScene : IScene
                 pickUp.Update(gameTime);
                 if(player.Rect.Intersects(pickUp.Rect))
                 {
+                    pickUpSfx.Play();
                     pickedUpType = pickUp.type;
                     pickUpToKill = pickUp;
                     resistorPickedUp = true;
