@@ -89,6 +89,8 @@ public class LevelPlatformScene : IScene
             sprite.Draw(spriteBatch);
         
         spriteBatch.Draw(hpbar.texture, hpbar.Rect, hpbar.DisplayRect, Color.White);
+        spriteBatch.Draw(texture, new Vector2(1210, 10), Color.White);
+        spriteBatch.DrawString(Game1.font, pickUps.Count.ToString(), new Vector2(1190, 10), Color.White);
 
         if(levelFinished)
             sceneManager.GetCurrentScene().Draw(spriteBatch);
