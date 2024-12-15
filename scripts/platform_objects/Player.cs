@@ -10,7 +10,7 @@ public class Player : Sprite
     public Vector2 velocity;
     public int jumpCount;
     public bool grounded;
-    public Player(Texture2D texture, Vector2 position) : base(texture, position)
+    public Player(Texture2D texture, Vector2 position, Vector2 singleDimensions) : base(texture, position, singleDimensions)
     {
         velocity = new();
         grounded = false;

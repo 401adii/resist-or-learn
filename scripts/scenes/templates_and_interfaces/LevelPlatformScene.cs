@@ -20,7 +20,7 @@ public class LevelPlatformScene : IScene
     protected const int TS = 64; //tilesize
     protected const string PLATFORM_DEFAULT = "platform/";
     protected const string CONTENT_DEFAULT = "../../../Content/";
-    private const string PLAYER = "check";
+    private const string PLAYER = "player";
     private const string PICK_UP = "resistor_pickup";
     private const string TILEMAP = "tilemap0.csv";
     private const string TILESET = "tileset";
@@ -128,7 +128,7 @@ public class LevelPlatformScene : IScene
         failedLevelMenu = new FailedLevelMenu(contentManager);
         sceneManager.AddScene(finishedLevelMenu);
         texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PLAYER);
-        player = new Player(texture, playerPos);
+        player = new Player(texture, playerPos, new Vector2(64,64));
         sprites.Add(player);
         UpdateLevelsJSON();
 
