@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -70,7 +71,7 @@ public class LevelPlatformScene : IScene
             new Rectangle(TS*2, 0, TS, TS)
         };
         playerPos = new Vector2(0, 0);
-        health = 3;
+        health = GetHealthData();
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -135,7 +136,6 @@ public class LevelPlatformScene : IScene
         texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PLAYER);
         player = new Player(texture, playerPos, new Vector2(64,64));
         sprites.Add(player);
-        UpdateLevelsJSON();
         texture = contentManager.Load<Texture2D>(GUI + HEALTH);
         hpbar = new Healthbar(texture, new Vector2(0, 0), new Vector2(64,32), health);
 
@@ -159,7 +159,7 @@ public class LevelPlatformScene : IScene
         }
 
         if(errorFlag){
-            health--;
+            UpdateHealthData();
             hpbar.UpdateTexture();
             if(health == 0){
                 levelFailed = true;
@@ -288,11 +288,28 @@ public class LevelPlatformScene : IScene
         return intersections;
     }
 
-    private void UpdateLevelsJSON()
+    public void UpdateLevelsJSON()
     {
         string content = File.ReadAllText(Game1.LEVELS_PATH);
-        Dictionary<string, bool> levelsInfo = JsonSerializer.Deserialize<Dictionary<string,bool>>(content);
-        levelsInfo[name] = true;
-        File.WriteAllText(Game1.LEVELS_PATH, JsonSerializer.Serialize(levelsInfo, new JsonSerializerOptions { WriteIndented = true}));
+        JsonNode node = JsonNode.Parse(content);
+        node[name] = true;
+        File.WriteAllText(Game1.LEVELS_PATH, node.ToJsonString(new JsonSerializerOptions { WriteIndented = true }));
+    }
+
+    private int GetHealthData()
+    {
+        string content = File.ReadAllText(Game1.LEVELS_PATH);
+        JsonNode node = JsonNode.Parse(content);
+        return node["Health"].AsValue().GetValue<int>();
+    }
+
+    private int UpdateHealthData()
+    {
+        string content = File.ReadAllText(Game1.LEVELS_PATH);
+        JsonNode node = JsonNode.Parse(content);
+        int newVal = node["Health"].AsValue().GetValue<int>() - 1;
+        node["Health"] =  newVal;
+        File.WriteAllText(Game1.LEVELS_PATH, node.ToJsonString(new JsonSerializerOptions { WriteIndented = true }));
+        return newVal;
     }
 }

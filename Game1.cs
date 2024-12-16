@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -66,8 +68,8 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         font = Content.Load<SpriteFont>("font");
-        ReadLevelData();
         InitializeLevels();
+        ReadLevelData();
         currentLevel = levels[currentLevelIndex];
         state = GameState.main_menu;
         mainMenu = new MainMenu(Content);
@@ -91,8 +93,10 @@ public class Game1 : Game
                 state = GameState.guess;
             }
             if(currentLevel.levelFinished){
-                if(currentLevelIndex == levels.IndexOf(currentLevel))
+                if(currentLevelIndex == levels.IndexOf(currentLevel)){
                     currentLevelIndex++;
+                    levels[currentLevelIndex].UpdateLevelsJSON();
+                }
                 if(currentLevel.finishedLevelMenu.nextState != 0)
                     state = currentLevel.finishedLevelMenu.nextState;
             }
@@ -129,10 +133,7 @@ public class Game1 : Game
                 break;
             }   
             sceneManager.RemoveScene();
-            int temp = currentLevel.health;
-            //currentLevel = new LevelPlatformScene(Content);
             currentLevel = levels[currentLevelIndex];
-            currentLevel.health = temp;
             sceneManager.AddScene(currentLevel);
             state = GameState.platform;
             break;
@@ -178,17 +179,23 @@ public class Game1 : Game
         base.Draw(gameTime);
     }
 
-    void ReadLevelData()
+    private void ReadLevelData()
     {
         string content = File.ReadAllText(LEVELS_PATH);
-        Dictionary<string, bool> levelInfo = JsonSerializer.Deserialize<Dictionary<string, bool>>(content);
-        int index = levelInfo.Count - 1;
-        foreach(string key in levelInfo.Keys.Reverse()){
-            if(levelInfo[key]){
-                currentLevelIndex = index;
-                break;
+        int index = levels.Count - 1;
+        JsonNode node = JsonNode.Parse(content);
+        if (node is JsonObject jsonObject)
+        {
+            foreach (var pair in jsonObject)
+            {
+                index--;
+                if(pair.Value.AsValue().TryGetValue<bool>(out _) == true)
+                {
+                    currentLevelIndex = index;
+                    break;
+                }
+
             }
-            index--;
         }
     }
 
