@@ -10,8 +10,9 @@ using Microsoft.Xna.Framework.Graphics;
 namespace resist_or_learn;
 
 public class SettingsMenu : MenuScene
-{
-
+{  
+    private SceneManager sceneManager;
+    private EreaseDataScene ereaseDataScene;
     private Button backBtn;
     private Button cntrlsBtn;
     private Button resetBtn;
@@ -22,15 +23,18 @@ public class SettingsMenu : MenuScene
     private string TOLERANCE = "TOLERANCE";
     private string CHEATSHEET = "CHEATSHEET";
     private string CONTROLS = "CONTROLS";
+    private bool popUpOn;
     
     public SettingsMenu(ContentManager contentManager) : base(contentManager)
     {
-
+        popUpOn = false;
     }
 
     public override void Load()
     {
         base.Load();
+        sceneManager = new SceneManager();
+        ereaseDataScene = new EreaseDataScene(contentManager);
         nextState = Game1.GameState.settings;
         buttons = [
             backBtn = new Button(textureButton, new Vector2 (100, 600), "BACK", textureHover, texturePressed),
@@ -49,6 +53,20 @@ public class SettingsMenu : MenuScene
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        if(popUpOn){
+            ereaseDataScene.Update(gameTime);
+            if(ereaseDataScene.yesBtn.isPressed){
+                ResetGameState();
+                popUpOn = false;
+                sceneManager.RemoveScene();
+            }
+            if(ereaseDataScene.noBtn.isPressed){
+                popUpOn = false;
+                sceneManager.RemoveScene();
+            }
+            return;
+        }
+        
         if(backBtn.isPressed)
             nextState = Game1.GameState.main_menu;
         
@@ -68,11 +86,19 @@ public class SettingsMenu : MenuScene
         {
             Toggle(soundBtn);
         }
+        if(resetBtn.isPressed)
+        {
+            popUpOn = true;
+            sceneManager.AddScene(ereaseDataScene);
+
+        }
     }
 
     public override void Draw(SpriteBatch spriteBatch)
     {
         base.Draw(spriteBatch);
+        if(popUpOn)
+            sceneManager.GetCurrentScene().Draw(spriteBatch);
     }
 
     private void Toggle(Button btn)
@@ -102,6 +128,12 @@ public class SettingsMenu : MenuScene
             else
                 btn.text += ": WSAD";
         }
+    }
+
+    private void ResetGameState()
+    {
+        File.WriteAllText(Game1.LEVELS_PATH,
+        "{\n  \t\"Health\": 3,\n \t\"Level1\": true,\n \t\"Level2\": false,\n \t\"Level3\": false\n}");
     }
 }
 
