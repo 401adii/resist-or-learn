@@ -73,7 +73,5 @@ public class SelectLevelMenu : MenuScene
                     levelData.Add(pair.Value.GetValue<bool>());
             }
         }
-        foreach(var d in levelData)
-            Debug.WriteLine(d);
     }
 }

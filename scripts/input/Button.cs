@@ -9,7 +9,7 @@ namespace resist_or_learn;
 
 public class Button : Sprite
 {
-    public readonly string text;
+    public string text;
     public Texture2D hoverTexture;
     public Texture2D pressedTexture;
     public Texture2D defaultTexture;

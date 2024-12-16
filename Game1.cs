@@ -18,7 +18,7 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     public const string LEVELS_PATH = "../../../data/levels.json";
-    public const string SETTINGS_PATH = "../../../data/level.json";
+    public const string SETTINGS_PATH = "../../../data/settings.json";
     public enum ResistorType{
         three_band = 3,
         four_band = 4,
@@ -45,6 +45,10 @@ public class Game1 : Game
     public int currentLevelIndex;
     public LevelGuessScene guessScene;
     public Timer transitionTimer;
+    public static bool arrows;
+    public static bool sound;
+    public static bool cheatsheet;
+    public static bool tolerance;
     
     public Game1()
     {
@@ -70,6 +74,7 @@ public class Game1 : Game
         font = Content.Load<SpriteFont>("font");
         InitializeLevels();
         ReadLevelData();
+        GetSettingsData();
         currentLevel = levels[currentLevelIndex];
         state = GameState.main_menu;
         mainMenu = new MainMenu(Content);
@@ -95,7 +100,7 @@ public class Game1 : Game
             if(currentLevel.levelFinished){
                 if(currentLevelIndex == levels.IndexOf(currentLevel)){
                     currentLevelIndex++;
-                    levels[currentLevelIndex].UpdateLevelsJSON(); //add reset if last level!!!!!!!
+                    levels[currentLevelIndex].UpdateLevelsJSON(); //add reset if last 
                 }
                 if(currentLevel.finishedLevelMenu.nextState != 0)
                     state = currentLevel.finishedLevelMenu.nextState;
@@ -222,5 +227,15 @@ public class Game1 : Game
         if(state != sc.nextState){
             state = sc.nextState;
         }
+    }
+
+    public static void GetSettingsData()
+    {
+        string content = File.ReadAllText(SETTINGS_PATH);
+        Dictionary<string, bool> settings = JsonSerializer.Deserialize<Dictionary<string, bool>>(content);
+        settings["TOLERANCE"] = tolerance;
+        settings["SOUND"] = sound;
+        settings["CONTROLS"] = arrows;
+        settings["CHEATSHEET"] = cheatsheet;
     }
 }

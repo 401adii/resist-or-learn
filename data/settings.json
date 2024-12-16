@@ -1,5 +1,6 @@
 {
-    "arrowkeys" : false,
-    "cheatsheet" : false,
-    "sound" : false
+  "SOUND": true,
+  "CHEATSHEET": true,
+  "CONTROLS": false,
+  "TOLERANCE": true
 }
