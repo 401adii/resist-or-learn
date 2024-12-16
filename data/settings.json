@@ -1,6 +1,6 @@
 {
   "SOUND": true,
   "CHEATSHEET": true,
-  "CONTROLS": false,
+  "CONTROLS": true,
   "TOLERANCE": true
 }
