@@ -28,12 +28,12 @@ public class SettingsMenu : MenuScene
     public SettingsMenu(ContentManager contentManager) : base(contentManager)
     {
         popUpOn = false;
+        sceneManager = new SceneManager();
     }
 
     public override void Load()
     {
         base.Load();
-        sceneManager = new SceneManager();
         ereaseDataScene = new EreaseDataScene(contentManager);
         nextState = Game1.GameState.settings;
         buttons = [

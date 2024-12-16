@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.Xna.Framework.Audio;
 
 namespace resist_or_learn;
@@ -8,7 +9,7 @@ public static class SoundManager
     {
         if(Game1.sound)
         {
-            
+            sfx.Play();
         }
     }
 }

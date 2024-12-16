@@ -104,6 +104,7 @@ public class LevelGuessScene : IScene
         //creating other objects
         resistanceInput = new InputBox(buttonTexture, new Vector2(800, 150));
         toleranceInput = new InputBox(buttonTexture, new Vector2(800, 260), true);
+        toleranceInput.enabled = Game1.tolerance;
         submitButton = new Button(buttonTextureGreen, new Vector2(800, 330), "          SUBMIT", buttonTextureGreenPressed, buttonTextureGreenHover);
         resistanceError = new Sprite(errorTexture, new Vector2(1075, 145), false);
         toleranceError = new Sprite(errorTexture, new Vector2(1075, 255), false);
@@ -206,13 +207,16 @@ public class LevelGuessScene : IScene
             resistanceInput.enabled = false;
         }
 
-        if(inputToleranceValue == -1){
+        if(inputToleranceValue == -1 && toleranceInput.enabled){
             Debug.WriteLine("tolerance error");
             toleranceError.isVisible = true;
         }
-        else{
+        else if (inputToleranceValue != -1 && toleranceInput.enabled){
             toleranceError.isVisible = false;
             toleranceInput.enabled = false;
+        }
+        else{
+            toleranceError.isVisible = false;
         }
 
         if(toleranceError.isVisible || resistanceError.isVisible)
@@ -227,7 +231,9 @@ public class LevelGuessScene : IScene
         else
             resistanceWrong.isVisible = true;
 
-        if(inputToleranceValue == resistor.tolerance)
+        if(inputToleranceValue == -1)
+            toleranceCorrect.isVisible = true;
+        else if(inputToleranceValue == resistor.tolerance)
             toleranceCorrect.isVisible = true;
         else
             toleranceWrong.isVisible = true;

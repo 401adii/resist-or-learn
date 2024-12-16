@@ -72,6 +72,7 @@ public class LevelPlatformScene : IScene
         };
         playerPos = new Vector2(0, 0);
         health = GetHealthData();
+
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -178,7 +179,7 @@ public class LevelPlatformScene : IScene
                 pickUp.Update(gameTime);
                 if(player.Rect.Intersects(pickUp.Rect))
                 {
-                    pickUpSfx.Play();
+                    SoundManager.Play(pickUpSfx);
                     pickedUpType = pickUp.type;
                     pickUpToKill = pickUp;
                     resistorPickedUp = true;

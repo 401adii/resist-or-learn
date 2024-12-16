@@ -45,7 +45,7 @@ public class Game1 : Game
     public int currentLevelIndex;
     public LevelGuessScene guessScene;
     public Timer transitionTimer;
-    public static bool arrows;
+    public static bool controls;
     public static bool sound;
     public static bool cheatsheet;
     public static bool tolerance;
@@ -233,9 +233,9 @@ public class Game1 : Game
     {
         string content = File.ReadAllText(SETTINGS_PATH);
         Dictionary<string, bool> settings = JsonSerializer.Deserialize<Dictionary<string, bool>>(content);
-        settings["TOLERANCE"] = tolerance;
-        settings["SOUND"] = sound;
-        settings["CONTROLS"] = arrows;
-        settings["CHEATSHEET"] = cheatsheet;
+        sound = settings["SOUND"];
+        controls = settings["CONTROLS"];
+        tolerance = settings["TOLERANCE"];
+        cheatsheet = settings["CHEATSHEET"];
     }
 }
