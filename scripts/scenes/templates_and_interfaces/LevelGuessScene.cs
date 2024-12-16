@@ -27,6 +27,7 @@ public class LevelGuessScene : IScene
     private const string ERROR = "gui/error";
     private const string WRONG = "gui/wrong";
     private const string CORRECT = "gui/correct";
+    private const string CHEATSHEET = "/cheatsheet";
     private readonly Dictionary<Game1.ResistorType, Vector2> RESISTOR_POSITIONS = new()
     {
         {Game1.ResistorType.three_band, new Vector2(100, 120)},
@@ -45,6 +46,7 @@ public class LevelGuessScene : IScene
     private Texture2D errorTexture;
     private Texture2D correctTexture;
     private Texture2D wrongTexture;
+    private Texture2D cheatsheetTexture;
     
     //OBJECTS
     private Resistor resistor;
@@ -57,6 +59,7 @@ public class LevelGuessScene : IScene
     private Sprite toleranceWrong;
     private Sprite resistanceCorrect;
     private Sprite toleranceCorrect;
+    private Cheatsheet cheatsheet;
 
     //FLAGS AND PUBLIC VARIABLES
     public bool isSubmitted;
@@ -100,6 +103,7 @@ public class LevelGuessScene : IScene
         errorTexture = contentManager.Load<Texture2D>(ERROR);
         wrongTexture = contentManager.Load<Texture2D>(WRONG);
         correctTexture = contentManager.Load<Texture2D>(CORRECT);
+        cheatsheetTexture = contentManager.Load<Texture2D>(GUI_DEFAULT + CHEATSHEET);
         
         //creating other objects
         resistanceInput = new InputBox(buttonTexture, new Vector2(800, 150));
@@ -112,10 +116,12 @@ public class LevelGuessScene : IScene
         toleranceWrong = new Sprite(wrongTexture, new Vector2(1075, 255), false);
         resistanceCorrect = new Sprite(correctTexture, new Vector2(1075, 145), false);
         toleranceCorrect = new Sprite(correctTexture, new Vector2(1075, 255), false);
+        cheatsheet = new Cheatsheet(cheatsheetTexture, new Vector2(100, 680), new Vector2(640, 320));
     }
 
     public void Update(GameTime gameTime)
     {
+        cheatsheet.Update(gameTime);
         FocusControl();
         resistanceInput.Update();
         resistanceInput.HandleInput();
@@ -135,6 +141,7 @@ public class LevelGuessScene : IScene
         toleranceInput.Draw(spriteBatch);
         spriteBatch.DrawString(Game1.font, "Tolerance: ", new Vector2(800, 230), Color.White);
         submitButton.Draw(spriteBatch);
+        cheatsheet.Draw(spriteBatch);
         if(resistanceError.isVisible == true)
             resistanceError.Draw(spriteBatch);
         if(toleranceError.isVisible == true)
