@@ -95,7 +95,7 @@ public class Game1 : Game
             if(currentLevel.levelFinished){
                 if(currentLevelIndex == levels.IndexOf(currentLevel)){
                     currentLevelIndex++;
-                    levels[currentLevelIndex].UpdateLevelsJSON();
+                    levels[currentLevelIndex].UpdateLevelsJSON(); //add reset if last level!!!!!!!
                 }
                 if(currentLevel.finishedLevelMenu.nextState != 0)
                     state = currentLevel.finishedLevelMenu.nextState;
@@ -145,6 +145,9 @@ public class Game1 : Game
 
         case GameState.level_select:
             MenuBehaviour(selectLevelMenu);
+            if(selectLevelMenu.newLevelIndex != -1){
+                currentLevelIndex = selectLevelMenu.newLevelIndex;
+            }
             selectLevelMenu.nextState = GameState.level_select;
             break;
 
@@ -189,10 +192,11 @@ public class Game1 : Game
             foreach (var pair in jsonObject)
             {
                 index--;
-                if(pair.Value.AsValue().TryGetValue<bool>(out _) == true)
-                {
-                    currentLevelIndex = index;
-                    break;
+                if(pair.Value.AsValue().TryGetValue<bool>(out _)){
+                    if(pair.Value.GetValue<bool>() == true){
+                        currentLevelIndex = index;
+                        break;
+                    }
                 }
 
             }
@@ -219,5 +223,4 @@ public class Game1 : Game
             state = sc.nextState;
         }
     }
-
 }
