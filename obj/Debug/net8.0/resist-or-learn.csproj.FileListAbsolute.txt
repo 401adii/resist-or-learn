@@ -60,3 +60,7 @@ c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Co
 c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\gui\health.xnb
 c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\platform\pickup.xnb
 c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\gui\cheatsheet.xnb
+c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\platform\enemy.xnb
+c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\platform\healthup.xnb
+c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\platform\spikes.xnb
+c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\platform\health_up.xnb

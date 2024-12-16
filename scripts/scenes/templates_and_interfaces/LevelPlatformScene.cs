@@ -29,8 +29,11 @@ public class LevelPlatformScene : IScene
     private const string AUDIO = "audio/";
     private const string GUI = "gui/";
     private const string HEALTH = "health";
+    private const string HEALTH_UP = "health_up";
     //VARIABLES
-    protected Texture2D texture;
+    private Texture2D texture;
+    protected Texture2D resistorTexture;
+    protected Texture2D healthUpTexture;
     private Texture2D textureAtlas;
     protected List<Sprite> sprites;
     private Dictionary<Vector2, int> tilemap;
@@ -44,7 +47,9 @@ public class LevelPlatformScene : IScene
     public FinishedLevelMenu finishedLevelMenu;
     public FailedLevelMenu failedLevelMenu;
     private SoundEffect pickUpSfx;
+    
     public int health;
+    private int resistorCount;
 
     //FLAGS
     protected string name;
@@ -53,6 +58,7 @@ public class LevelPlatformScene : IScene
     public bool levelFinished;
     public bool levelFailed;
     public Game1.ResistorType pickedUpType;
+    
 
     public LevelPlatformScene(ContentManager contentManager, string name){
         this.contentManager = contentManager;
@@ -72,7 +78,7 @@ public class LevelPlatformScene : IScene
         };
         playerPos = new Vector2(0, 0);
         health = GetHealthData();
-
+        resistorCount = 0;
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -91,8 +97,8 @@ public class LevelPlatformScene : IScene
             sprite.Draw(spriteBatch);
         
         spriteBatch.Draw(hpbar.texture, hpbar.Rect, hpbar.DisplayRect, Color.White);
-        spriteBatch.Draw(texture, new Vector2(1210, 10), Color.White);
-        spriteBatch.DrawString(Game1.font, pickUps.Count.ToString(), new Vector2(1190, 10), Color.White);
+        spriteBatch.Draw(resistorTexture, new Vector2(1210, 10), Color.White);
+        spriteBatch.DrawString(Game1.font, resistorCount.ToString(), new Vector2(1190, 10), Color.White);
 
         if(levelFinished)
             sceneManager.GetCurrentScene().Draw(spriteBatch);
@@ -123,9 +129,12 @@ public class LevelPlatformScene : IScene
 
     protected virtual void LoadPickups()
     {
-        pickUps = [new PickUp(texture, new Vector2(200, 100), Game1.ResistorType.four_band)];
-        foreach(PickUp pickUp in pickUps)
+        //pickUps = [new ResistorPickUp(resistorTexture, new Vector2(200, 100), Game1.ResistorType.four_band)];
+        foreach(PickUp pickUp in pickUps){
             sprites.Add(pickUp);
+            if(pickUp is ResistorPickUp)
+                resistorCount++;
+        }
     }
 
     public virtual void Load()
@@ -139,9 +148,10 @@ public class LevelPlatformScene : IScene
         sprites.Add(player);
         texture = contentManager.Load<Texture2D>(GUI + HEALTH);
         hpbar = new Healthbar(texture, new Vector2(0, 0), new Vector2(64,32), health);
+        healthUpTexture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + HEALTH_UP);
 
         textureAtlas = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + TILESET);
-        texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PICK_UP);
+        resistorTexture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PICK_UP);
         LoadPickups();
 
         pickUpSfx = contentManager.Load<SoundEffect>(AUDIO + PICK_UP);
@@ -160,8 +170,8 @@ public class LevelPlatformScene : IScene
         }
 
         if(errorFlag){
-            UpdateHealthData();
-            hpbar.UpdateTexture();
+            DecrementHealth();
+            hpbar.UpdateTexture(true);
             if(health == 0){
                 levelFailed = true;
                 sceneManager.AddScene(failedLevelMenu);
@@ -179,10 +189,19 @@ public class LevelPlatformScene : IScene
                 pickUp.Update(gameTime);
                 if(player.Rect.Intersects(pickUp.Rect))
                 {
-                    SoundManager.Play(pickUpSfx);
-                    pickedUpType = pickUp.type;
+                    if(pickUp is ResistorPickUp){
+                        SoundManager.Play(pickUpSfx);
+                        pickedUpType = pickUp.type;
+                        resistorPickedUp = true;
+                        resistorCount--;
+                    }
+                    if(pickUp is HealthPickUp){
+                        IncrementHealth();
+                        if(health != 3)
+                            hpbar.UpdateTexture(false);
+                    }
+                        
                     pickUpToKill = pickUp;
-                    resistorPickedUp = true;
                 }
             }
             sprites.Remove(pickUpToKill);
@@ -304,12 +323,25 @@ public class LevelPlatformScene : IScene
         return node["Health"].AsValue().GetValue<int>();
     }
 
-    private int UpdateHealthData()
+    private int DecrementHealth()
     {
         string content = File.ReadAllText(Game1.LEVELS_PATH);
         JsonNode node = JsonNode.Parse(content);
         int newVal = node["Health"].AsValue().GetValue<int>() - 1;
         node["Health"] =  newVal;
+        File.WriteAllText(Game1.LEVELS_PATH, node.ToJsonString(new JsonSerializerOptions { WriteIndented = true }));
+        return newVal;
+    }
+
+    private int IncrementHealth()
+    {
+        string content = File.ReadAllText(Game1.LEVELS_PATH);
+        JsonNode node = JsonNode.Parse(content);
+        int newVal = node["Health"].AsValue().GetValue<int>() + 1;
+        if(newVal < 3)
+            node["Health"] =  newVal;
+        else
+            node["Health"] = 3;
         File.WriteAllText(Game1.LEVELS_PATH, node.ToJsonString(new JsonSerializerOptions { WriteIndented = true }));
         return newVal;
     }

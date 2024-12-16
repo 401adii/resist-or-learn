@@ -32,8 +32,11 @@
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/gui/health.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/gui/wrong.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/check.png</File>
+    <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/enemy.png</File>
+    <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/health_up.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/player.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/resistor_pickup.png</File>
+    <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/spikes.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/tileset.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/three_band/band1.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/three_band/band2.png</File>
@@ -70,7 +73,10 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
-    <File>platform/pickup.png</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

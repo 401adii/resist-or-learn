@@ -14,9 +14,9 @@ public class PickUp : Sprite
     private bool animationGoUp;
     private Timer oscTimer;
     private Timer moveTimer;
-    public PickUp(Texture2D texture, Vector2 position, Game1.ResistorType type) : base(texture, position)
+    public PickUp(Texture2D texture, Vector2 position) : base(texture, position)
     {
-        this.type = type;
+        
         startPosY = position.Y;
         animationGoUp = true;
         oscTimer = new Timer(0.8f);

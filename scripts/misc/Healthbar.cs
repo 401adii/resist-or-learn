@@ -11,9 +11,12 @@ public class Healthbar : Sprite
         colPos = 3 - health;
     }
 
-    public void UpdateTexture()
-    {
-        colPos++;
+    public void UpdateTexture(bool shift)
+    {  
+        if(shift)
+            colPos++;
+        else
+            colPos--;
         if(rowPos >= 3)
         {
             colPos = 0;
