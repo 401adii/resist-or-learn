@@ -30,16 +30,19 @@ public class LevelPlatformScene : IScene
     private const string GUI = "gui/";
     private const string HEALTH = "health";
     private const string HEALTH_UP = "health_up";
+    private const string SPIKES = "spikes";
     //VARIABLES
     private Texture2D texture;
     protected Texture2D resistorTexture;
     protected Texture2D healthUpTexture;
+    protected Texture2D spikesTexture; 
     private Texture2D textureAtlas;
     protected List<Sprite> sprites;
     private Dictionary<Vector2, int> tilemap;
     private Player player;
     protected Vector2 playerPos;
     protected List<PickUp> pickUps;
+    protected List<Sprite> obstacles;
     private List<Rectangle> textureStore;
     private List<Rectangle> intersectingTiles;
     private KeyboardState prevState;
@@ -48,6 +51,7 @@ public class LevelPlatformScene : IScene
     public FailedLevelMenu failedLevelMenu;
     public PauseMenu pauseMenu;
     private SoundEffect pickUpSfx;
+    private Vector2 checkpointPos;
     
     public int health;
     private int resistorCount;
@@ -142,6 +146,13 @@ public class LevelPlatformScene : IScene
         }
     }
 
+    protected virtual void LoadObstacles()
+    {
+        foreach(Sprite sprite in obstacles){
+            sprites.Add(sprite);
+        }
+    }
+
     public virtual void Load()
     {
         sprites = new();
@@ -151,14 +162,17 @@ public class LevelPlatformScene : IScene
         sceneManager.AddScene(finishedLevelMenu);
         texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PLAYER);
         player = new Player(texture, playerPos, new Vector2(64,64));
+        checkpointPos = playerPos;
         sprites.Add(player);
         texture = contentManager.Load<Texture2D>(GUI + HEALTH);
         hpbar = new Healthbar(texture, new Vector2(0, 0), new Vector2(64,32), health);
         healthUpTexture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + HEALTH_UP);
+        spikesTexture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + SPIKES);
 
         textureAtlas = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + TILESET);
         resistorTexture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PICK_UP);
         LoadPickups();
+        LoadObstacles();
 
         pickUpSfx = contentManager.Load<SoundEffect>(AUDIO + PICK_UP);
     }
@@ -181,13 +195,8 @@ public class LevelPlatformScene : IScene
 
         if(errorFlag){
             DecrementHealth();
-            hpbar.UpdateTexture(true);
-            if(health == 0){
-                levelFailed = true;
-                sceneManager.AddScene(failedLevelMenu);
-                return;
-            }
             errorFlag = false;
+            return;
         }
         
         player.Update(Keyboard.GetState(), prevState, gameTime);
@@ -204,11 +213,10 @@ public class LevelPlatformScene : IScene
                         pickedUpType = pickUp.type;
                         resistorPickedUp = true;
                         resistorCount--;
+                        checkpointPos = player.position;
                     }
                     if(pickUp is HealthPickUp){
                         IncrementHealth();
-                        if(health != 3)
-                            hpbar.UpdateTexture(false);
                     }
                         
                     pickUpToKill = pickUp;
@@ -221,6 +229,13 @@ public class LevelPlatformScene : IScene
             levelFinished = true;
             sceneManager.AddScene(finishedLevelMenu);
             return;
+        }
+
+        foreach(Sprite obstacle in obstacles){
+            if(player.Rect.Intersects(obstacle.Rect)){
+                player.position = checkpointPos;
+                DecrementHealth();
+            }
         }
 
         player.position.X += (int)player.velocity.X;
@@ -335,6 +350,12 @@ public class LevelPlatformScene : IScene
 
     private int DecrementHealth()
     {
+        health--;
+        hpbar.UpdateTexture(true);
+        if(health == 0){
+            levelFailed = true;
+            sceneManager.AddScene(failedLevelMenu);
+        }
         string content = File.ReadAllText(Game1.LEVELS_PATH);
         JsonNode node = JsonNode.Parse(content);
         int newVal = node["Health"].AsValue().GetValue<int>() - 1;
@@ -345,6 +366,9 @@ public class LevelPlatformScene : IScene
 
     private int IncrementHealth()
     {
+        health++;
+        if(health != 3)
+            hpbar.UpdateTexture(false);
         string content = File.ReadAllText(Game1.LEVELS_PATH);
         JsonNode node = JsonNode.Parse(content);
         int newVal = node["Health"].AsValue().GetValue<int>() + 1;

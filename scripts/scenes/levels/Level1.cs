@@ -18,11 +18,19 @@ public class Level1 : LevelPlatformScene
     protected override void LoadPickups()
     {
         pickUps = [
-            new ResistorPickUp(resistorTexture, new Vector2(TS*4, TS*8), Game1.ResistorType.four_band),
-            new HealthPickUp(healthUpTexture, new Vector2(TS*3, TS*9)),
+            new ResistorPickUp(resistorTexture, new Vector2(TS*14, TS*9), Game1.ResistorType.four_band),
+            new ResistorPickUp(resistorTexture, new Vector2(TS*14, TS*4), Game1.ResistorType.four_band),
             // new PickUp(texture, new Vector2(TS*5, TS*8), Game1.ResistorType.four_band),
             ];
         base.LoadPickups();
+    }
+
+    protected override void LoadObstacles()
+    {
+        obstacles = [
+            new Spikes(spikesTexture, new Vector2(TS * 6, TS*9)),
+        ];
+        base.LoadObstacles();
     }
 
 }
