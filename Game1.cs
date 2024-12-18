@@ -111,6 +111,9 @@ public class Game1 : Game
                 if(currentLevel.failedLevelMenu.nextState != 0)
                     state = currentLevel.failedLevelMenu.nextState;
             }
+            if(currentLevel.levelPaused && currentLevel.pauseMenu.nextState == GameState.main_menu){
+                state = GameState.main_menu;
+            }
             break;
         
         

@@ -46,6 +46,7 @@ public class LevelPlatformScene : IScene
     public Healthbar hpbar;
     public FinishedLevelMenu finishedLevelMenu;
     public FailedLevelMenu failedLevelMenu;
+    public PauseMenu pauseMenu;
     private SoundEffect pickUpSfx;
     
     public int health;
@@ -57,6 +58,7 @@ public class LevelPlatformScene : IScene
     public bool errorFlag;
     public bool levelFinished;
     public bool levelFailed;
+    public bool levelPaused;
     public Game1.ResistorType pickedUpType;
     
 
@@ -105,6 +107,9 @@ public class LevelPlatformScene : IScene
         
         if(levelFailed)
             sceneManager.GetCurrentScene().Draw(spriteBatch);
+        
+        if(levelPaused)
+            sceneManager.GetCurrentScene().Draw(spriteBatch);
     }
 
     protected void LoadMap(string path)
@@ -142,6 +147,7 @@ public class LevelPlatformScene : IScene
         sprites = new();
         finishedLevelMenu = new FinishedLevelMenu(contentManager);
         failedLevelMenu = new FailedLevelMenu(contentManager);
+        pauseMenu = new PauseMenu(contentManager);
         sceneManager.AddScene(finishedLevelMenu);
         texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PLAYER);
         player = new Player(texture, playerPos, new Vector2(64,64));
@@ -159,14 +165,18 @@ public class LevelPlatformScene : IScene
 
     public void Update(GameTime gameTime)
     {
-        if(levelFinished){
-            finishedLevelMenu.Update(gameTime);
+        if(levelFinished || levelFailed || levelPaused){
+            sceneManager.GetCurrentScene().Update(gameTime);
+            if(levelPaused && pauseMenu.continueBtn.isPressed){
+                levelPaused = false;
+                sceneManager.RemoveScene();
+            }
             return;
         }
 
-        if(levelFailed){
-            failedLevelMenu.Update(gameTime);
-            return;
+        if(Keyboard.GetState().IsKeyDown(Keys.Escape)){
+            levelPaused = true;
+            sceneManager.AddScene(pauseMenu);
         }
 
         if(errorFlag){

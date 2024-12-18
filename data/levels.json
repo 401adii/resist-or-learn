@@ -1,6 +1,6 @@
 {
-  "Health": 2,
-  "Level1": true,
-  "Level2": true,
-  "Level3": false
+  	"Health": 3,
+ 	"Level1": true,
+ 	"Level2": false,
+ 	"Level3": false
 }
