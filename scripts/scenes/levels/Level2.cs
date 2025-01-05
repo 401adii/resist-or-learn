@@ -16,8 +16,6 @@ public class Level2 : LevelPlatformScene
     protected override void LoadPickups()
     {
         pickUps = [
-            new ResistorPickUp(resistorTexture, new Vector2(TS*36, TS*13), Game1.ResistorType.four_band),
-            new ResistorPickUp(resistorTexture, new Vector2(TS*38, TS*9), Game1.ResistorType.four_band),
             new ResistorPickUp(resistorTexture, new Vector2(TS*1, TS*5), Game1.ResistorType.four_band),
             new ResistorPickUp(resistorTexture, new Vector2(TS*32, TS*19), Game1.ResistorType.four_band),
             new ResistorPickUp(resistorTexture, new Vector2(TS*17, TS*1), Game1.ResistorType.four_band),

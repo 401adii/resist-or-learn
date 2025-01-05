@@ -9,17 +9,25 @@ public class FailedLevelMenu : MenuScene
     public Button menuBtn;
     public Button selectLevelBtn;
     public Button retryBtn;
+    private Texture2D background;
     public FailedLevelMenu(ContentManager contentManager) : base(contentManager) {}
 
+
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        spriteBatch.Draw(background, new Vector2(494, 379), Color.White);
+        base.Draw(spriteBatch);
+    }
     public override void Load()
     {
         nextState = 0;
         base.Load();
         buttons = [
-            retryBtn = new Button(textureButton, new Vector2(100, 100), "RETRY", textureHover, texturePressed),
-            menuBtn = new Button(textureButton, new Vector2(100, 200), "BACK TO MENU", textureHover, texturePressed),
-            selectLevelBtn = new Button(textureButton, new Vector2(100, 300), "CHOOSE LEVEL", textureHover, texturePressed),
+            retryBtn = new Button(textureButton, new Vector2(510, 443), "RETRY", textureHover, texturePressed),
+            menuBtn = new Button(textureButton, new Vector2(510, 539), "BACK TO MENU", textureHover, texturePressed),
+            selectLevelBtn = new Button(textureButton, new Vector2(510, 635), "CHOOSE LEVEL", textureHover, texturePressed),
         ];
+        background = contentManager.Load<Texture2D>("gui/menu_background");
     }
 
     public override void Update(GameTime gameTime)

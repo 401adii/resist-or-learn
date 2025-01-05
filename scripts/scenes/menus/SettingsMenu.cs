@@ -37,12 +37,12 @@ public class SettingsMenu : MenuScene
         ereaseDataScene = new EreaseDataScene(contentManager);
         nextState = Game1.GameState.settings;
         buttons = [
-            backBtn = new Button(textureButton, new Vector2 (100, 600), "BACK", textureHover, texturePressed),
-            resetBtn = new Button(textureButton, new Vector2(100, 500), "RESET PROGRESS", textureHover, texturePressed),
-            soundBtn = new Button(textureButton, new Vector2(100, 200), SOUND, textureHover, texturePressed),
-            cntrlsBtn = new Button(textureButton, new Vector2(100, 100), CONTROLS, textureHover, texturePressed),
-            tolBtn = new Button(textureButton, new Vector2(100, 300), TOLERANCE, textureHover, texturePressed),
-            cheatSheetBtn = new Button(textureButton, new Vector2(100, 400), CHEATSHEET, textureHover, texturePressed),
+            cntrlsBtn = new Button(textureButton, new Vector2(16, 80), CONTROLS, textureHover, texturePressed),
+            soundBtn = new Button(textureButton, new Vector2(16, 160), SOUND, textureHover, texturePressed),
+            tolBtn = new Button(textureButton, new Vector2(16, 240), TOLERANCE, textureHover, texturePressed),
+            cheatSheetBtn = new Button(textureButton, new Vector2(16, 320), CHEATSHEET, textureHover, texturePressed),
+            resetBtn = new Button(textureButton, new Vector2(16, 400), "RESET PROGRESS", textureHover, texturePressed),
+            backBtn = new Button(textureButton, new Vector2 (16, 560), "BACK", textureHover, texturePressed),
             ];
         UpdateText(cntrlsBtn);
         UpdateText(cheatSheetBtn);

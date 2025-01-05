@@ -17,6 +17,7 @@ public class MainMenu : MenuScene
     public MainMenu(ContentManager contentManager) : base(contentManager) {}
     public override void Draw(SpriteBatch spriteBatch)
     {
+        spriteBatch.Draw(logo, new Vector2(16, 16), Color.White);
         base.Draw(spriteBatch);
         
     }
@@ -25,11 +26,12 @@ public class MainMenu : MenuScene
     {
         base.Load();
         nextState = Game1.GameState.main_menu;
-        playBtn = new Button(textureButton, new Vector2(100, 100), "PLAY", textureHover, texturePressed);
-        selectLevelBtn = new Button(textureButton, new Vector2(100, 200), "CHOOSE LEVEL", textureHover, texturePressed);
-        settingsBtn = new Button(textureButton, new Vector2(100, 300), "SETTINGS", textureHover, texturePressed);
-        exitBtn = new Button(textureButton, new Vector2(100, 400), "QUIT", textureHover, texturePressed);
+        playBtn = new Button(textureButton, new Vector2(16, 320), "PLAY", textureHover, texturePressed);
+        selectLevelBtn = new Button(textureButton, new Vector2(16, 400), "CHOOSE LEVEL", textureHover, texturePressed);
+        settingsBtn = new Button(textureButton, new Vector2(16, 480), "SETTINGS", textureHover, texturePressed);
+        exitBtn = new Button(textureButton, new Vector2(16, 560), "QUIT", textureHover, texturePressed);
         buttons = [playBtn, selectLevelBtn, settingsBtn, exitBtn];
+        logo = contentManager.Load<Texture2D>("gui/logo");
     }
 
     public override void Update(GameTime gameTime)

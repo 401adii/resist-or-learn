@@ -34,10 +34,10 @@ public class SelectLevelMenu : MenuScene
         base.Load();
         nextState = Game1.GameState.level_select;
         buttons = [
-            backBtn = new Button(textureButton, new Vector2(100, 600), "BACK TO MENU", textureHover, texturePressed),
-            lvl1Btn = new Button(textureButton, new Vector2(100, 100), "LEVEL 1", textureHover, texturePressed),
-            lvl2Btn = new Button(textureButton, new Vector2(100, 200), "LEVEL 2", textureHover, texturePressed),
-            lvl3Btn = new Button(textureButton, new Vector2(100, 300), "LEVEL 3", textureHover, texturePressed),
+            backBtn = new Button(textureButton, new Vector2(16, 560), "BACK TO MENU", textureHover, texturePressed),
+            lvl1Btn = new Button(textureButton, new Vector2(16, 240), "LEVEL 1", textureHover, texturePressed),
+            lvl2Btn = new Button(textureButton, new Vector2(16, 320), "LEVEL 2", textureHover, texturePressed),
+            lvl3Btn = new Button(textureButton, new Vector2(16, 400), "LEVEL 3", textureHover, texturePressed),
         ];
     }
 

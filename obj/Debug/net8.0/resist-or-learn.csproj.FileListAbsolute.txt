@@ -63,3 +63,5 @@ c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Co
 c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\platform\spikes.xnb
 c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\platform\health_up.xnb
 c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\platform\player.xnb
+c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\gui\logo.xnb
+c:\Users\Adrian\Desktop\!!\Studia\5 sem\jpwp\resist-or-learn\bin\Debug\net8.0\Content\gui\menu_background.xnb
