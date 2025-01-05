@@ -116,7 +116,7 @@ public class LevelGuessScene : IScene
         toleranceWrong = new Sprite(wrongTexture, new Vector2(1075, 255), false);
         resistanceCorrect = new Sprite(correctTexture, new Vector2(1075, 145), false);
         toleranceCorrect = new Sprite(correctTexture, new Vector2(1075, 255), false);
-        cheatsheet = new Cheatsheet(cheatsheetTexture, new Vector2(100, 680), new Vector2(640, 320));
+        cheatsheet = new Cheatsheet(cheatsheetTexture, new Vector2(100, 669), new Vector2(620, 340));
     }
 
     public void Update(GameTime gameTime)

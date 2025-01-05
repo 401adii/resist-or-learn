@@ -12,6 +12,7 @@ public class MainMenu : MenuScene
     private Button selectLevelBtn;
     private Button settingsBtn;
     private Button exitBtn;
+    private Texture2D logo;
     
     public MainMenu(ContentManager contentManager) : base(contentManager) {}
     public override void Draw(SpriteBatch spriteBatch)

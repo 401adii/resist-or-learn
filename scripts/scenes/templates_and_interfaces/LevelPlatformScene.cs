@@ -19,7 +19,7 @@ public class LevelPlatformScene : IScene
     private SceneManager sceneManager;
     
     //CONSTS AND ENUMS
-    protected const int TS = 64; //tilesize
+    protected const int TS = 32; //tilesize
     protected const string PLATFORM_DEFAULT = "platform/";
     protected const string CONTENT_DEFAULT = "../../../Content/";
     private const string PLAYER = "player";
@@ -80,7 +80,25 @@ public class LevelPlatformScene : IScene
         textureStore = new(){
             new Rectangle(0, 0, TS, TS),
             new Rectangle(TS, 0, TS, TS),
-            new Rectangle(TS*2, 0, TS, TS)
+            new Rectangle(TS*2, 0, TS, TS),
+            new Rectangle(TS*3, 0, TS, TS),
+            new Rectangle(TS*4, 0, TS, TS),
+            new Rectangle(TS*5, 0, TS, TS),
+            new Rectangle(TS*6, 0, TS, TS),
+            new Rectangle(0, TS, TS, TS),
+            new Rectangle(TS*1, TS, TS, TS),
+            new Rectangle(TS*2, TS, TS, TS),
+            new Rectangle(TS*3, TS, TS, TS),
+            new Rectangle(TS*4, TS, TS, TS),
+            new Rectangle(TS*5, TS, TS, TS),
+            new Rectangle(TS*6, TS, TS, TS),
+            new Rectangle(0, TS*2, TS, TS),
+            new Rectangle(TS*1, TS*2, TS, TS),
+            new Rectangle(TS*2, TS*2, TS, TS),
+            new Rectangle(TS*3, TS*2, TS, TS),
+            new Rectangle(TS*4, TS*2, TS, TS),
+            new Rectangle(TS*5, TS*2, TS, TS),
+            new Rectangle(TS*6, TS*2, TS, TS),
         };
         playerPos = new Vector2(0, 0);
         health = GetHealthData();
@@ -161,7 +179,7 @@ public class LevelPlatformScene : IScene
         pauseMenu = new PauseMenu(contentManager);
         sceneManager.AddScene(finishedLevelMenu);
         texture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PLAYER);
-        player = new Player(texture, playerPos, new Vector2(64,64));
+        player = new Player(texture, playerPos, new Vector2(33,64));
         checkpointPos = playerPos;
         sprites.Add(player);
         texture = contentManager.Load<Texture2D>(GUI + HEALTH);

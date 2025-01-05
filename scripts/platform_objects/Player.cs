@@ -41,14 +41,13 @@ public class Player : Sprite
         }
 
         if(currState.IsKeyDown(chosenControls[Controls.JUMP]) && !prevState.IsKeyDown(chosenControls[Controls.JUMP]) && jumpCount > 0){
-            velocity.Y = -500 * delta;
+            velocity.Y = -600 * delta;
             jumpCount--;
         }
     }
 
-    public override void Draw(SpriteBatch spriteBatch)
-    {
-        spriteBatch.Draw(texture, Rect, DisplayRect, Color.White);
+    public override void Draw(SpriteBatch spriteBatch){
+        base.Draw(spriteBatch);
     }
 
     private void GetControls()
