@@ -33,6 +33,7 @@
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/gui/logo.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/gui/menu_background.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/gui/wrong.png</File>
+    <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/background.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/health_up.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/pickup.png</File>
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/player.png</File>
@@ -44,6 +45,7 @@
     <File>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/three_band/base.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

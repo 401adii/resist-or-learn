@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.Xna.Framework;
@@ -32,6 +33,7 @@ public class LevelPlatformScene : IScene
     private const string HEALTH_UP = "health_up";
     private const string SPIKES = "spikes";
     //VARIABLES
+    private Texture2D background;
     private Texture2D texture;
     protected Texture2D resistorTexture;
     protected Texture2D healthUpTexture;
@@ -64,6 +66,7 @@ public class LevelPlatformScene : IScene
     public bool levelFailed;
     public bool levelPaused;
     public Game1.ResistorType pickedUpType;
+    public Color backgroundColor;
     
 
     public LevelPlatformScene(ContentManager contentManager, string name){
@@ -103,10 +106,12 @@ public class LevelPlatformScene : IScene
         playerPos = new Vector2(0, 0);
         health = GetHealthData();
         resistorCount = 0;
+        backgroundColor = Color.White;
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
+        spriteBatch.Draw(background, Vector2.Zero, backgroundColor);
         foreach(var item in tilemap){
             Rectangle dest = new(
                 (int)item.Key.X*TS,
@@ -132,6 +137,7 @@ public class LevelPlatformScene : IScene
         
         if(levelPaused)
             sceneManager.GetCurrentScene().Draw(spriteBatch);
+        
     }
 
     protected void LoadMap(string path)
@@ -186,6 +192,7 @@ public class LevelPlatformScene : IScene
         hpbar = new Healthbar(texture, new Vector2(0, 0), new Vector2(64,32), health);
         healthUpTexture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + HEALTH_UP);
         spikesTexture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + SPIKES);
+        background = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + "background");
 
         textureAtlas = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + TILESET);
         resistorTexture = contentManager.Load<Texture2D>(PLATFORM_DEFAULT + PICK_UP);

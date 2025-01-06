@@ -214,7 +214,10 @@ public class LevelGuessScene : IScene
             resistanceInput.enabled = false;
         }
 
-        if(inputToleranceValue == -1 && toleranceInput.enabled){
+        if(resistor.tolerance == -1){
+            toleranceInput.enabled = false;
+        }
+        else if(inputToleranceValue == -1 && toleranceInput.enabled){
             Debug.WriteLine("tolerance error");
             toleranceError.isVisible = true;
         }

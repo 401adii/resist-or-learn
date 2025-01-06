@@ -11,6 +11,7 @@ public class Level2 : LevelPlatformScene
     {
         LoadMap(CONTENT_DEFAULT + PLATFORM_DEFAULT + TILEMAP);
         playerPos = new Vector2(TS, TS*18);
+        backgroundColor = new Color(239, 175, 121);
     }
 
     protected override void LoadPickups()

@@ -16,12 +16,15 @@ public class Player : Sprite
         JUMP, LEFT, RIGHT
     }
     private Dictionary<Controls, Keys> chosenControls;
+    bool direction;
+    
     public Player(Texture2D texture, Vector2 position, Vector2 singleDimensions) : base(texture, position, singleDimensions)
     {
         velocity = new();
         chosenControls = new();
         grounded = false;
         jumpCount = 2;
+        direction = true;
         GetControls();
     }
 
@@ -30,24 +33,32 @@ public class Player : Sprite
         float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
         velocity.X = 0;
         velocity.Y += 40 * delta;
+
+        
         if(velocity.Y > 30){
             velocity.Y = 30;
         }
         if(currState.IsKeyDown(chosenControls[Controls.RIGHT])){
             velocity.X += 250 * delta;
+            direction = true;
         }
         if(currState.IsKeyDown(chosenControls[Controls.LEFT])){
             velocity.X -= 250 * delta;
+            direction = false;
         }
 
         if(currState.IsKeyDown(chosenControls[Controls.JUMP]) && !prevState.IsKeyDown(chosenControls[Controls.JUMP]) && jumpCount > 0){
             velocity.Y = -600 * delta;
             jumpCount--;
         }
+    
     }
 
     public override void Draw(SpriteBatch spriteBatch){
-        base.Draw(spriteBatch);
+        if(direction)
+            spriteBatch.Draw(texture, Rect, DisplayRect, Color.White);
+        else
+           spriteBatch.Draw(texture, Rect, DisplayRect, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
     }
 
     private void GetControls()
