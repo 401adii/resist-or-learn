@@ -20,16 +20,16 @@ public class EreaseDataScene : MenuScene
     public override void Draw(SpriteBatch spriteBatch)
     {
         base.Draw(spriteBatch);
-        spriteBatch.DrawString(Game1.font, "ARE YOU SURE?", new Vector2(400, 200), Color.White);
-        spriteBatch.DrawString(Game1.font, "ALL PROGRESS WILL BE LOST!", new Vector2(350, 240), Color.White);
+        spriteBatch.DrawString(Game1.font, "ARE YOU SURE?", new Vector2(568, 161), Color.White);
+        spriteBatch.DrawString(Game1.font, "ALL PROGRESS WILL BE LOST!", new Vector2(505, 200), Color.White);
     }
 
     public override void Load()
     {
         base.Load();
         buttons = [
-            yesBtn = new Button(textureButton, new Vector2(300, 350), "YES", textureHover, texturePressed),
-            noBtn = new Button(textureButton, new Vector2(500, 350), "NO", textureHover, texturePressed),
+            yesBtn = new Button(textureButton, new Vector2(368, 244), "YES", textureHover, texturePressed),
+            noBtn = new Button(textureButton, new Vector2(656, 244), "NO", textureHover, texturePressed),
         ];
     }
 

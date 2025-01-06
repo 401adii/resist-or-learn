@@ -19,17 +19,29 @@
 /processorParam:Quality=Best
 /build:audio/correct.wav
 
-#begin audio/healthup.wav
+#begin audio/explosion.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:audio/healthup.wav
+/build:audio/explosion.wav
+
+#begin audio/health_up.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/health_up.wav
 
 #begin audio/pickup.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:audio/pickup.wav
+
+#begin audio/wrong.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/wrong.wav
 
 #begin five_band/band1.png
 /importer:TextureImporter

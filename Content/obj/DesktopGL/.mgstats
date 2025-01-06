@@ -1,2 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/platform/background.png","C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/bin/DesktopGL/platform/background.xnb","TextureProcessor","Texture2DContent",5320,3686485,0,2748245
+"C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/audio/explosion.wav","C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/bin/DesktopGL/audio/explosion.xnb","SoundEffectProcessor","SoundEffectContent",25109,25170,0,2424535
+"C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/audio/wrong.wav","C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/bin/DesktopGL/audio/wrong.xnb","SoundEffectProcessor","SoundEffectContent",18584,18645,0,1249613

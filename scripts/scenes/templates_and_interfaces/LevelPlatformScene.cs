@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -32,6 +33,7 @@ public class LevelPlatformScene : IScene
     private const string HEALTH = "health";
     private const string HEALTH_UP = "health_up";
     private const string SPIKES = "spikes";
+    private const string EXPLOSION = "explosion";
     //VARIABLES
     private Texture2D background;
     private Texture2D texture;
@@ -53,6 +55,8 @@ public class LevelPlatformScene : IScene
     public FailedLevelMenu failedLevelMenu;
     public PauseMenu pauseMenu;
     private SoundEffect pickUpSfx;
+    private SoundEffect healthUpSfx;
+    private SoundEffect explosionSfx;
     private Vector2 checkpointPos;
     
     public int health;
@@ -200,6 +204,8 @@ public class LevelPlatformScene : IScene
         LoadObstacles();
 
         pickUpSfx = contentManager.Load<SoundEffect>(AUDIO + PICK_UP);
+        healthUpSfx = contentManager.Load<SoundEffect>(AUDIO + HEALTH_UP);
+        explosionSfx = contentManager.Load<SoundEffect>(AUDIO + EXPLOSION);
     }
 
     public void Update(GameTime gameTime)
@@ -241,6 +247,7 @@ public class LevelPlatformScene : IScene
                         checkpointPos = player.position;
                     }
                     if(pickUp is HealthPickUp){
+                        SoundManager.Play(healthUpSfx);
                         IncrementHealth();
                     }
                         
@@ -259,6 +266,7 @@ public class LevelPlatformScene : IScene
         foreach(Sprite obstacle in obstacles){
             if(player.Rect.Intersects(obstacle.Rect)){
                 player.position = checkpointPos;
+                SoundManager.Play(explosionSfx);
                 DecrementHealth();
             }
         }
@@ -391,9 +399,10 @@ public class LevelPlatformScene : IScene
 
     private int IncrementHealth()
     {
-        health++;
-        if(health != 3)
+        if(health != 3){
+            health++;
             hpbar.UpdateTexture(false);
+        }
         string content = File.ReadAllText(Game1.LEVELS_PATH);
         JsonNode node = JsonNode.Parse(content);
         int newVal = node["Health"].AsValue().GetValue<int>() + 1;

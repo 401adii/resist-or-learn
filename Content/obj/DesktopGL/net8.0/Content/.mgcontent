@@ -5,8 +5,10 @@
   <Config />
   <SourceFiles>
     <File>c:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/audio/correct.wav</File>
-    <File>c:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/audio/healthup.wav</File>
+    <File>c:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/audio/explosion.wav</File>
+    <File>c:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/audio/health_up.wav</File>
     <File>c:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/audio/pickup.wav</File>
+    <File>c:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/audio/wrong.wav</File>
     <File>c:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/five_band/band1.png</File>
     <File>c:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/five_band/band2.png</File>
     <File>c:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/five_band/band3.png</File>
@@ -45,6 +47,8 @@
     <File>c:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/three_band/base.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/audio/healthup.wav</SourceFile>
-  <SourceTime>2024-12-15T23:56:40.0462304+01:00</SourceTime>
-  <DestFile>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/bin/DesktopGL/audio/healthup.xnb</DestFile>
-  <DestTime>2025-01-05T21:14:29.0005207+01:00</DestTime>
+  <SourceFile>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/audio/explosion.wav</SourceFile>
+  <SourceTime>2025-01-06T13:05:05.3411068+01:00</SourceTime>
+  <DestFile>C:/Users/Adrian/Desktop/!!/Studia/5 sem/jpwp/resist-or-learn/Content/bin/DesktopGL/audio/explosion.xnb</DestFile>
+  <DestTime>2025-01-06T13:06:45.0875353+01:00</DestTime>
   <Importer>WavImporter</Importer>
   <ImporterTime>2024-08-16T19:05:56+02:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>

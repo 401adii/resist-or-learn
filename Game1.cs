@@ -99,8 +99,10 @@ public class Game1 : Game
             }
             if(currentLevel.levelFinished){
                 if(currentLevelIndex == levels.IndexOf(currentLevel)){
-                    currentLevelIndex++;
-                    levels[currentLevelIndex].UpdateLevelsJSON(); //add reset if last 
+                    if(currentLevelIndex != 2){
+                        currentLevelIndex++;
+                        levels[currentLevelIndex].UpdateLevelsJSON(); //add reset if last 
+                    }
                 }
                 if(currentLevel.finishedLevelMenu.nextState != 0)
                     state = currentLevel.finishedLevelMenu.nextState;

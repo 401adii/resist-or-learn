@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -15,7 +17,6 @@ public class LevelGuessScene : IScene
 
 
     //CONSTS AND ENUMS
-
     private const string RESISTOR_BAND_DEFAULT = "/band";
     private const string RESISTOR_BASE_DEFAULT = "/base";
     private const string GUI_DEFAULT = "gui";
@@ -28,6 +29,8 @@ public class LevelGuessScene : IScene
     private const string WRONG = "gui/wrong";
     private const string CORRECT = "gui/correct";
     private const string CHEATSHEET = "/cheatsheet";
+    private const string WRONGSFX = "audio/wrong";
+    private const string CORRECTSFX = "audio/correct";
     private readonly Dictionary<Game1.ResistorType, Vector2> RESISTOR_POSITIONS = new()
     {
         {Game1.ResistorType.three_band, new Vector2(100, 120)},
@@ -60,6 +63,8 @@ public class LevelGuessScene : IScene
     private Sprite resistanceCorrect;
     private Sprite toleranceCorrect;
     private Cheatsheet cheatsheet;
+    private SoundEffect correctSfx;
+    private SoundEffect wrongSfx;
 
     //FLAGS AND PUBLIC VARIABLES
     public bool isSubmitted;
@@ -117,6 +122,8 @@ public class LevelGuessScene : IScene
         resistanceCorrect = new Sprite(correctTexture, new Vector2(1075, 145), false);
         toleranceCorrect = new Sprite(correctTexture, new Vector2(1075, 255), false);
         cheatsheet = new Cheatsheet(cheatsheetTexture, new Vector2(100, 669), new Vector2(620, 340));
+        wrongSfx = contentManager.Load<SoundEffect>(WRONGSFX);
+        correctSfx = contentManager.Load<SoundEffect>(CORRECTSFX);
     }
 
     public void Update(GameTime gameTime)
@@ -250,5 +257,10 @@ public class LevelGuessScene : IScene
 
         if(resistanceCorrect.isVisible && toleranceCorrect.isVisible)
             isCorrect = true;
+        
+        if(isCorrect)
+            SoundManager.Play(correctSfx);
+        else
+            SoundManager.Play(wrongSfx);
     }
 }
