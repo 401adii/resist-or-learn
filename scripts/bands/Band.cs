@@ -1,25 +1,21 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Mime;
-using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace resist_or_learn;
 
 public class Band : Sprite
-{   
-    protected virtual Dictionary<Color, double> ValueMap{ get; } = new()
+{
+    protected virtual Dictionary<Color, double> ValueMap { get; } = new()
     {
         {new Color(0f, 0f, 0f, 1f), 1}
     };
     public double value;
     public Color color;
-    
+
     public Band(Texture2D texture, Vector2 position) : base(texture, position)
     {
         List<Color> keys = ValueMap.Keys.ToList();

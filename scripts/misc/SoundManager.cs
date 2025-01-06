@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Microsoft.Xna.Framework.Audio;
 
 namespace resist_or_learn;
